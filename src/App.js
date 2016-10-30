@@ -1,20 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class App extends Component {
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+    return <div>
+      <Navbar inverse fixedTop>
+        <div className="container">
+          <Navbar.Header>
+            <Navbar.Brand>
+              <a>Max Reps Fire</a>
+            </Navbar.Brand>
+            <Navbar.Toggle/>
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav>
+              <NavItem eventKey={1} href="#">Workouts</NavItem>
+            </Nav>
+          </Navbar.Collapse>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
+      </Navbar>
+      <main className="container theme-showcase">
+        {this.props.children}
+      </main>
+    </div>;
   }
 }
 
