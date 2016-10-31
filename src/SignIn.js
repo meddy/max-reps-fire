@@ -6,7 +6,7 @@ class SignIn extends Component {
   render() {
     return <div className="row">
       <a href="#">
-        <img src={googleSignInPNG}/>
+        <img src={googleSignInPNG} alt="Google Sign In"/>
       </a>
     </div>;
   }

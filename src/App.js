@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Link} from 'react-router';
+import {LinkContainer} from 'react-router-bootstrap';
 
 class App extends Component {
   render() {
@@ -8,13 +10,15 @@ class App extends Component {
         <div className="container">
           <Navbar.Header>
             <Navbar.Brand>
-              <a>Max Reps Fire</a>
+              <Link to="/">Max Reps Fire</Link>
             </Navbar.Brand>
             <Navbar.Toggle/>
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href="#">Workouts</NavItem>
+              <LinkContainer to="/workouts">
+                <NavItem>Workouts</NavItem>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </div>
