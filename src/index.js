@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router'
@@ -11,10 +12,33 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
+firebase.initializeApp({
+  apiKey: 'AIzaSyA-kECJqrQd-RizeKgFYGdkD3q7pjoNhRw',
+  authDomain: 'max-reps-fire.firebaseapp.com',
+  databaseURL: 'https://max-reps-fire.firebaseio.com',
+});
+
+
+function requireAuth(nextState, replace, cb) {
+  firebase
+    .auth()
+    .getRedirectResult()
+    .then(result => {
+      if (!result.user) {
+        replace('/sign-in');
+      }
+      cb();
+    })
+    .catch(err => {
+      replace('/error');
+      cb(err);
+    });
+}
+
 const routeConfig = <Router history={browserHistory}>
   <Route path="/" component={App}>
     <Route path="sign-in" component={SignIn}/>
-    <Route path="workouts" component={Workouts}/>
+    <Route path="workouts" component={Workouts} onEnter={requireAuth}/>
     <Route path="*" component={NoMatch}/>
   </Route>
 </Router>;

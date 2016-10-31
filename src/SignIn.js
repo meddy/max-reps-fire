@@ -1,3 +1,4 @@
+import firebase from 'firebase';
 import React, {Component} from 'react';
 
 import googleSignInPNG from './google-sign-in.png';
@@ -5,10 +6,15 @@ import googleSignInPNG from './google-sign-in.png';
 class SignIn extends Component {
   render() {
     return <div className="row">
-      <a href="#">
+      <a onClick={SignIn.handleSignInWithGoogle}>
         <img src={googleSignInPNG} alt="Google Sign In"/>
       </a>
     </div>;
+  }
+
+  static handleSignInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithRedirect(provider);
   }
 }
 
