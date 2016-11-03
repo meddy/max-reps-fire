@@ -2,6 +2,7 @@ import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, browserHistory} from 'react-router'
+import {createStore, applyMiddleware} from 'redux'
 
 import App from './App';
 import NoMatch from './NoMatch';
@@ -13,11 +14,10 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyA-kECJqrQd-RizeKgFYGdkD3q7pjoNhRw',
-  authDomain: 'max-reps-fire.firebaseapp.com',
-  databaseURL: 'https://max-reps-fire.firebaseio.com',
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
-
 
 function requireAuth(nextState, replace, cb) {
   firebase
