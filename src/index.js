@@ -1,9 +1,10 @@
-import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux'
 import {Router, Route, browserHistory} from 'react-router'
-import {createStore, applyMiddleware} from 'redux'
 
+import configureStore from './bootstrap/configureStore';
+import configureFirebase from './bootstrap/configureFirebase';
 import App from './App';
 import NoMatch from './NoMatch';
 import SignIn from './SignIn';
@@ -13,34 +14,19 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './index.css';
 
-firebase.initializeApp({
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-});
+const store = configureStore();
+configureFirebase();
 
-function requireAuth(nextState, replace, cb) {
-  firebase
-    .auth()
-    .getRedirectResult()
-    .then(result => {
-      if (!result.user) {
-        replace('/sign-in');
-      }
-      cb();
-    })
-    .catch(err => {
-      replace('/error');
-      cb(err);
-    });
-}
+const rootComponent = <Provider store={store}>
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="sign-in" component={SignIn}/>
+      <Route path="workouts" component={Workouts} onEnter={requireAuth}/>
+      <Route path="*" component={NoMatch}/>
+    </Route>
+  </Router>
+</Provider>;
 
-const routeConfig = <Router history={browserHistory}>
-  <Route path="/" component={App}>
-    <Route path="sign-in" component={SignIn}/>
-    <Route path="workouts" component={Workouts} onEnter={requireAuth}/>
-    <Route path="*" component={NoMatch}/>
-  </Route>
-</Router>;
+const containerElement = document.getElementById('root');
 
-ReactDOM.render(routeConfig, document.getElementById('root'));
+ReactDOM.render(rootComponent, containerElement);
