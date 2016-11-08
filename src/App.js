@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
+import DevTools from './containers/DevTools';
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
       </Navbar>
       <main className="container theme-showcase">
         {this.props.children}
+        <DevTools/>
       </main>
     </div>;
   }

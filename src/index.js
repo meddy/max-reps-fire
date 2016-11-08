@@ -21,7 +21,7 @@ const rootComponent = <Provider store={store}>
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="sign-in" component={SignIn}/>
-      <Route path="workouts" component={Workouts} onEnter={requireAuth}/>
+      <Route path="workouts" component={Workouts}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
