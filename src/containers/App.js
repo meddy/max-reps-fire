@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
-import DevTools from './containers/DevTools';
+import DevTools from './DevTools';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.dispatch({type: 'SIGN_IN_REQUEST'});
+  }
+
   render() {
     return <div>
       <Navbar inverse fixedTop>
@@ -32,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect()(App);

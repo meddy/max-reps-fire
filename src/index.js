@@ -1,32 +1,43 @@
+import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
-import {Router, Route, browserHistory} from 'react-router'
+import {Router, Route, browserHistory} from 'react-router';
+import {applyMiddleware, compose, createStore} from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-import configureStore from './bootstrap/configureStore';
-import configureFirebase from './bootstrap/configureFirebase';
-import App from './App';
-import NoMatch from './NoMatch';
-import SignIn from './SignIn';
-import Workouts from './Workouts';
+import {App, DevTools, NoMatch, SignIn, Workouts} from './containers';
+import createIsAuthenticated from './helpers/createIsAuthenticated';
+import reduceState from './reducers';
+import rootSaga from './sagas';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import './index.css';
+import './resources/index.css';
 
-const store = configureStore();
-configureFirebase();
+firebase.initializeApp({
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+});
 
-const rootComponent = <Provider store={store}>
-  <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <Route path="sign-in" component={SignIn}/>
-      <Route path="workouts" component={Workouts}/>
-      <Route path="*" component={NoMatch}/>
-    </Route>
-  </Router>
-</Provider>;
+const sagaMiddleware = createSagaMiddleware();
+const middleware = applyMiddleware(sagaMiddleware);
+const enhancer = compose(middleware, DevTools.instrument());
+const store = createStore(reduceState, null, enhancer);
+const isAuthenticated = createIsAuthenticated(store.getState);
 
-const containerElement = document.getElementById('root');
+sagaMiddleware.run(rootSaga);
 
-ReactDOM.render(rootComponent, containerElement);
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <Route path="sign-in" component={SignIn}/>
+        <Route path="workouts" component={Workouts} onEnter={isAuthenticated}/>
+        <Route path="*" component={NoMatch}/>
+      </Route>
+    </Router>
+  </Provider>,
+  document.getElementById('root')
+);

@@ -1,7 +1,7 @@
 import firebase from 'firebase';
 import React, {Component} from 'react';
 
-import googleSignInPNG from './google-sign-in.png';
+import googleSignInPNG from '../resources/google-sign-in.png';
 
 class SignIn extends Component {
   render() {

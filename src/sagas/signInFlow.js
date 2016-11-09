@@ -4,7 +4,9 @@ import {fork, call, take, put} from 'redux-saga/effects'
 
 function* authenticate() {
   try {
-    const result = yield call(firebase.auth().getRedirectResult);
+    const firebaseAuth = firebase.auth();
+    const result = yield call(firebaseAuth.getRedirectResult.bind(firebaseAuth));
+    // need to check for user
     yield put({type: 'SIGN_IN_SUCCESS', result});
     yield call(browserHistory.push, ['/workouts']);
   } catch(error) {
