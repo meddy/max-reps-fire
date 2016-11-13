@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
-import {Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Button, Navbar, Nav, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
+
 import DevTools from './DevTools';
+import {requestSignOut} from '../actions';
 
 class App extends Component {
-  componentWillMount() {
-    this.props.dispatch({type: 'SIGN_IN_REQUEST'});
+  constructor(props) {
+    super(props);
+
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   render() {
@@ -26,6 +30,9 @@ class App extends Component {
                 <NavItem>Workouts</NavItem>
               </LinkContainer>
             </Nav>
+            {this.props.authenticated && <Navbar.Form pullRight>
+              <Button type="button" onClick={this.handleSignOut}>Sign Out</Button>
+            </Navbar.Form>}
           </Navbar.Collapse>
         </div>
       </Navbar>
@@ -35,6 +42,16 @@ class App extends Component {
       </main>
     </div>;
   }
+
+  handleSignOut() {
+    this.props.dispatch(requestSignOut());
+  }
 }
 
-export default connect()(App);
+function mapStateToProps(state) {
+  return {
+    authenticated: state.user.authenticated
+  }
+}
+
+export default connect(mapStateToProps)(App);

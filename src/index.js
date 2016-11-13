@@ -6,6 +6,7 @@ import {Router, Route, browserHistory} from 'react-router';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
+import {receiveSignIn, receiveSignOut} from './actions';
 import {App, DevTools, NoMatch, SignIn, Workouts} from './containers';
 import createIsAuthenticated from './helpers/createIsAuthenticated';
 import reduceState from './reducers';
@@ -24,17 +25,25 @@ firebase.initializeApp({
 const sagaMiddleware = createSagaMiddleware();
 const middleware = applyMiddleware(sagaMiddleware);
 const enhancer = compose(middleware, DevTools.instrument());
-const store = createStore(reduceState, null, enhancer);
+const store = createStore(reduceState, {}, enhancer);
 const isAuthenticated = createIsAuthenticated(store.getState);
 
 sagaMiddleware.run(rootSaga);
+
+firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    store.dispatch(receiveSignIn(user.displayName));
+  } else {
+    store.dispatch(receiveSignOut());
+  }
+});
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <Route path="sign-in" component={SignIn}/>
-        <Route path="workouts" component={Workouts} onEnter={isAuthenticated}/>
+        <Route path="workouts" component={Workouts}/>
         <Route path="*" component={NoMatch}/>
       </Route>
     </Router>

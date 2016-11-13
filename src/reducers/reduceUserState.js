@@ -1,16 +1,25 @@
+import {RECEIVE_SIGN_IN, RECEIVE_SIGN_OUT} from '../actions';
+
 const initialState = {
-  user: null
+  authenticated: false,
+  name: null
 };
 
 export default function reduceUserState(state = initialState, action) {
   const newState = Object.assign({}, state);
 
   switch (action.type) {
-    case 'SIGN_IN_SUCCESS':
-      return Object.assign(newState, {user: action.result.user});
+    case RECEIVE_SIGN_IN:
+      return Object.assign(newState, {
+        authenticated: true,
+        name: action.name
+      });
 
-    case 'LOGOUT':
-      return Object.assign(newState, {user: null});
+    case RECEIVE_SIGN_OUT:
+      return Object.assign(newState, {
+        authenticated: false,
+        name: null
+      });
 
     default:
       return newState;
