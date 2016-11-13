@@ -2,12 +2,13 @@ import firebase from 'firebase';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
-import {Router, Route, browserHistory} from 'react-router';
+import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
 import {receiveSignIn, receiveSignOut} from './actions';
-import {App, DevTools, NoMatch, SignIn, Workouts} from './containers';
+import {Home, NoMatch} from './components';
+import {App, DevTools, Workouts} from './containers';
 import createIsAuthenticated from './helpers/createIsAuthenticated';
 import reduceState from './reducers';
 import rootSaga from './sagas';
@@ -42,7 +43,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <Route path="sign-in" component={SignIn}/>
+        <IndexRoute component={Home}/>
         <Route path="workouts" component={Workouts}/>
         <Route path="*" component={NoMatch}/>
       </Route>

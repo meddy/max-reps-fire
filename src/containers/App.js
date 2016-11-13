@@ -1,20 +1,25 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
 import {Button, Navbar, Nav, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 
-import DevTools from './DevTools';
 import {requestSignOut} from '../actions';
+
+let DevTools = null;
+if (process.env.NODE_ENV === 'development') {
+  DevTools = require('./DevTools').default;
+}
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   render() {
+    const {authenticated, children} = this.props;
+
     return <div>
       <Navbar inverse fixedTop>
         <div className="container">
@@ -30,15 +35,15 @@ class App extends Component {
                 <NavItem>Workouts</NavItem>
               </LinkContainer>
             </Nav>
-            {this.props.authenticated && <Navbar.Form pullRight>
+            {authenticated && <Navbar.Form pullRight>
               <Button type="button" onClick={this.handleSignOut}>Sign Out</Button>
             </Navbar.Form>}
           </Navbar.Collapse>
         </div>
       </Navbar>
       <main className="container theme-showcase">
-        {this.props.children}
-        <DevTools/>
+        {children}
+        {DevTools && <DevTools/>}
       </main>
     </div>;
   }
@@ -48,10 +53,14 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  authenticated: PropTypes.bool.isRequired
+};
+
 function mapStateToProps(state) {
   return {
     authenticated: state.user.authenticated
-  }
+  };
 }
 
 export default connect(mapStateToProps)(App);
