@@ -1,0 +1,100 @@
+{
+  "rules": {
+    "exercises": {
+      ".read": "auth != null",
+      ".write": false
+    },
+    "users": {
+      "$userId": {
+        ".read": "auth != null && auth.uid === $userId",
+        "exercises": {
+          "$exerciseId": {
+            // user is authenticated and is owner data
+            // data is unique
+            // data does not exist as a default exercise
+            ".write": "auth != null && auth.uid === $userId && newData.val() === $exerciseId && !root.child('exercises/' + newData.val()).exists()",
+            ".validate": "newData.isString()"
+          }
+        },
+        "workoutTemplates": {
+          "$workoutTemplateId": {
+            // user is authenticated and is owner of data
+            // data has a unique name
+            ".write": "auth != null && auth.uid === $userId && newData.child('name').val() === $workoutTemplateId!",
+            "name": {
+              ".validate": "newData.isString()"
+            },
+            "order": {
+              ".validate": "newData.isNumber()"
+            }
+          }
+        },
+        "workouts": {
+          "$workoutTemplateId": {
+            // user is authenticated and is owner of data
+            // workouts are children of an existing workout template
+            ".write": "auth != null && auth.uid === $userId && parent().child('workoutTemplates/' + $workoutTemplateId).exists()",
+            "$workoutId": {
+              ".validate": "newData.hasChild('performed')",
+              "$performed": {
+                ".validate": "newData.isString()"
+              }
+            }
+          }
+        },
+        "exerciseTemplates": {
+          "$workoutTemplateId": {
+            // user is authenticated and is owner of data
+            // exercise templates are children of an existing workout template
+            ".write": "auth != null && auth.uid === $userId && parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
+            "$exerciseTemplateId": {
+              ".validate": "newData.hasChildren(['setsMin', 'setsMax', 'repsMin', 'repsMax', 'restMin', 'restMax', order', 'exercise'])",
+              "setsMin": {
+                ".validate": "newData.isNumber()"
+              },
+              "setsMax": {
+                ".validate": "newData.isNumber()"
+              },
+              "repsMin": {
+                ".validate": "newData.isNumber()"
+              },
+              "repsMax": {
+                ".validate": "newData.isNumber()"
+              },
+              "restMin": {
+                ".validate": "newData.isNumber()"
+              },
+              "restMax": {
+                ".validate": "newData.isNumber()"
+              },
+              "order": {
+                ".validate": "newData.isNumber()"
+              },
+              "exercise": {
+                // exercise value exists as a user exercise or default exercise
+                ".validate": "parent().parent().child('exercises/' + newData.val()).exists() || root.child('exercises/' + newData.val()).exists()"
+              }
+            }
+          }
+        },
+        "sets": {
+          "$exerciseId": {
+            // user is authenticated and is owner of data
+            // sets are children of existing exercises
+            ".write": "auth != null && auth.uid === $userId && parent().child('exercises/' + $exerciseId).exists() || root.child('exercises/' + $exerciseId).exists()",
+            ".validate": "newData.hasChildren(['weight', 'reps', 'restLength'])",
+            "weight": {
+              ".validate": "newData.isNumber()",
+            },
+            "reps": {
+              ".validate": "newData.isNumber()"
+            },
+            "restLength": {
+              ".validate": "newData.isNumber()"
+            }
+          }
+        }
+      }
+    }
+  }
+}
