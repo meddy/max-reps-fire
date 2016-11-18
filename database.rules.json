@@ -20,7 +20,7 @@
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // data has a unique name
-            ".write": "auth != null && auth.uid === $userId && newData.child('name').val() === $workoutTemplateId!",
+            ".write": "auth != null && auth.uid === $userId && newData.child('name').val() === $workoutTemplateId",
             "name": {
               ".validate": "newData.isString()"
             },
@@ -33,7 +33,7 @@
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // workouts are children of an existing workout template
-            ".write": "auth != null && auth.uid === $userId && parent().child('workoutTemplates/' + $workoutTemplateId).exists()",
+            ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplates/' + $workoutTemplateId).exists()",
             "$workoutId": {
               ".validate": "newData.hasChild('performed')",
               "$performed": {
@@ -46,9 +46,9 @@
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // exercise templates are children of an existing workout template
-            ".write": "auth != null && auth.uid === $userId && parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
+            ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
             "$exerciseTemplateId": {
-              ".validate": "newData.hasChildren(['setsMin', 'setsMax', 'repsMin', 'repsMax', 'restMin', 'restMax', order', 'exercise'])",
+              ".validate": "newData.hasChildren(['setsMin', 'setsMax', 'repsMin', 'repsMax', 'restMin', 'restMax', 'order', 'exercise'])",
               "setsMin": {
                 ".validate": "newData.isNumber()"
               },
@@ -72,7 +72,7 @@
               },
               "exercise": {
                 // exercise value exists as a user exercise or default exercise
-                ".validate": "parent().parent().child('exercises/' + newData.val()).exists() || root.child('exercises/' + newData.val()).exists()"
+                ".validate": "data.parent().parent().child('exercises/' + newData.val()).exists() || root.child('exercises/' + newData.val()).exists()"
               }
             }
           }
@@ -81,7 +81,7 @@
           "$exerciseId": {
             // user is authenticated and is owner of data
             // sets are children of existing exercises
-            ".write": "auth != null && auth.uid === $userId && parent().child('exercises/' + $exerciseId).exists() || root.child('exercises/' + $exerciseId).exists()",
+            ".write": "auth != null && auth.uid === $userId && data.parent().child('exercises/' + $exerciseId).exists() || root.child('exercises/' + $exerciseId).exists()",
             ".validate": "newData.hasChildren(['weight', 'reps', 'restLength'])",
             "weight": {
               ".validate": "newData.isNumber()",

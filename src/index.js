@@ -18,8 +18,7 @@ import 'bootstrap/dist/css/bootstrap-theme.css';
 import './resources/index.css';
 
 const sagaMiddleware = createSagaMiddleware();
-const middleware = applyMiddleware(sagaMiddleware);
-const enhancer = compose(middleware, DevTools.instrument());
+const enhancer = compose(applyMiddleware(sagaMiddleware), DevTools.instrument());
 const store = createStore(reduceState, {}, enhancer);
 const redirectToAuth = createIsAuthenticated(store.getState);
 
