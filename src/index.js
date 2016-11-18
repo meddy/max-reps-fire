@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import {receiveSignIn} from './actions';
 import {Home, NoMatch} from './components';
-import {App, DevTools, Workouts} from './containers';
+import {App, DevTools, Exercises, Workouts} from './containers';
 import createIsAuthenticated from './helpers/createRedirectToAuth';
 import reduceState from './reducers';
 import rootSaga from './sagas';
@@ -42,6 +42,7 @@ ReactDOM.render(
       <Route path="/" component={App}>
         <IndexRoute component={Home}/>
         <Route path="workouts" component={Workouts} onEnter={redirectToAuth}/>
+        <Route path="exercises" component={Exercises} onEnter={redirectToAuth}/>
         <Route path="*" component={NoMatch}/>
       </Route>
     </Router>

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Button, Grid, Navbar, Nav, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
@@ -34,6 +34,9 @@ class App extends Component {
               <LinkContainer to="/workouts">
                 <NavItem>Workouts</NavItem>
               </LinkContainer>
+              <LinkContainer to="/exercises">
+                <NavItem>Exercises</NavItem>
+              </LinkContainer>
             </Nav>
             {authenticated && <Navbar.Form pullRight>
               <Button type="button" onClick={this.handleSignOut}>Sign Out</Button>
@@ -41,10 +44,10 @@ class App extends Component {
           </Navbar.Collapse>
         </div>
       </Navbar>
-      <main className="container theme-showcase">
+      <Grid className="container theme-showcase">
         {children}
         {DevTools && <DevTools/>}
-      </main>
+      </Grid>
     </div>;
   }
 
