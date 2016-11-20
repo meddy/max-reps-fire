@@ -1,14 +1,18 @@
 import firebase from 'firebase';
 import {browserHistory} from 'react-router';
-import {apply, fork, call, take, put} from 'redux-saga/effects';
+import {takeEvery} from 'redux-saga';
+import {apply, call, take, put} from 'redux-saga/effects';
 
 import actions, {types} from '../actions';
 
-export default function* rootSaga() {
-  yield fork(authFlow);
+export default function* combineSagas() {
+  return yield [
+    watchAuth(),
+    watchExercises()
+  ];
 }
 
-function* authFlow() {
+function* watchAuth() {
   const firebaseAuth = firebase.auth();
 
   while (true) {
@@ -28,13 +32,29 @@ function* authFlow() {
   }
 }
 
+function* watchExercises() {
+  yield takeEvery(types.REQUEST_EXERCISES, fetchExercises);
+}
+
+function* fetchExercises() {
+  const systemExercises = yield call(fetchSystemExercises);
+  yield put(actions.receiveExercises(systemExercises, null));
+}
+
 function getAuthState() {
   return new Promise(resolve => {
     firebase
       .auth()
       .onAuthStateChanged(user => {
-        console.log('test');
         resolve(user);
       });
   });
+}
+
+function fetchSystemExercises() {
+  return firebase
+    .database()
+    .ref('/exercises')
+    .once('value')
+    .then(snapshot => snapshot.val());
 }

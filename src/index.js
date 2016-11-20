@@ -8,9 +8,9 @@ import createSagaMiddleware from 'redux-saga';
 
 import {NoMatch} from './components';
 import {App, DevTools, Exercises, Home, Workouts} from './containers';
-import createIsAuthenticated from './helpers/createRedirectToAuth';
-import reduceState from './reducers';
-import rootSaga from './sagas';
+import createRedirectToAuth from './helpers/createRedirectToAuth';
+import combineReducers from './reducers/combineReducers';
+import composeSagas from './sagas/combineSagas';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './resources/index.css';
@@ -23,10 +23,10 @@ firebase.initializeApp({
 
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = compose(applyMiddleware(sagaMiddleware), DevTools.instrument());
-const store = createStore(reduceState, {}, enhancer);
-const redirectToAuth = createIsAuthenticated(store.getState);
+const store = createStore(combineReducers, {}, enhancer);
+const redirectToAuth = createRedirectToAuth(store.getState);
 
-sagaMiddleware.run(rootSaga);
+sagaMiddleware.run(composeSagas);
 
 ReactDOM.render(
   <Provider store={store}>
