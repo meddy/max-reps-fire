@@ -1,17 +1,40 @@
 import firebase from 'firebase';
-import {browserHistory} from 'react-router'
-import {fork, call, take, put} from 'redux-saga/effects';
+import {browserHistory} from 'react-router';
+import {apply, fork, call, take, put} from 'redux-saga/effects';
 
-import {receiveSignOut, REQUEST_SIGN_OUT} from '../actions';
-
-function* signOut() {
-  yield take(REQUEST_SIGN_OUT);
-  const firebaseAuth = firebase.auth();
-  yield call(firebaseAuth.signOut.bind(firebaseAuth));
-  yield put(receiveSignOut());
-  yield call(browserHistory.replace, ['/']);
-}
+import actions, {types} from '../actions';
 
 export default function* rootSaga() {
-  yield fork(signOut);
+  yield fork(authFlow);
+}
+
+function* authFlow() {
+  const firebaseAuth = firebase.auth();
+
+  while (true) {
+    yield take(types.REQUEST_SIGN_IN);
+
+    const user = yield call(getAuthState);
+    if (!user) {
+      yield put(actions.touchAuth());
+      continue;
+    }
+
+    yield put(actions.receiveSignIn(user.displayName));
+    yield take(types.REQUEST_SIGN_OUT);
+    yield apply(firebaseAuth, firebaseAuth.signOut);
+    yield put(actions.receiveSignOut());
+    yield call(browserHistory.replace, ['/']);
+  }
+}
+
+function getAuthState() {
+  return new Promise(resolve => {
+    firebase
+      .auth()
+      .onAuthStateChanged(user => {
+        console.log('test');
+        resolve(user);
+      });
+  });
 }

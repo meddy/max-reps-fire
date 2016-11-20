@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Col, Row, ListGroup, ListGroupItem} from 'react-bootstrap';
 
 class Exercises extends Component {

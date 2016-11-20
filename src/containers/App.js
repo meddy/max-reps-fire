@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 
-import {requestSignOut} from '../actions';
+import actions from '../actions';
 
 let DevTools = null;
 if (process.env.NODE_ENV === 'development') {
@@ -52,7 +52,7 @@ class App extends Component {
   }
 
   handleSignOut() {
-    this.props.dispatch(requestSignOut());
+    this.props.dispatch(actions.requestSignOut());
   }
 }
 

@@ -1,15 +1,15 @@
-export const RECEIVE_SIGN_IN = 'RECEIVE_SIGN_IN';
-export const RECEIVE_SIGN_OUT = 'RECEIVE_SIGN_OUT';
-export const REQUEST_SIGN_OUT ='REQUEST_SIGN_OUT';
+export const types = {
+  RECEIVE_SIGN_IN: 'RECEIVE_SIGN_IN',
+  RECEIVE_SIGN_OUT: 'RECEIVE_SIGN_OUT',
+  REQUEST_SIGN_IN: 'REQUEST_SIGN_IN',
+  REQUEST_SIGN_OUT: 'REQUEST_SIGN_OUT',
+  TOUCH_AUTH: 'TOUCH_AUTH'
+};
 
-export function receiveSignIn(name) {
-  return {type: RECEIVE_SIGN_IN, name};
-}
-
-export function receiveSignOut() {
-  return {type: RECEIVE_SIGN_OUT};
-}
-
-export function requestSignOut() {
-  return {type: REQUEST_SIGN_OUT};
-}
+export default {
+  receiveSignIn: (name) => ({type: types.RECEIVE_SIGN_IN, name}),
+  receiveSignOut: () => ({type: types.RECEIVE_SIGN_OUT}),
+  requestSignIn: () => ({type: types.REQUEST_SIGN_IN}),
+  requestSignOut: () => ({type: types.REQUEST_SIGN_OUT}),
+  touchAuth: () => ({type: types.TOUCH_AUTH}),
+};
