@@ -1,54 +1,97 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Col, Modal, Row, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Button, Col, FormGroup, FormControl, Modal, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
+
 import actions from '../actions';
+import {ExerciseList} from '../components';
 
 class Exercises extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalVisible: false
+      isModalVisible: false,
+      name: ''
     };
+
+    this.getNameValidationState = this.getNameValidationState.bind(this);
   }
 
   componentWillMount() {
-    this.props.dispatch(actions.requestExercises());
+    const {dispatch} = this.props;
+    dispatch(actions.requestExercises());
+  }
+
+  getNameValidationState() {
+    const {user, system} = this.props;
+    const {name} = this.state;
+
+    if (!name.length) {
+      return;
+    }
+
+    if (user.includes(name) || system.includes(name)) {
+      return 'error';
+    }
+
+    return 'success';
+  }
+
+  renderModal() {
+    const validationState = this.getNameValidationState();
+
+    return <Modal
+      show={this.state.isModalVisible}
+      onHide={() => this.setState({isModalVisible: false})}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Add New Exercise</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form>
+          <FormGroup
+            controlId="formBasicText"
+            validationState={validationState}
+          >
+            <FormControl
+              type="text"
+              value={this.state.name}
+              placeholder="name"
+              onChange={e => this.setState({name: e.target.value})}
+            />
+            <FormControl.Feedback />
+          </FormGroup>
+          <Button type="submit" bsStyle="success" disabled={validationState !== 'success'}>
+            Create
+          </Button>
+        </form>
+      </Modal.Body>
+    </Modal>;
   }
 
   render() {
     const {system, user} = this.props;
+
     return <Row>
       <Col lg={6} lgOffset={3}>
         <div className="clearfix">
           <h4 className="pull-left">User Defined</h4>
           <Button
-            bsStyle="primary"
+            bsStyle="success"
             title="New Workout"
             className="pull-right"
             onClick={() => this.setState({isModalVisible: true})}
           >
-            <span className="glyphicon glyphicon-plus"/>
+            <span className="glyphicon glyphicon-plus"/> Create
           </Button>
         </div>
-        <NewExerciseForm
-          show={this.state.isModalVisible}
-          onHide={() => this.setState({isModalVisible: false})}
-        />
-        <ListGroup>
-          {user.map(exercise =>
-            <Exercise name={exercise} key={exercise}>{exercise}</Exercise>
-          )}
-        </ListGroup>
+        <ExerciseList items={user}/>
       </Col>
       <Col lg={6} lgOffset={3}>
         <h4>System Defined</h4>
-        <ListGroup>
-        {system.map(exercise =>
-          <Exercise name={exercise} key={exercise}>{exercise}</Exercise>
-        )}
-      </ListGroup>;
+        <ExerciseList items={system}/>
       </Col>
+      {this.renderModal()}
     </Row>;
   }
 }
@@ -61,42 +104,6 @@ Exercises.propTypes = {
 Exercises.defaultProps = {
   system: [],
   user: []
-};
-
-function NewExerciseForm(props) {
-  return <Modal show={props.show} onHide={props.onHide}>
-    <Modal.Header closeButton>
-      <Modal.Title>Add New Exercise</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <p>Test</p>
-    </Modal.Body>
-  </Modal>;
-}
-
-NewExerciseForm.propTypes = {
-  show: Modal.propTypes.show,
-  onHide: Modal.propTypes.onHide
-};
-
-function Exercise(props) {
-  const {onClickDelete, name} = props;
-  return <ListGroupItem key={name} className="clearfix">
-    <span className="pull-left">{name}</span>
-    {onClickDelete && <Button
-      bsStyle="danger"
-      title="Delete Exercises"
-      onClick={props.onClickDelete}
-      className="pull-right"
-    >
-      <span className="glyphicon glyphicon-trash"/>
-    </Button>}
-  </ListGroupItem>;
-}
-
-Exercise.propTypes = {
-  name: PropTypes.string.isRequired,
-  onClickDelete: PropTypes.func,
 };
 
 function mapStateToProps(state) {
