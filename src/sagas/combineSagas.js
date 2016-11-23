@@ -1,8 +1,8 @@
-import firebase from 'firebase';
 import {browserHistory} from 'react-router';
 import {takeEvery} from 'redux-saga';
 import {apply, call, take, put} from 'redux-saga/effects';
 
+import {auth, db} from '../firebaseServices';
 import actions, {types} from '../actions';
 
 export default function* combineSagas() {
@@ -13,8 +13,6 @@ export default function* combineSagas() {
 }
 
 function* watchAuth() {
-  const firebaseAuth = firebase.auth();
-
   while (true) {
     yield take(types.REQUEST_SIGN_IN);
 
@@ -24,9 +22,9 @@ function* watchAuth() {
       continue;
     }
 
-    yield put(actions.receiveSignIn(user.displayName));
+    yield put(actions.receiveSignIn(user.displayName, user.uid));
     yield take(types.REQUEST_SIGN_OUT);
-    yield apply(firebaseAuth, firebaseAuth.signOut);
+    yield apply(auth, auth.signOut);
     yield put(actions.receiveSignOut());
     yield call(browserHistory.replace, ['/']);
   }
@@ -42,19 +40,14 @@ function* fetchExercises() {
 }
 
 function getAuthState() {
-  return new Promise(resolve => {
-    firebase
-      .auth()
-      .onAuthStateChanged(user => {
-        resolve(user);
-      });
-  });
+  return new Promise(resolve =>
+    auth.onAuthStateChanged(user => resolve(user))
+  );
 }
 
 function fetchSystemExercises() {
-  return firebase
-    .database()
-    .ref('/exercises')
-    .once('value')
-    .then(snapshot => snapshot.val());
+    return db
+      .ref('/exercises')
+      .once('value')
+      .then(snapshot => snapshot.val());
 }

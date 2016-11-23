@@ -15,11 +15,20 @@ class Exercises extends Component {
     };
 
     this.getNameValidationState = this.getNameValidationState.bind(this);
+    this.onNewExerciseSubmit = this.onNewExerciseSubmit.bind(this);
   }
 
   componentWillMount() {
     const {dispatch} = this.props;
     dispatch(actions.requestExercises());
+
+    // load exercises page
+    // fetch system exercises
+    // fetch user exercises
+    // add new exercise
+    // delete new exercise
+
+    // fetch user exercises
   }
 
   getNameValidationState() {
@@ -35,6 +44,14 @@ class Exercises extends Component {
     }
 
     return 'success';
+  }
+
+  onNewExerciseSubmit(event) {
+    event.preventDefault();
+
+    // create new exercise
+    // set set
+    console.log('test');
   }
 
   renderModal() {
@@ -61,7 +78,12 @@ class Exercises extends Component {
             />
             <FormControl.Feedback />
           </FormGroup>
-          <Button type="submit" bsStyle="success" disabled={validationState !== 'success'}>
+          <Button
+            type="submit"
+            bsStyle="success"
+            disabled={validationState !== 'success'}
+            onClick={this.onNewExerciseSubmit}
+          >
             Create
           </Button>
         </form>

@@ -1,10 +1,10 @@
-import firebase from 'firebase';
 import React, {Component, PropTypes} from 'react';
 import {Well} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 import actions from '../actions';
 
+import {auth, authProvider} from '../firebaseServices';
 import '../resources/spinner.css';
 import signInImage from '../resources/google-sign-in.png';
 
@@ -35,8 +35,7 @@ class Home extends Component {
   }
 
   static handleSignInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithRedirect(provider);
+    auth.signInWithRedirect(authProvider);
   }
 }
 
