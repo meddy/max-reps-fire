@@ -11,7 +11,7 @@ export const types = {
 
 export default {
   createExercise: name => ({type: types.CREATE_EXERCISE, name}),
-  receiveExercises: (system, user) => ({type: types.RECEIVE_EXERCISES, system, user}),
+  receiveExercises: (exercises, source) => ({type: types.RECEIVE_EXERCISES, exercises, source}),
   receiveSignIn: (name, uid) => ({type: types.RECEIVE_SIGN_IN, name, uid}),
   receiveSignOut: () => ({type: types.RECEIVE_SIGN_OUT}),
   requestExercises: () => ({type: types.REQUEST_EXERCISES}),

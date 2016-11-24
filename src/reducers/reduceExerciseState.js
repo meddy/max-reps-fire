@@ -10,7 +10,7 @@ export default function reduceExerciseState(state = initialState, action) {
     case types.RECEIVE_EXERCISES:
       return {
         ...state,
-        system: action.system
+        [action.source]: action.exercises
       };
 
     default:
