@@ -1,9 +1,8 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, FormGroup, FormControl, Modal, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-
 import actions from '../actions';
-import {ExerciseList} from '../components';
+import {ExerciseList, LoadingIndicator} from '../components';
 
 class Exercises extends Component {
   constructor(props) {
@@ -87,27 +86,29 @@ class Exercises extends Component {
   render() {
     const {system, user} = this.props;
 
-    return <Row>
-      <Col lg={6} lgOffset={3}>
-        <div className="clearfix">
-          <h4 className="pull-left">User Defined</h4>
-          <Button
-            bsStyle="success"
-            title="New Workout"
-            className="pull-right"
-            onClick={() => this.setState({isModalVisible: true})}
-          >
-            <span className="glyphicon glyphicon-plus"/> Create
-          </Button>
-        </div>
-        <ExerciseList items={user}/>
-      </Col>
-      <Col lg={6} lgOffset={3}>
-        <h4>System Defined</h4>
-        <ExerciseList items={system}/>
-      </Col>
-      {this.renderModal()}
-    </Row>;
+    return <LoadingIndicator loading={!system.length && !user.length}>
+      <Row>
+        <Col lg={6} lgOffset={3}>
+          <div className="clearfix">
+            <h4 className="pull-left">User Defined</h4>
+            <Button
+              bsStyle="success"
+              title="New Workout"
+              className="pull-right"
+              onClick={() => this.setState({isModalVisible: true})}
+            >
+              <span className="glyphicon glyphicon-plus"/> Create
+            </Button>
+          </div>
+          <ExerciseList items={user}/>
+        </Col>
+        <Col lg={6} lgOffset={3}>
+          <h4>System Defined</h4>
+          <ExerciseList items={system}/>
+        </Col>
+        {this.renderModal()}
+      </Row>
+    </LoadingIndicator>;
   }
 }
 
