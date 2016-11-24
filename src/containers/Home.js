@@ -4,9 +4,10 @@ import {connect} from 'react-redux';
 
 import actions from '../actions';
 
+import {LoadingIndicator} from '../components';
 import {auth, authProvider} from '../firebaseServices';
-import '../resources/spinner.css';
 import signInImage from '../resources/google-sign-in.png';
+import '../resources/spinner.css';
 
 class Home extends Component {
 
@@ -16,21 +17,14 @@ class Home extends Component {
 
   render() {
     const {authenticated, authStateChecked} = this.props;
-    let signInComponent;
-
-    if (!authStateChecked) {
-      signInComponent = <div className="loader">Loading...</div>;
-    } else if (authenticated) {
-      signInComponent = null;
-    } else {
-      signInComponent = <a onClick={Home.handleSignInWithGoogle} style={{cursor: 'pointer'}}>
-        <img src={signInImage} alt="Google Sign In"/>
-      </a>;
-    }
 
     return <div className="row">
       <Well>Max Reps Fire is a weight lifting log app.</Well>
-      {signInComponent}
+      <LoadingIndicator loading={!authStateChecked}>
+        {!authenticated && <a onClick={Home.handleSignInWithGoogle} style={{cursor: 'pointer'}}>
+          <img src={signInImage} alt="Google Sign In"/>
+        </a>}
+      </LoadingIndicator>
     </div>;
   }
 

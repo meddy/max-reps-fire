@@ -1,5 +1,5 @@
 import {eventChannel} from 'redux-saga';
-import {call, fork, take, put, select} from 'redux-saga/effects';
+import {call, fork, put, select, take} from 'redux-saga/effects';
 
 import actions from '../actions';
 import {db, paths} from '../firebaseServices';
@@ -40,7 +40,7 @@ function getUid(state) {
 function createDbValueChannel(path) {
   return eventChannel(emit => {
     const ref = db.ref(path);
-    const onValueChange = snapShot => emit(snapShot.val());
+    const onValueChange = snapshot => emit(snapshot.val());
 
     ref.on('value', onValueChange);
 
