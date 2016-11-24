@@ -21,14 +21,6 @@ class Exercises extends Component {
   componentWillMount() {
     const {dispatch} = this.props;
     dispatch(actions.requestExercises());
-
-    // load exercises page
-    // fetch system exercises
-    // fetch user exercises
-    // add new exercise
-    // delete new exercise
-
-    // fetch user exercises
   }
 
   getNameValidationState() {
@@ -47,11 +39,11 @@ class Exercises extends Component {
   }
 
   onNewExerciseSubmit(event) {
-    event.preventDefault();
+    const {dispatch} = this.props;
 
-    // create new exercise
-    // set set
-    console.log('test');
+    event.preventDefault();
+    dispatch(actions.createExercise(this.state.name));
+    this.setState({isModalVisible: false, name: ''});
   }
 
   renderModal() {
@@ -83,6 +75,7 @@ class Exercises extends Component {
             bsStyle="success"
             disabled={validationState !== 'success'}
             onClick={this.onNewExerciseSubmit}
+            block
           >
             Create
           </Button>

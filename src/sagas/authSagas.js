@@ -4,14 +4,7 @@ import {apply, call, take, put} from 'redux-saga/effects';
 import actions, {types} from '../actions';
 import {auth} from '../firebaseServices';
 
-export default function* watchAuth() {
-  while (true) {
-    yield take(types.REQUEST_SIGN_IN);
-    yield call(handleAuthFlow);
-  }
-}
-
-function* handleAuthFlow() {
+export function* handleAuthFlow() {
   const user = yield call(getAuthState);
   if (!user) {
     yield put(actions.touchAuth());
