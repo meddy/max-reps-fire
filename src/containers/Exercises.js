@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, FormGroup, FormControl, Modal, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
+
 import actions from '../actions';
 import {ExerciseList, LoadingIndicator} from '../components';
 
@@ -15,6 +16,7 @@ class Exercises extends Component {
 
     this.getNameValidationState = this.getNameValidationState.bind(this);
     this.onNewExerciseSubmit = this.onNewExerciseSubmit.bind(this);
+    this.onExerciseDeleteClick = this.onExerciseDeleteClick.bind(this);
   }
 
   componentWillMount() {
@@ -43,6 +45,10 @@ class Exercises extends Component {
     event.preventDefault();
     dispatch(actions.createExercise(this.state.name));
     this.setState({isModalVisible: false, name: ''});
+  }
+
+  onExerciseDeleteClick(exercise) {
+    console.log(exercise);
   }
 
   renderModal() {
@@ -97,14 +103,14 @@ class Exercises extends Component {
               className="pull-right"
               onClick={() => this.setState({isModalVisible: true})}
             >
-              <span className="glyphicon glyphicon-plus"/> Create
+              <span className="glyphicon glyphicon-plus" /> Create
             </Button>
           </div>
           <ExerciseList items={user}/>
         </Col>
         <Col lg={6} lgOffset={3}>
           <h4>System Defined</h4>
-          <ExerciseList items={system}/>
+          <ExerciseList items={system} onClickDelet={this.onExerciseDeleteClick} />
         </Col>
         {this.renderModal()}
       </Row>

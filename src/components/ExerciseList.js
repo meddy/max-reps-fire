@@ -10,7 +10,7 @@ export default function ExerciseList(props) {
         {onClickDelete && <Button
           bsStyle="danger"
           title="Delete Exercises"
-          onClick={props.onClickDelete}
+          onClick={() => props.onClickDelete(exercise)}
           className="pull-right"
         >
           <span className="glyphicon glyphicon-trash"/>
