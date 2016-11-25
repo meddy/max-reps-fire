@@ -15,8 +15,8 @@ class Exercises extends Component {
     };
 
     this.getNameValidationState = this.getNameValidationState.bind(this);
-    this.onNewExerciseSubmit = this.onNewExerciseSubmit.bind(this);
-    this.onExerciseDeleteClick = this.onExerciseDeleteClick.bind(this);
+    this.onSubmitNewExercise = this.onSubmitNewExercise.bind(this);
+    this.onClickExerciseDelete = this.onClickExerciseDelete.bind(this);
   }
 
   componentWillMount() {
@@ -39,7 +39,7 @@ class Exercises extends Component {
     return 'success';
   }
 
-  onNewExerciseSubmit(event) {
+  onSubmitNewExercise(event) {
     const {dispatch} = this.props;
 
     event.preventDefault();
@@ -47,8 +47,9 @@ class Exercises extends Component {
     this.setState({isModalVisible: false, name: ''});
   }
 
-  onExerciseDeleteClick(exercise) {
-    console.log(exercise);
+  onClickExerciseDelete(exercise) {
+    const {dispatch} = this.props;
+    dispatch(actions.deleteExercise(exercise));
   }
 
   renderModal() {
@@ -79,7 +80,7 @@ class Exercises extends Component {
             type="submit"
             bsStyle="success"
             disabled={validationState !== 'success'}
-            onClick={this.onNewExerciseSubmit}
+            onClick={this.onSubmitNewExercise}
             block
           >
             Create
@@ -106,11 +107,11 @@ class Exercises extends Component {
               <span className="glyphicon glyphicon-plus" /> Create
             </Button>
           </div>
-          <ExerciseList items={user}/>
+          <ExerciseList items={user} onClickDelete={this.onClickExerciseDelete} />
         </Col>
         <Col lg={6} lgOffset={3}>
           <h4>System Defined</h4>
-          <ExerciseList items={system} onClickDelet={this.onExerciseDeleteClick} />
+            <ExerciseList items={system} />
         </Col>
         {this.renderModal()}
       </Row>
@@ -119,6 +120,7 @@ class Exercises extends Component {
 }
 
 Exercises.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   system: PropTypes.arrayOf(PropTypes.string).isRequired,
   user: PropTypes.arrayOf(PropTypes.string).isRequired
 };

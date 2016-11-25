@@ -16,8 +16,9 @@ function waitForAuthCheck(store) {
       resolve();
     }
 
-    store.subscribe(() => {
+    const unsubscribe = store.subscribe(() => {
       if (store.getState().user.authChecked) {
+        unsubscribe();
         resolve();
       }
     });

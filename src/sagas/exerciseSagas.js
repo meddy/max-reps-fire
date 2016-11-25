@@ -26,6 +26,11 @@ export function* createExercise(action) {
   yield call(setExercise, uid, action.name);
 }
 
+export function* deleteExercise(action) {
+  const uid = yield select(getUid);
+  yield call(setExercise, uid, action.name, null);
+}
+
 function fetchSystemExercises() {
   return db
     .ref('/exercises')
@@ -48,7 +53,7 @@ function createDbValueChannel(path) {
   });
 }
 
-function setExercise(uid, name) {
+function setExercise(uid, name, value = name) {
   const path = paths.userExercises(uid) + '/' + name;
-  return db.ref(path).set(name);
+  return db.ref(path).set(value);
 }

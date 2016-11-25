@@ -1,5 +1,6 @@
 export const types = {
   CREATE_EXERCISE: 'CREATE_EXERCISE',
+  DELETE_EXERCISE: 'DELETE_EXERCISE',
   RECEIVE_EXERCISES: 'RECEIVE_EXERCISES',
   RECEIVE_SIGN_IN: 'RECEIVE_SIGN_IN',
   RECEIVE_SIGN_OUT: 'RECEIVE_SIGN_OUT',
@@ -11,6 +12,7 @@ export const types = {
 
 export default {
   createExercise: name => ({type: types.CREATE_EXERCISE, name}),
+  deleteExercise: name => ({type: types.DELETE_EXERCISE, name}),
   receiveExercises: (exercises, source) => ({type: types.RECEIVE_EXERCISES, exercises, source}),
   receiveSignIn: (name, uid) => ({type: types.RECEIVE_SIGN_IN, name, uid}),
   receiveSignOut: () => ({type: types.RECEIVE_SIGN_OUT}),

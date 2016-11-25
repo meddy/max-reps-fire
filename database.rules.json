@@ -12,7 +12,7 @@
             // user is authenticated and is owner of data
             // data is unique
             // data does not exist as a default exercise
-            ".write": "auth != null && auth.uid === $userId && newData.val() === $exerciseId && !root.child('exercises/' + newData.val()).exists()",
+            ".write": "auth != null && auth.uid === $userId && (!newData.exists() || (newData.val() === $exerciseId && !root.child('exercises/' + newData.val()).exists()))",
             ".validate": "newData.isString()"
           }
         },
