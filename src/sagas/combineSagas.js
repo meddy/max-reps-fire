@@ -2,16 +2,15 @@ import {takeEvery} from 'redux-saga';
 import {call, take} from 'redux-saga/effects';
 
 import {handleAuthFlow} from './authSagas';
-import {createExercise, deleteExercise, fetchExercises} from './exerciseSagas';
-import {createWorkoutTemplate} from './workoutTemplateSagas';
+import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
 import {types} from '../actions';
 
 export default function* combineSagas() {
   return yield [
     watchAuth(),
     watchExercises(),
-    watchCreateExercise(),
-    watchDeleteExercise()
+    watchAddExercise(),
+    watchRemoveExercise()
   ];
 }
 
@@ -26,14 +25,10 @@ function* watchExercises() {
   yield takeEvery(types.REQUEST_EXERCISES, fetchExercises);
 }
 
-function* watchCreateExercise() {
-  yield takeEvery(types.CREATE_EXERCISE, createExercise);
+function* watchAddExercise() {
+  yield takeEvery(types.ADD_EXERCISE, addExercise);
 }
 
-function* watchDeleteExercise() {
-  yield takeEvery(types.DELETE_EXERCISE, deleteExercise);
-}
-
-function* watchCreateWorkoutTemplate() {
-  yield takeEvery(types.CREATE_WORKOUT_TEMPLATE, createWorkoutTemplate);
+function* watchRemoveExercise() {
+  yield takeEvery(types.REMOVE_EXERCISE, removeExercise);
 }
