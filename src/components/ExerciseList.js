@@ -9,6 +9,7 @@ export default function ExerciseList(props) {
         <span className="pull-left">{exercise}</span>
         {onClickDelete && <Button
           bsStyle="danger"
+          bsSize="xsmall"
           title="Delete Exercises"
           onClick={() => props.onClickDelete(exercise)}
           className="pull-right"

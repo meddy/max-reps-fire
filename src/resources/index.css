@@ -16,6 +16,7 @@ label input[type="checkbox"] {
 }
 
 .select-action {
-  width: calc(100% - 45px);
+  width: calc(100% - 110px);
   display: inline-block;
+  margin-right: 10px;
 }

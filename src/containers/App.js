@@ -52,7 +52,8 @@ class App extends Component {
   }
 
   handleSignOut() {
-    this.props.dispatch(actions.requestSignOut());
+    const {dispatch} = this.props;
+    dispatch(actions.requestSignOut());
   }
 }
 

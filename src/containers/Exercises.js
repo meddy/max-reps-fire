@@ -104,7 +104,7 @@ class Exercises extends Component {
               className="pull-right"
               onClick={() => this.setState({isModalVisible: true})}
             >
-              <span className="glyphicon glyphicon-plus" /> Create
+              <span className="glyphicon glyphicon-plus" /> Exercise
             </Button>
           </div>
           <ExerciseList items={user} onClickDelete={this.onClickExerciseDelete} />
