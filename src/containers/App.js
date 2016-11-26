@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Grid, Navbar, Nav, NavItem} from 'react-bootstrap';
+import {Button, Grid, Nav, Navbar, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';

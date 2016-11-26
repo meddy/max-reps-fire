@@ -11,7 +11,8 @@ const auth = app.auth();
 const authProvider = new firebase.auth.GoogleAuthProvider();
 
 const paths = {
-  userExercises: uid => `/users/${uid}/exercises`
+  userExercises: uid => `/users/${uid}/exercises`,
+  workoutTemplates: uid => `/users/${uid}/workoutTemplates`
 };
 
 export {

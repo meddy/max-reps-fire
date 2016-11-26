@@ -3,6 +3,7 @@ import {call, fork, put, select, take} from 'redux-saga/effects';
 
 import actions from '../actions';
 import {db, paths} from '../firebaseServices';
+import {getUid} from '../selectors';
 
 export function* fetchExercises() {
   const exercises = yield call(fetchSystemExercises);
@@ -36,10 +37,6 @@ function fetchSystemExercises() {
     .ref('/exercises')
     .once('value')
     .then(snapshot => snapshot.val());
-}
-
-function getUid(state) {
-  return state.user.uid;
 }
 
 function createDbValueChannel(path) {

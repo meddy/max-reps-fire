@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
+import {connect} from 'react-redux';
 
 import {NewEntityModal} from '../components';
 
@@ -29,7 +29,11 @@ class Workouts extends Component {
       <Col lg={6} lgOffset={3}>
         <Row>
           <Col md={6}>
-            <FormControl componentClass="select" placeholder="Workout Template" className="select-action"/>
+            <FormControl
+              componentClass="select"
+              placeholder="Workout Template"
+              className="select-action"
+            />
             <Button bsStyle="primary" title="New Workout">
               <span className="glyphicon glyphicon-plus" /> Workout
             </Button>
@@ -55,4 +59,10 @@ class Workouts extends Component {
   }
 }
 
-export default Workouts;
+function mapStateToProps(state) {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps)(Workouts);

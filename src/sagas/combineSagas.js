@@ -3,6 +3,7 @@ import {call, take} from 'redux-saga/effects';
 
 import {handleAuthFlow} from './authSagas';
 import {createExercise, deleteExercise, fetchExercises} from './exerciseSagas';
+import {createWorkoutTemplate} from './workoutTemplateSagas';
 import {types} from '../actions';
 
 export default function* combineSagas() {
@@ -31,4 +32,8 @@ function* watchCreateExercise() {
 
 function* watchDeleteExercise() {
   yield takeEvery(types.DELETE_EXERCISE, deleteExercise);
+}
+
+function* watchCreateWorkoutTemplate() {
+  yield takeEvery(types.CREATE_WORKOUT_TEMPLATE, createWorkoutTemplate);
 }
