@@ -1,8 +1,29 @@
 import React, {Component} from 'react';
-import {Button, ButtonGroup, ButtonToolbar, Col, DropdownButton, FormControl, MenuItem, Row} from 'react-bootstrap';
+import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
+import {NewEntityModal} from '../components';
+
 class Workouts extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModalVisible: false
+    };
+
+    this.getNameValidationState = this.getNameValidationState.bind(this);
+    this.onSubmitNewWorkoutTemplate = this.onSubmitNewWorkoutTemplate.bind(this);
+  }
+
+  getNameValidationState() {
+    return 'success';
+  }
+
+  onSubmitNewWorkoutTemplate() {
+
+  }
+
   render() {
     return <Row>
       <Col lg={6} lgOffset={3}>
@@ -14,14 +35,22 @@ class Workouts extends Component {
             </Button>
           </Col>
           <Col md={6} className="text-right">
-            <LinkContainer to={{ pathname: '/workout-templates'}}>
-              <Button title="New Workout Template">
-                <span className="glyphicon glyphicon-plus" /> Template
-              </Button>
-            </LinkContainer>
+            <Button
+              title="New Workout Template"
+              onClick={() => this.setState({isModalVisible: true})}
+            >
+              <span className="glyphicon glyphicon-plus" /> Template
+            </Button>
           </Col>
         </Row>
       </Col>
+      <NewEntityModal
+        onHide={() => this.setState({isModalVisible: false})}
+        onSubmit={this.onSubmitNewWorkoutTemplate}
+        show={this.state.isModalVisible}
+        title="Add New Workout Template"
+        getValidationState={this.getNameValidationState}
+      />
     </Row>;
   }
 }

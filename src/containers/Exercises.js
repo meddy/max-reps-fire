@@ -1,17 +1,16 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Col, FormGroup, FormControl, Modal, Row} from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 import actions from '../actions';
-import {ExerciseList, LoadingIndicator} from '../components';
+import {ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
 
 class Exercises extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalVisible: false,
-      name: ''
+      isModalVisible: false
     };
 
     this.getNameValidationState = this.getNameValidationState.bind(this);
@@ -24,70 +23,29 @@ class Exercises extends Component {
     dispatch(actions.requestExercises());
   }
 
-  getNameValidationState() {
+  getNameValidationState(value) {
     const {user, system} = this.props;
-    const {name} = this.state;
 
-    if (!name.length) {
+    if (!value.length) {
       return;
     }
 
-    if (user.includes(name) || system.includes(name)) {
+    if (user.includes(value) || system.includes(value)) {
       return 'error';
     }
 
     return 'success';
   }
 
-  onSubmitNewExercise(event) {
+  onSubmitNewExercise(value) {
     const {dispatch} = this.props;
-
-    event.preventDefault();
-    dispatch(actions.createExercise(this.state.name));
-    this.setState({isModalVisible: false, name: ''});
+    dispatch(actions.createExercise(value));
+    this.setState({isModalVisible: false});
   }
 
   onClickExerciseDelete(exercise) {
     const {dispatch} = this.props;
     dispatch(actions.deleteExercise(exercise));
-  }
-
-  renderModal() {
-    const validationState = this.getNameValidationState();
-
-    return <Modal
-      show={this.state.isModalVisible}
-      onHide={() => this.setState({isModalVisible: false})}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>Add New Exercise</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form>
-          <FormGroup
-            controlId="formBasicText"
-            validationState={validationState}
-          >
-            <FormControl
-              type="text"
-              value={this.state.name}
-              placeholder="name"
-              onChange={e => this.setState({name: e.target.value})}
-            />
-            <FormControl.Feedback />
-          </FormGroup>
-          <Button
-            type="submit"
-            bsStyle="success"
-            disabled={validationState !== 'success'}
-            onClick={this.onSubmitNewExercise}
-            block
-          >
-            Create
-          </Button>
-        </form>
-      </Modal.Body>
-    </Modal>;
   }
 
   render() {
@@ -113,7 +71,13 @@ class Exercises extends Component {
           <h4>System Defined</h4>
             <ExerciseList items={system} />
         </Col>
-        {this.renderModal()}
+        <NewEntityModal
+          onHide={() => this.setState({isModalVisible: false})}
+          onSubmit={this.onSubmitNewExercise}
+          show={this.state.isModalVisible}
+          title="Add New Exercise"
+          getValidationState={this.getNameValidationState}
+        />
       </Row>
     </LoadingIndicator>;
   }
