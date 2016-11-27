@@ -6,14 +6,14 @@ import {createWatchPath, createAddItem, createRemoveItem} from '../helpers/sagaH
 
 const pathName = 'exercises';
 
-export const watchExercises = createWatchPath(pathName, receiveExercises, ['user']);
+export const channelExercises = createWatchPath(pathName, receiveExercises, ['user']);
 export const addExercise = createAddItem(pathName);
 export const removeExercise = createRemoveItem(pathName);
 
 export function* fetchExercises() {
   const exercises = yield call(fetchSystemExercises);
   yield put(receiveExercises(exercises, 'system'));
-  yield fork(watchExercises);
+  yield fork(channelExercises);
 }
 
 function fetchSystemExercises() {

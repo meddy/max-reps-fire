@@ -4,7 +4,7 @@ import {call, put, select, take} from 'redux-saga/effects';
 import {getUid} from '../selectors';
 import {db, paths} from '../firebaseServices';
 
-export function createWatchPath(pathName, receiveActionCreator, actionArgs) {
+export function createWatchPath(pathName, receiveActionCreator, actionArgs = []) {
   return function* () {
     const uid = yield select(getUid);
     const path = paths[pathName](uid);

@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Grid, Nav, Navbar, NavItem} from 'react-bootstrap';
+import {Button, Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 
-import {requestSignOut} from '../actionCreators';
+import {requestSignOut, requestWorkoutTemplates} from '../actionCreators';
 
 let DevTools = null;
 if (process.env.NODE_ENV === 'development') {
@@ -17,8 +17,13 @@ class App extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
+  componentWillMount() {
+    const {dispatch} = this.props;
+    dispatch(requestWorkoutTemplates());
+  }
+
   render() {
-    const {authenticated, children} = this.props;
+    const {authenticated, children, workoutTemplates} = this.props;
 
     return <div>
       <Navbar inverse fixedTop>
@@ -34,6 +39,11 @@ class App extends Component {
               <LinkContainer to="/workouts">
                 <NavItem>Workouts</NavItem>
               </LinkContainer>
+              <NavDropdown title="Workout Templates">
+                {workoutTemplates.map(workoutTemplate => {
+                  return <MenuItem>{workoutTemplate.name}</MenuItem>;
+                })}
+              </NavDropdown>
               <LinkContainer to="/exercises">
                 <NavItem>Exercises</NavItem>
               </LinkContainer>
@@ -58,12 +68,14 @@ class App extends Component {
 }
 
 App.propTypes = {
-  authenticated: PropTypes.bool.isRequired
+  authenticated: PropTypes.bool.isRequired,
+  workoutTemplates: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.user.authenticated
+    authenticated: state.user.authenticated,
+    workoutTemplates: Object.values(state.workoutTemplate)
   };
 }
 
