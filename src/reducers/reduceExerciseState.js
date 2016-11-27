@@ -1,4 +1,4 @@
-import {types} from '../actions';
+import {RECEIVE_EXERCISES} from '../actionTypes';
 
 const initialState = {
   user: {},
@@ -7,7 +7,7 @@ const initialState = {
 
 export default function reduceExerciseState(state = initialState, action) {
   switch (action.type) {
-    case types.RECEIVE_EXERCISES:
+    case RECEIVE_EXERCISES:
       return {
         ...state,
         [action.source]: action.exercises

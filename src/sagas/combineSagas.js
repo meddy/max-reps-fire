@@ -1,9 +1,15 @@
 import {takeEvery} from 'redux-saga';
 import {call, take} from 'redux-saga/effects';
 
+import {
+  ADD_EXERCISE,
+  REMOVE_EXERCISE,
+  REQUEST_EXERCISES,
+  REQUEST_SIGN_IN
+} from '../actionTypes';
+
 import {handleAuthFlow} from './authSagas';
 import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
-import {types} from '../actions';
 
 export default function* combineSagas() {
   return yield [
@@ -16,19 +22,19 @@ export default function* combineSagas() {
 
 function* watchAuth() {
   while (true) {
-    yield take(types.REQUEST_SIGN_IN);
+    yield take(REQUEST_SIGN_IN);
     yield call(handleAuthFlow);
   }
 }
 
 function* watchExercises() {
-  yield takeEvery(types.REQUEST_EXERCISES, fetchExercises);
+  yield takeEvery(REQUEST_EXERCISES, fetchExercises);
 }
 
 function* watchAddExercise() {
-  yield takeEvery(types.ADD_EXERCISE, addExercise);
+  yield takeEvery(ADD_EXERCISE, addExercise);
 }
 
 function* watchRemoveExercise() {
-  yield takeEvery(types.REMOVE_EXERCISE, removeExercise);
+  yield takeEvery(REMOVE_EXERCISE, removeExercise);
 }

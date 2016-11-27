@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
-import actions from '../actions';
+import {addExercise, requestExercises, removeExercise} from '../actionCreators';
 import {ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
 
 class Exercises extends Component {
@@ -20,7 +20,7 @@ class Exercises extends Component {
 
   componentWillMount() {
     const {dispatch} = this.props;
-    dispatch(actions.requestExercises());
+    dispatch(requestExercises());
   }
 
   getNameValidationState(value) {
@@ -39,13 +39,13 @@ class Exercises extends Component {
 
   onSubmitNewExercise(value) {
     const {dispatch} = this.props;
-    dispatch(actions.createExercise(value));
+    dispatch(addExercise(value));
     this.setState({isModalVisible: false});
   }
 
   onClickExerciseDelete(exercise) {
     const {dispatch} = this.props;
-    dispatch(actions.deleteExercise(exercise));
+    dispatch(removeExercise(exercise));
   }
 
   render() {

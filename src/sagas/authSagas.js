@@ -1,20 +1,21 @@
 import {browserHistory} from 'react-router';
 import {apply, call, take, put} from 'redux-saga/effects';
 
-import actions, {types} from '../actions';
+import {receiveSignIn, receiveSignOut, touchAuth} from '../actionCreators';
+import {REQUEST_SIGN_OUT} from '../actionTypes';
 import {auth} from '../firebaseServices';
 
 export function* handleAuthFlow() {
   const user = yield call(getAuthState);
   if (!user) {
-    yield put(actions.touchAuth());
+    yield put(touchAuth());
     return;
   }
 
-  yield put(actions.receiveSignIn(user.displayName, user.uid));
-  yield take(types.REQUEST_SIGN_OUT);
+  yield put(receiveSignIn(user.displayName, user.uid));
+  yield take(REQUEST_SIGN_OUT);
   yield apply(auth, auth.signOut);
-  yield put(actions.receiveSignOut());
+  yield put(receiveSignOut());
   yield call(browserHistory.replace, ['/']);
 }
 

@@ -5,7 +5,7 @@ import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import actions from './actions';
+import {requestSignIn} from './actionCreators';
 import {NoMatch} from './components';
 import {App, DevTools, Exercises, Home, Workouts} from './containers';
 import createRedirectToSignIn from './helpers/createRedirectToSignIn';
@@ -22,7 +22,7 @@ const store = createStore(combineReducers, {}, enhancer);
 const redirectToSignIn = createRedirectToSignIn(store);
 
 sagaMiddleware.run(composeSagas);
-store.dispatch(actions.requestSignIn());
+store.dispatch(requestSignIn());
 
 ReactDOM.render(
   <Provider store={store}>
