@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
+import {addWorkoutTemplate} from '../actionCreators';
 import {NewEntityModal} from '../components';
 
 class Workouts extends Component {
@@ -16,12 +17,21 @@ class Workouts extends Component {
     this.onSubmitNewWorkoutTemplate = this.onSubmitNewWorkoutTemplate.bind(this);
   }
 
-  getNameValidationState() {
-    return 'success';
+  getNameValidationState(value) {
+    const {workoutTemplateNames} = this.props;
+
+    if (!value.length) {
+      return;
+    }
+
+    return workoutTemplateNames.includes(value) ? 'error' : 'success';
   }
 
-  onSubmitNewWorkoutTemplate() {
+  onSubmitNewWorkoutTemplate(value) {
+    const {dispatch} = this.props;
 
+    dispatch(addWorkoutTemplate(value));
+    this.setState({isModalVisible: false});
   }
 
   render() {
@@ -61,8 +71,8 @@ class Workouts extends Component {
 
 function mapStateToProps(state) {
   return {
-
-  }
+    workoutTemplateNames: Object.keys(state.workoutTemplate)
+  };
 }
 
 export default connect(mapStateToProps)(Workouts);

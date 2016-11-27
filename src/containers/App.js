@@ -39,9 +39,11 @@ class App extends Component {
               <LinkContainer to="/workouts">
                 <NavItem>Workouts</NavItem>
               </LinkContainer>
-              <NavDropdown title="Workout Templates">
+              <NavDropdown title="Workout Templates" id="workout-template-dropdown">
                 {workoutTemplates.map(workoutTemplate => {
-                  return <MenuItem>{workoutTemplate.name}</MenuItem>;
+                  return <MenuItem key={workoutTemplate.name}>
+                    {workoutTemplate.name}
+                  </MenuItem>;
                 })}
               </NavDropdown>
               <LinkContainer to="/exercises">

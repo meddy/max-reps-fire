@@ -23,9 +23,6 @@
             ".write": "auth != null && auth.uid === $userId && newData.child('name').val() === $workoutTemplateId",
             "name": {
               ".validate": "newData.isString()"
-            },
-            "order": {
-              ".validate": "newData.isNumber()"
             }
           }
         },

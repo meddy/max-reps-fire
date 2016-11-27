@@ -8,11 +8,11 @@ export function addExercise(name) {
   };
 }
 
-export function addWorkoutTemplate(workoutTemplate) {
+export function addWorkoutTemplate(name) {
   return {
     type: types.ADD_WORKOUT_TEMPLATE,
-    key: workoutTemplate.name,
-    value: workoutTemplate
+    key: name,
+    value: {name}
   };
 }
 
