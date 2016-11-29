@@ -17,9 +17,14 @@ class App extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
-  componentWillMount() {
-    const {dispatch} = this.props;
-    dispatch(requestWorkoutTemplates());
+  componentWillUpdate(props) {
+    const {authenticated, workoutTemplates} = props;
+    // I think we want to change this to check if workoutTemplates were fetched in the event there
+    // are no workout templates, but that might not be strictly necessary
+    if (authenticated && !workoutTemplates.length) {
+      const {dispatch} = this.props;
+      dispatch(requestWorkoutTemplates());
+    }
   }
 
   render() {
@@ -41,9 +46,12 @@ class App extends Component {
               </LinkContainer>
               <NavDropdown title="Workout Templates" id="workout-template-dropdown">
                 {workoutTemplates.map(workoutTemplate => {
-                  return <MenuItem key={workoutTemplate.name}>
-                    {workoutTemplate.name}
-                  </MenuItem>;
+                  return <LinkContainer
+                    key={workoutTemplate.name}
+                    to={`/workout-template/${workoutTemplate.name}`}
+                  >
+                    <MenuItem>{workoutTemplate.name}</MenuItem>
+                  </LinkContainer>;
                 })}
               </NavDropdown>
               <LinkContainer to="/exercises">
@@ -75,6 +83,7 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
+  console.log('test3');
   return {
     authenticated: state.user.authenticated,
     workoutTemplates: Object.values(state.workoutTemplate)

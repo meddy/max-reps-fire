@@ -18,7 +18,7 @@ class Exercises extends Component {
     this.onClickExerciseDelete = this.onClickExerciseDelete.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const {dispatch} = this.props;
     dispatch(requestExercises());
   }

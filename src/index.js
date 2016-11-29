@@ -7,7 +7,14 @@ import createSagaMiddleware from 'redux-saga';
 
 import {requestSignIn} from './actionCreators';
 import {NoMatch} from './components';
-import {App, DevTools, Exercises, Home, Workouts} from './containers';
+import {
+  App,
+  DevTools,
+  Exercises,
+  Home,
+  Workouts,
+  WorkoutTemplate
+} from './containers';
 import createRedirectToSignIn from './helpers/createRedirectToSignIn';
 import combineReducers from './reducers/combineReducers';
 import composeSagas from './sagas/combineSagas';
@@ -28,10 +35,23 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
-        <Route path="workouts" component={Workouts} onEnter={redirectToSignIn}/>
-        <Route path="exercises" component={Exercises} onEnter={redirectToSignIn}/>
-        <Route path="*" component={NoMatch}/>
+        <IndexRoute component={Home} />
+        <Route
+          path="workouts"
+          component={Workouts}
+          onEnter={redirectToSignIn}
+        />
+        <Route
+          path="exercises"
+          component={Exercises}
+          onEnter={redirectToSignIn}
+        />
+        <Route
+          path="workout-template/:workoutTemplateKey"
+          component={WorkoutTemplate}
+          onEnter={redirectToSignIn}
+        />
+        <Route path="*" component={NoMatch} />
       </Route>
     </Router>
   </Provider>,
