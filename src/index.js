@@ -15,9 +15,11 @@ import {
   Workouts,
   WorkoutTemplate
 } from './containers';
-import createRedirectToSignIn from './helpers/createRedirectToSignIn';
+import createGuard from './helpers/createGaurd';
+import createStateCheck from './helpers/createStateCheck';
 import combineReducers from './reducers/combineReducers';
 import composeSagas from './sagas/combineSagas';
+import {getAuthReceived, getAuthenticated} from './selectors';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './resources/index.css';
@@ -26,10 +28,11 @@ import './firebaseServices';
 const sagaMiddleware = createSagaMiddleware();
 const enhancer = compose(applyMiddleware(sagaMiddleware), DevTools.instrument());
 const store = createStore(combineReducers, {}, enhancer);
-const redirectToSignIn = createRedirectToSignIn(store);
+
+const isAuthenticated = createStateCheck(requestSignIn, getAuthReceived, getAuthenticated);
+const guardAuth = createGuard(isAuthenticated, '/', store);
 
 sagaMiddleware.run(composeSagas);
-store.dispatch(requestSignIn());
 
 ReactDOM.render(
   <Provider store={store}>
@@ -39,17 +42,17 @@ ReactDOM.render(
         <Route
           path="workouts"
           component={Workouts}
-          onEnter={redirectToSignIn}
+          onEnter={guardAuth}
         />
         <Route
           path="exercises"
           component={Exercises}
-          onEnter={redirectToSignIn}
+          onEnter={guardAuth}
         />
         <Route
           path="workout-template/:workoutTemplateKey"
           component={WorkoutTemplate}
-          onEnter={redirectToSignIn}
+          onEnter={guardAuth}
         />
         <Route path="*" component={NoMatch} />
       </Route>

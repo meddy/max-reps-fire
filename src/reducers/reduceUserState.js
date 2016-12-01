@@ -1,7 +1,7 @@
 import {RECEIVE_SIGN_IN, RECEIVE_SIGN_OUT, TOUCH_AUTH} from '../actionTypes';
 
 const initialState = {
-  authChecked: false,
+  received: false,
   authenticated: false,
   name: null,
   uid: null
@@ -12,7 +12,7 @@ export default function reduceUserState(state = initialState, action) {
     case RECEIVE_SIGN_IN:
       return {
         ...state,
-        authChecked: true,
+        received: true,
         authenticated: true,
         name: action.name,
         uid: action.uid
@@ -29,7 +29,7 @@ export default function reduceUserState(state = initialState, action) {
     case TOUCH_AUTH:
       return {
         ...state,
-        authChecked: true
+        received: true
       };
 
     default:

@@ -18,10 +18,8 @@ class App extends Component {
   }
 
   componentWillUpdate(props) {
-    const {authenticated, workoutTemplates} = props;
-    // I think we want to change this to check if workoutTemplates were fetched in the event there
-    // are no workout templates, but that might not be strictly necessary
-    if (authenticated && !workoutTemplates.length) {
+    const {authenticated, workoutTemplatesReceived} = props;
+    if (authenticated && !workoutTemplatesReceived) {
       const {dispatch} = this.props;
       dispatch(requestWorkoutTemplates());
     }
@@ -83,10 +81,10 @@ App.propTypes = {
 };
 
 function mapStateToProps(state) {
-  console.log('test3');
   return {
     authenticated: state.user.authenticated,
-    workoutTemplates: Object.values(state.workoutTemplate)
+    workoutTemplatesReceived: state.workoutTemplate.received,
+    workoutTemplates: Object.values(state.workoutTemplate.data)
   };
 }
 

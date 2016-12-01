@@ -1,11 +1,17 @@
 import {RECEIVE_WORKOUT_TEMPLATES} from '../actionTypes';
 
-const initialState = {};
+const initialState = {
+  received: false,
+  data: {}
+};
 
 export default function reduceWorkoutTemplateState(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_WORKOUT_TEMPLATES:
-      return action.workoutTemplates;
+      return {
+        received: true,
+        data: action.workoutTemplates
+      };
 
     default:
       return state;
