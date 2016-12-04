@@ -1,7 +1,7 @@
 import {call, fork, put} from 'redux-saga/effects';
 
 import {receiveExercises} from '../actionCreators';
-import {db} from '../firebaseServices';
+import {db} from '../bootstrap/firebaseServices';
 import {createWatchPath, createAddItem, createRemoveItem} from '../helpers/sagaHelpers';
 
 const pathName = 'exercises';

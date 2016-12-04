@@ -3,8 +3,8 @@ import {Row, Well} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
 import {requestSignIn} from '../actionCreators';
+import {auth, authProvider} from '../bootstrap/firebaseServices';
 import {LoadingIndicator} from '../components';
-import {auth, authProvider} from '../firebaseServices';
 import signInImage from '../resources/google-sign-in.png';
 import '../resources/spinner.css';
 

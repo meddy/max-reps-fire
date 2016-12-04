@@ -3,7 +3,7 @@ import {apply, call, take, put} from 'redux-saga/effects';
 
 import {receiveSignIn, receiveSignOut, touchAuth} from '../actionCreators';
 import {REQUEST_SIGN_OUT} from '../actionTypes';
-import {auth} from '../firebaseServices';
+import {auth} from '../bootstrap/firebaseServices';
 
 export function* handleAuthFlow() {
   const user = yield call(getAuthState);

@@ -2,7 +2,7 @@ import {eventChannel} from 'redux-saga';
 import {call, put, select, take} from 'redux-saga/effects';
 
 import {getUid} from '../selectors';
-import {db, paths} from '../firebaseServices';
+import {db, paths} from '../bootstrap/firebaseServices';
 
 export function createWatchPath(pathName, receiveActionCreator, actionArgs = []) {
   return function* () {
