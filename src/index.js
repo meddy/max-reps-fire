@@ -5,7 +5,7 @@ import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {applyMiddleware, compose, createStore} from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
-import {requestSignIn} from './actionCreators';
+import {requestSignIn, requestWorkoutTemplates} from './actionCreators';
 import {NoMatch} from './components';
 import {
   App,
@@ -15,11 +15,19 @@ import {
   Workouts,
   WorkoutTemplate
 } from './containers';
-import createGuard from './helpers/createGaurd';
-import createStateCheck from './helpers/createStateCheck';
+import {
+  composeChecks,
+  createGuard,
+  createStateCheck
+} from './helpers/guardHelpers';
 import combineReducers from './reducers/combineReducers';
 import composeSagas from './sagas/combineSagas';
-import {getAuthReceived, getAuthenticated} from './selectors';
+import {
+  getAuthReceived,
+  getAuthenticated,
+  getWorkoutTemplatesReceived,
+  getWorkoutTemplate
+} from './selectors';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './resources/index.css';
@@ -30,6 +38,8 @@ const enhancer = compose(applyMiddleware(sagaMiddleware), DevTools.instrument())
 const store = createStore(combineReducers, {}, enhancer);
 
 const isAuthenticated = createStateCheck(requestSignIn, getAuthReceived, getAuthenticated);
+const workoutTemplateExists = createStateCheck(requestWorkoutTemplates, getWorkoutTemplatesReceived);
+
 const guardAuth = createGuard(isAuthenticated, '/', store);
 
 sagaMiddleware.run(composeSagas);
