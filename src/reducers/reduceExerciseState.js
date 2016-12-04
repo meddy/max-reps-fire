@@ -1,4 +1,4 @@
-import {RECEIVE_EXERCISES} from '../actionTypes';
+import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actionTypes';
 
 const initialState = {
   user: {},
@@ -12,6 +12,9 @@ export default function reduceExerciseState(state = initialState, action) {
         ...state,
         [action.source]: action.exercises
       };
+
+    case REQUEST_SIGN_OUT:
+      return initialState;
 
     default:
       return state;

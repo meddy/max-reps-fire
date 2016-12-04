@@ -1,4 +1,4 @@
-import {RECEIVE_WORKOUT_TEMPLATES} from '../actionTypes';
+import {RECEIVE_WORKOUT_TEMPLATES, RECEIVE_SIGN_OUT} from '../actionTypes';
 
 const initialState = {
   received: false,
@@ -12,6 +12,9 @@ export default function reduceWorkoutTemplateState(state = initialState, action)
         received: true,
         data: action.workoutTemplates
       };
+
+    case RECEIVE_SIGN_OUT:
+      return initialState;
 
     default:
       return state;
