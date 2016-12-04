@@ -14,8 +14,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(requestSignIn());
+    const {authenticated, dispatch} = this.props;
+    if (!authenticated) {
+      dispatch(requestSignIn());
+    }
   }
 
   render() {

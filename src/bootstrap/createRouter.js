@@ -7,7 +7,7 @@ import {
   requestWorkoutTemplates
 } from '../actionCreators';
 
-import {NoMatch} from '../components';
+import {NoMatch} from '../containers';
 
 import {
   App,
