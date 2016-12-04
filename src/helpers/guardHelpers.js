@@ -25,7 +25,7 @@ export function createStateCheck(createRequestAction, selectReady, selectCheck) 
         const state = store.getState();
         if (selectReady(state, params)) {
           unsubscribe();
-          resolve(selectCheck(state));
+          resolve(selectCheck(state, params));
         }
       });
     });
@@ -33,9 +33,10 @@ export function createStateCheck(createRequestAction, selectReady, selectCheck) 
 }
 
 export function composeChecks(checks) {
-  return store => {
-    return Promise
-      .all(checks.map(check => check(store)))
-      .then(results => results.every(value => value));
+  return (store, params) => {
+    return checks.reduce(
+      (promise, check) => promise.then(() => check(store, params)),
+      Promise.resolve()
+    );
   };
 }

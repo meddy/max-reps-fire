@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 
-import createRouter from './bootstrap/createRouter';
 import createStore from './bootstrap/createStore';
+import createRouter from './bootstrap/createRouter';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './resources/index.css';
