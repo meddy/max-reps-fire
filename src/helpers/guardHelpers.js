@@ -1,6 +1,6 @@
 export function createGuard(check, failRoutePath, store) {
   return (newRouteState, replace, cb) => {
-    check(store, newRouteState.params).then(result => {
+    check(store, newRouteState).then(result => {
       if (!result) {
         replace(failRoutePath);
       }
@@ -11,11 +11,11 @@ export function createGuard(check, failRoutePath, store) {
 }
 
 export function createStateCheck(createRequestAction, selectReady, selectCheck) {
-  return (store, params) => {
+  return (store, localState) => {
     return new Promise(resolve => {
       const state = store.getState();
-      if (selectReady(state, params)) {
-        resolve(selectCheck(state, params));
+      if (selectReady(state, localState)) {
+        resolve(selectCheck(state, localState));
         return;
       }
 
@@ -23,9 +23,9 @@ export function createStateCheck(createRequestAction, selectReady, selectCheck) 
 
       const unsubscribe = store.subscribe(() => {
         const state = store.getState();
-        if (selectReady(state, params)) {
+        if (selectReady(state, localState)) {
           unsubscribe();
-          resolve(selectCheck(state, params));
+          resolve(selectCheck(state, localState));
         }
       });
     });
@@ -33,9 +33,9 @@ export function createStateCheck(createRequestAction, selectReady, selectCheck) 
 }
 
 export function composeChecks(checks) {
-  return (store, params) => {
+  return (store, localState) => {
     return checks.reduce(
-      (promise, check) => promise.then(() => check(store, params)),
+      (promise, check) => promise.then(() => check(store, localState)),
       Promise.resolve()
     );
   };

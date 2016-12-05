@@ -32,6 +32,7 @@ class Workouts extends Component {
 
     dispatch(addWorkoutTemplate(value));
     this.setState({isModalVisible: false});
+
   }
 
   render() {

@@ -22,6 +22,12 @@ export function removeExercise(name) {
     key: name
   };
 }
+export function removeWorkoutTemplate(name) {
+  return {
+    type: types.REMOVE_WORKOUT_TEMPLATE,
+    key: name
+  };
+}
 
 export function receiveExercises(exercises, source) {
   return {type: types.RECEIVE_EXERCISES, exercises, source};

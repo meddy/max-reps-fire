@@ -12,8 +12,18 @@ import {
 } from '../actionTypes';
 
 import {handleAuthFlow} from './authSagas';
-import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
-import {addWorkoutTemplate, channelWorkoutTemplates, removeWorkoutTemplate} from './workoutTemplateSagas';
+
+import {
+  addExercise,
+  fetchExercises,
+  removeExercise
+} from './exerciseSagas';
+
+import {
+  addWorkoutTemplate,
+  channelWorkoutTemplates,
+  removeWorkoutTemplate
+} from './workoutTemplateSagas';
 
 export default function* combineSagas() {
   return yield [
