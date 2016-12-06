@@ -20,10 +20,14 @@ class App extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
   }
 
-  componentWillUpdate(props) {
-    const {authenticated, workoutTemplatesReceived} = props;
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(requestWorkoutTemplates());
+  }
+
+  componentDidUpdate() {
+    const {authenticated, dispatch, workoutTemplatesReceived} = this.props;
     if (authenticated && !workoutTemplatesReceived) {
-      const {dispatch} = this.props;
       dispatch(requestWorkoutTemplates());
     }
   }

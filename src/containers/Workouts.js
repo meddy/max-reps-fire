@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 
 import {addWorkoutTemplate} from '../actionCreators';
 import {NewEntityModal} from '../components';
@@ -29,10 +30,11 @@ class Workouts extends Component {
 
   onSubmitNewWorkoutTemplate(value) {
     const {dispatch} = this.props;
-
     dispatch(addWorkoutTemplate(value));
+
     this.setState({isModalVisible: false});
 
+    browserHistory.push(`/workout-template/${value}`);
   }
 
   render() {
