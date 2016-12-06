@@ -11,7 +11,7 @@ export function createWatchPath(pathName, receiveActionCreator, actionArgs = [])
     const valueChannel = yield call(createDbValueChannel, path);
 
     while (true) {
-      const data= yield take(valueChannel);
+      const data = yield take(valueChannel);
       yield put(receiveActionCreator.apply(null, [data, ...actionArgs]));
     }
   };
@@ -34,7 +34,7 @@ export function createRemoveItem(pathName) {
 function createDbValueChannel(path) {
   return eventChannel(emit => {
     const ref = db.ref(path);
-    const onValueChange = snapshot => emit(snapshot.val());
+    const onValueChange = snapshot => emit(snapshot.val() || {});
 
     ref.on('value', onValueChange);
 
