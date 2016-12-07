@@ -9,10 +9,10 @@ export default class NewEntityModal extends Component {
       value: ''
     };
 
-    this.onClick = this.onClick.bind(this);
+    this.onClickSubmit = this.onClickSubmit.bind(this);
   }
 
-  onClick(event) {
+  onClickSubmit(event) {
     const {onSubmit} = this.props;
 
     event.preventDefault();
@@ -49,7 +49,7 @@ export default class NewEntityModal extends Component {
             type="submit"
             bsStyle="success"
             disabled={validationState !== 'success'}
-            onClick={this.onClick}
+            onClick={this.onClickSubmit}
             block
           >
             Add

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Breadcrumb, Button, Col, Row} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
 
+import {ConfirmModal} from '../components';
 import {removeWorkoutTemplate} from '../actionCreators';
 import {getWorkoutTemplate} from '../selectors';
 
@@ -10,10 +11,14 @@ class WorkoutTemplate extends Component {
   constructor(props) {
     super(props);
 
-    this.onDeleteWorkoutTemplate = this.onDeleteWorkoutTemplate.bind(this);
+    this.state = {
+      isModalVisible: false
+    };
+
+    this.onConfirmDeleteWorkoutTemplate = this.onConfirmDeleteWorkoutTemplate.bind(this);
   }
 
-  onDeleteWorkoutTemplate() {
+  onConfirmDeleteWorkoutTemplate() {
     const {data, dispatch} = this.props;
     dispatch(removeWorkoutTemplate(data.name));
     browserHistory.goBack();
@@ -29,11 +34,17 @@ class WorkoutTemplate extends Component {
         <Button
           bsStyle="danger"
           title="Delete Workout Template"
-          onClick={this.onDeleteWorkoutTemplate}
+          onClick={() => this.setState({isModalVisible: true})}
         >
           <span className="glyphicon glyphicon-trash" /> Exercise
         </Button>
       </Col>
+      <ConfirmModal
+        onHide={() => this.setState({isModalVisible: false})}
+        onConfirm={this.onConfirmDeleteWorkoutTemplate}
+        show={this.state.isModalVisible}
+        title={`Delete ${data.name}?`}
+      />
     </Row>;
   }
 }
