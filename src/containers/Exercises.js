@@ -2,20 +2,30 @@ import React, {Component, PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 
-import {addExercise, requestExercises, removeExercise} from '../actionCreators';
-import {ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
+import {
+  addExercise,
+  requestExercises,
+  removeExercise
+} from '../actionCreators';
+
+import {
+  ConfirmModal,
+  ExerciseList,
+  LoadingIndicator,
+  NewEntityModal
+} from '../components';
 
 class Exercises extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalVisible: false
+      newExerciseVisible: false,
+      deleteExercise: {
+        visible: false,
+        name: null
+      }
     };
-
-    this.getNameValidationState = this.getNameValidationState.bind(this);
-    this.onSubmitNewExercise = this.onSubmitNewExercise.bind(this);
-    this.onClickExerciseDelete = this.onClickExerciseDelete.bind(this);
   }
 
   componentDidMount() {
@@ -23,7 +33,47 @@ class Exercises extends Component {
     dispatch(requestExercises());
   }
 
-  getNameValidationState(value) {
+  showNewExercise = () => {
+    this.setState({newExerciseVisible: true});
+  };
+
+  hideNewExercise = () => {
+    this.setState({newExerciseVisible: false});
+  };
+
+  showDeleteExercise = name => {
+    this.setState({
+      deleteExercise: {
+        visible: true,
+        name
+      }
+    });
+  };
+
+  hideDeleteExercise = () => {
+    this.setState({
+      deleteExercise: {
+        visible: false,
+        title: null
+      }
+    });
+  };
+
+  onSubmitNewExercise = value => {
+    const {dispatch} = this.props;
+    dispatch(addExercise(value));
+
+    this.hideNewExercise();
+  };
+
+  onConfirmDeleteExercise = () => {
+    const {dispatch} = this.props;
+    dispatch(removeExercise(this.state.deleteExercise.name));
+
+    this.hideDeleteExercise();
+  };
+
+  getNameValidationState = value => {
     const {user, system} = this.props;
 
     if (!value.length) {
@@ -35,18 +85,7 @@ class Exercises extends Component {
     }
 
     return 'success';
-  }
-
-  onSubmitNewExercise(value) {
-    const {dispatch} = this.props;
-    dispatch(addExercise(value));
-    this.setState({isModalVisible: false});
-  }
-
-  onClickExerciseDelete(exercise) {
-    const {dispatch} = this.props;
-    dispatch(removeExercise(exercise));
-  }
+  };
 
   render() {
     const {system, user} = this.props;
@@ -60,23 +99,29 @@ class Exercises extends Component {
               bsStyle="success"
               title="New Workout"
               className="pull-right"
-              onClick={() => this.setState({isModalVisible: true})}
+              onClick={this.showNewExercise}
             >
               <span className="glyphicon glyphicon-plus" /> Exercise
             </Button>
           </div>
-          <ExerciseList items={user} onClickDelete={this.onClickExerciseDelete} />
+          <ExerciseList items={user} onClickDelete={this.showDeleteExercise} />
         </Col>
         <Col lg={6} lgOffset={3}>
           <h4>System Defined</h4>
             <ExerciseList items={system} />
         </Col>
         <NewEntityModal
-          onHide={() => this.setState({isModalVisible: false})}
+          onHide={this.hideNewExercise}
           onSubmit={this.onSubmitNewExercise}
-          show={this.state.isModalVisible}
+          show={this.state.newExerciseVisible}
           title="Add New Exercise"
           getValidationState={this.getNameValidationState}
+        />
+        <ConfirmModal
+          onHide={this.hideDeleteExercise}
+          onConfirm={this.onConfirmDeleteExercise}
+          show={this.state.deleteExercise.visible}
+          title={`Delete ${this.state.deleteExercise.name}?`}
         />
       </Row>
     </LoadingIndicator>;

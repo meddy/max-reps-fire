@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {Button, ButtonToolbar, Modal} from 'react-bootstrap';
 
 export default function ConfirmModal(props) {
-  const {description, onConfirm, onHide, show, title} = props;
+  const {onConfirm, onHide, show, title} = props;
 
   return <Modal
     show={show}
