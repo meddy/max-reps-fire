@@ -12,17 +12,23 @@ class WorkoutTemplate extends Component {
     super(props);
 
     this.state = {
-      isModalVisible: false
+      deleteWorkoutTemplateVisible: false
     };
-
-    this.onConfirmDeleteWorkoutTemplate = this.onConfirmDeleteWorkoutTemplate.bind(this);
   }
 
-  onConfirmDeleteWorkoutTemplate() {
+  showNewWorkoutTemplate = () =>{
+    this.setState({deleteWorkoutTemplateVisible: true});
+  };
+
+  hideNewWorkoutTemplate = () => {
+    this.setState({deleteWorkoutTemplateVisible: false});
+  };
+
+  onConfirmDeleteWorkoutTemplate = () => {
     const {data, dispatch} = this.props;
     dispatch(removeWorkoutTemplate(data.name));
     browserHistory.goBack();
-  }
+  };
 
   render() {
     const {data} = this.props;
@@ -34,15 +40,15 @@ class WorkoutTemplate extends Component {
         <Button
           bsStyle="danger"
           title="Delete Workout Template"
-          onClick={() => this.setState({isModalVisible: true})}
+          onClick={this.showNewWorkoutTemplate}
         >
           <span className="glyphicon glyphicon-trash" /> Exercise
         </Button>
       </Col>
       <ConfirmModal
-        onHide={() => this.setState({isModalVisible: false})}
+        onHide={this.hideNewWorkoutTemplate}
         onConfirm={this.onConfirmDeleteWorkoutTemplate}
-        show={this.state.isModalVisible}
+        show={this.state.deleteWorkoutTemplateVisible}
         title={`Delete ${data.name}?`}
       />
     </Row>;

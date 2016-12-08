@@ -11,14 +11,28 @@ class Workouts extends Component {
     super(props);
 
     this.state = {
-      isModalVisible: false
+      newWorkoutTemplateVisible: false
     };
-
-    this.getNameValidationState = this.getNameValidationState.bind(this);
-    this.onSubmitNewWorkoutTemplate = this.onSubmitNewWorkoutTemplate.bind(this);
   }
 
-  getNameValidationState(value) {
+  showNewWorkoutTemplate = () => {
+    this.setState({newWorkoutTemplateVisible: true});
+  };
+
+  hideNewWorkoutTemplate = () => {
+    this.setState({newWorkoutTemplateVisible: false});
+  };
+
+  onSubmitNewWorkoutTemplate = value => {
+    const {dispatch} = this.props;
+    dispatch(addWorkoutTemplate(value));
+
+    this.setState({newWorkoutTemplateVisible: false});
+
+    browserHistory.push(`/workout-template/${value}`);
+  };
+
+  getNameValidationState = (value) => {
     const {workoutTemplateNames} = this.props;
 
     if (!value.length) {
@@ -26,16 +40,7 @@ class Workouts extends Component {
     }
 
     return workoutTemplateNames.includes(value) ? 'error' : 'success';
-  }
-
-  onSubmitNewWorkoutTemplate(value) {
-    const {dispatch} = this.props;
-    dispatch(addWorkoutTemplate(value));
-
-    this.setState({isModalVisible: false});
-
-    browserHistory.push(`/workout-template/${value}`);
-  }
+  };
 
   render() {
     return <Row>
@@ -54,7 +59,7 @@ class Workouts extends Component {
           <Col md={6} className="text-right">
             <Button
               title="New Workout Template"
-              onClick={() => this.setState({isModalVisible: true})}
+              onClick={this.showNewWorkoutTemplate}
             >
               <span className="glyphicon glyphicon-plus" /> Template
             </Button>
@@ -62,9 +67,9 @@ class Workouts extends Component {
         </Row>
       </Col>
       <NewEntityModal
-        onHide={() => this.setState({isModalVisible: false})}
+        onHide={this.hideNewWorkoutTemplate}
         onSubmit={this.onSubmitNewWorkoutTemplate}
-        show={this.state.isModalVisible}
+        show={this.state.newWorkoutTemplateVisible}
         title="Add New Workout Template"
         getValidationState={this.getNameValidationState}
       />
