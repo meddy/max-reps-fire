@@ -25,7 +25,7 @@ class Home extends Component {
       <Well>Max Reps Fire is a weight lifting log app.</Well>
       <LoadingIndicator loading={!authReceived}>
         {!authenticated && <a onClick={Home.handleSignInWithGoogle} style={{cursor: 'pointer'}}>
-          <img src={signInImage} alt="Google Sign In"/>
+          <img src={signInImage} alt="Google Sign In" />
         </a>}
       </LoadingIndicator>
     </Row>;

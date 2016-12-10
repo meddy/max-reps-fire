@@ -14,7 +14,7 @@ export default function ExerciseList(props) {
           onClick={() => props.onClickDelete(exercise)}
           className="pull-right"
         >
-          <span className="glyphicon glyphicon-trash"/>
+          <span className="glyphicon glyphicon-trash" />
         </Button>}
       </ListGroupItem>;
     })}

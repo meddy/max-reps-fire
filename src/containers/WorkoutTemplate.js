@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
-import {Breadcrumb, Button, Col, Row} from 'react-bootstrap';
+import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
 import {ConfirmModal} from '../components';
 import {removeWorkoutTemplate} from '../actionCreators';
@@ -36,13 +36,25 @@ class WorkoutTemplate extends Component {
         <Breadcrumb>
           <Breadcrumb.Item active>{data.name}</Breadcrumb.Item>
         </Breadcrumb>
-        <Button
-          bsStyle="danger"
-          title="Delete Workout Template"
-          onClick={this.showNewWorkoutTemplate}
-        >
-          <span className="glyphicon glyphicon-trash"/> Exercise
-        </Button>
+        <ButtonToolbar>
+          <ButtonGroup>
+            <Button>
+              <span className="glyphicon glyphicon-plus" /> Workout
+            </Button>
+            <Button>
+              <span className="glyphicon glyphicon-edit" /> Template
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button
+              bsStyle="danger"
+              title="Delete Workout Template"
+              onClick={this.showNewWorkoutTemplate}
+            >
+              <span className="glyphicon glyphicon-trash" /> Template
+            </Button>
+          </ButtonGroup>
+        </ButtonToolbar>
       </Col>
       <ConfirmModal
         onHide={this.hideNewWorkoutTemplate}

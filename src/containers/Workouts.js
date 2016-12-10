@@ -52,7 +52,7 @@ class Workouts extends Component {
               className="select-action"
             />
             <Button bsStyle="primary" title="New Workout">
-              <span className="glyphicon glyphicon-plus"/> Workout
+              <span className="glyphicon glyphicon-plus" /> Workout
             </Button>
           </Col>
           <Col md={6} className="text-right">
@@ -60,7 +60,7 @@ class Workouts extends Component {
               title="New Workout Template"
               onClick={this.showNewWorkoutTemplate}
             >
-              <span className="glyphicon glyphicon-plus"/> Template
+              <span className="glyphicon glyphicon-plus" /> Template
             </Button>
           </Col>
         </Row>

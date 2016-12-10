@@ -81,14 +81,14 @@ class App extends Component {
             <Navbar.Brand>
               <Link to="/">Max Reps Fire</Link>
             </Navbar.Brand>
-            <Navbar.Toggle/>
+            <Navbar.Toggle />
           </Navbar.Header>
           {this.renderNavbar()}
         </div>
       </Navbar>
       <Grid className="container theme-showcase">
         {children}
-        {DevTools && <DevTools/>}
+        {DevTools && <DevTools />}
       </Grid>
     </div>;
   }

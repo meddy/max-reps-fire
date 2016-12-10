@@ -90,14 +90,14 @@ class Exercises extends Component {
               className="pull-right"
               onClick={this.showNewExercise}
             >
-              <span className="glyphicon glyphicon-plus"/> Exercise
+              <span className="glyphicon glyphicon-plus" /> Exercise
             </Button>
           </div>
-          <ExerciseList items={user} onClickDelete={this.showDeleteExercise}/>
+          <ExerciseList items={user} onClickDelete={this.showDeleteExercise} />
         </Col>
         <Col lg={6} lgOffset={3}>
           <h4>System Defined</h4>
-          <ExerciseList items={system}/>
+          <ExerciseList items={system} />
         </Col>
         <NewEntityModal
           onHide={this.hideNewExercise}
