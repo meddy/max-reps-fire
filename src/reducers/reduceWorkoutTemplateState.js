@@ -1,7 +1,4 @@
-import {
-  RECEIVE_WORKOUT_TEMPLATES,
-  RECEIVE_SIGN_OUT
-} from '../actionTypes';
+import {RECEIVE_WORKOUT_TEMPLATES, RECEIVE_SIGN_OUT} from '../actionTypes';
 
 const initialState = {
   data: {},

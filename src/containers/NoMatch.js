@@ -1,7 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-
 import {requestSignIn} from '../actionCreators';
 
 class NoMatch extends Component {

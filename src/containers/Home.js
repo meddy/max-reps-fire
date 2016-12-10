@@ -1,12 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import {Row, Well} from 'react-bootstrap';
 import {connect} from 'react-redux';
-
 import {requestSignIn} from '../actionCreators';
 import {auth, authProvider} from '../bootstrap/firebaseServices';
 import {LoadingIndicator} from '../components';
 import signInImage from '../resources/google-sign-in.png';
-
 import '../resources/spinner.css';
 
 class Home extends Component {
@@ -23,7 +21,6 @@ class Home extends Component {
 
   render() {
     const {authenticated, authReceived} = this.props;
-
     return <Row>
       <Well>Max Reps Fire is a weight lifting log app.</Well>
       <LoadingIndicator loading={!authReceived}>

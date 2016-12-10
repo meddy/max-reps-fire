@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {Breadcrumb, Button, Col, Row} from 'react-bootstrap';
 import {browserHistory} from 'react-router';
-
 import {ConfirmModal} from '../components';
 import {removeWorkoutTemplate} from '../actionCreators';
 import {getWorkoutTemplate} from '../selectors';
@@ -16,7 +15,7 @@ class WorkoutTemplate extends Component {
     };
   }
 
-  showNewWorkoutTemplate = () =>{
+  showNewWorkoutTemplate = () => {
     this.setState({deleteWorkoutTemplateVisible: true});
   };
 
@@ -33,7 +32,7 @@ class WorkoutTemplate extends Component {
   render() {
     const {data} = this.props;
     return <Row>
-      <Col lg={6} lgOffset={3}>
+      <Col lg={8} lgOffset={2}>
         <Breadcrumb>
           <Breadcrumb.Item active>{data.name}</Breadcrumb.Item>
         </Breadcrumb>
@@ -42,7 +41,7 @@ class WorkoutTemplate extends Component {
           title="Delete Workout Template"
           onClick={this.showNewWorkoutTemplate}
         >
-          <span className="glyphicon glyphicon-trash" /> Exercise
+          <span className="glyphicon glyphicon-trash"/> Exercise
         </Button>
       </Col>
       <ConfirmModal

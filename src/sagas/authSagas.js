@@ -1,6 +1,5 @@
 import {browserHistory} from 'react-router';
 import {apply, call, take, put} from 'redux-saga/effects';
-
 import {receiveSignIn, receiveSignOut, touchAuth} from '../actionCreators';
 import {REQUEST_SIGN_OUT} from '../actionTypes';
 import {auth} from '../bootstrap/firebaseServices';

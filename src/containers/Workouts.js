@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-
 import {addWorkoutTemplate} from '../actionCreators';
 import {NewEntityModal} from '../components';
 
@@ -44,7 +43,7 @@ class Workouts extends Component {
 
   render() {
     return <Row>
-      <Col lg={6} lgOffset={3}>
+      <Col lg={8} lgOffset={2}>
         <Row>
           <Col md={6}>
             <FormControl
@@ -53,7 +52,7 @@ class Workouts extends Component {
               className="select-action"
             />
             <Button bsStyle="primary" title="New Workout">
-              <span className="glyphicon glyphicon-plus" /> Workout
+              <span className="glyphicon glyphicon-plus"/> Workout
             </Button>
           </Col>
           <Col md={6} className="text-right">
@@ -61,7 +60,7 @@ class Workouts extends Component {
               title="New Workout Template"
               onClick={this.showNewWorkoutTemplate}
             >
-              <span className="glyphicon glyphicon-plus" /> Template
+              <span className="glyphicon glyphicon-plus"/> Template
             </Button>
           </Col>
         </Row>
