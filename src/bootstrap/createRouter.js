@@ -2,7 +2,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {requestSignIn, requestWorkoutTemplates} from '../actionCreators';
-import {NoMatch, App, Exercises, Home, Workouts, WorkoutTemplate} from '../containers';
+import {NoMatch, App, Exercises, Home, Workouts, WorkoutTemplate, WorkoutTemplateEdit} from '../containers';
 import {composeChecks, createGuard, createStateCheck} from '../helpers/guardHelpers';
 import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../selectors';
 
@@ -51,6 +51,11 @@ export default function createRouter(store) {
         <Route
           path="workout-template/:workoutTemplateKey"
           component={WorkoutTemplate}
+          onEnter={guardWorkoutTemplate}
+        />
+        <Route
+          path="workout-template/:workoutTemplateKey/edit"
+          component={WorkoutTemplateEdit}
           onEnter={guardWorkoutTemplate}
         />
         <Route path="*" component={NoMatch}/>

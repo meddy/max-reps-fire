@@ -1,7 +1,8 @@
 import React, {Component, PropTypes} from 'react';
-import {connect} from 'react-redux';
 import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Row} from 'react-bootstrap';
+import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
+import {LinkContainer} from 'react-router-bootstrap';
 import {ConfirmModal} from '../components';
 import {removeWorkoutTemplate} from '../actionCreators';
 import {getWorkoutTemplate} from '../selectors';
@@ -24,28 +25,30 @@ class WorkoutTemplate extends Component {
   };
 
   onConfirmDeleteWorkoutTemplate = () => {
-    const {data, dispatch} = this.props;
-    dispatch(removeWorkoutTemplate(data.name));
+    const {name, dispatch} = this.props;
+    dispatch(removeWorkoutTemplate(name));
     browserHistory.goBack();
   };
 
   render() {
-    const {data} = this.props;
+    const {name} = this.props;
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Breadcrumb>
-          <Breadcrumb.Item active>{data.name}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{name}</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonToolbar>
           <ButtonGroup>
             <Button bsStyle="primary" title="Add Workout">
               <span className="glyphicon glyphicon-plus" /> Workout
             </Button>
-            <Button title="Edit Workout Template">
-              <span className="glyphicon glyphicon-edit" /> Template
-            </Button>
           </ButtonGroup>
           <ButtonGroup>
+            <LinkContainer to={`/workout-template/${name}/edit`}>
+              <Button title="Edit Workout Template">
+                <span className="glyphicon glyphicon-edit" /> Template
+              </Button>
+            </LinkContainer>
             <Button
               bsStyle="danger"
               title="Delete Workout Template"
@@ -60,24 +63,19 @@ class WorkoutTemplate extends Component {
         onHide={this.hideNewWorkoutTemplate}
         onConfirm={this.onConfirmDeleteWorkoutTemplate}
         show={this.state.deleteWorkoutTemplateVisible}
-        title={`Delete ${data.name}?`}
+        title={`Delete ${name}?`}
       />
     </Row>;
   }
 }
 
 WorkoutTemplate.propTypes = {
-  data: PropTypes.object
-};
-
-WorkoutTemplate.defaultProps = {
-  data: {}
+  name: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state, props) {
-  return {
-    data: getWorkoutTemplate(state, props)
-  };
+  const {name} = getWorkoutTemplate(state, props);
+  return {name};
 }
 
 export default connect(mapStateToProps)(WorkoutTemplate);

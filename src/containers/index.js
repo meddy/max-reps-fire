@@ -5,6 +5,7 @@ import Home from './Home';
 import NoMatch from './NoMatch';
 import Workouts from './Workouts';
 import WorkoutTemplate from './WorkoutTemplate';
+import WorkoutTemplateEdit from './WorkoutTemplateEdit';
 
 export {
   App,
@@ -13,5 +14,6 @@ export {
   Home,
   NoMatch,
   Workouts,
-  WorkoutTemplate
+  WorkoutTemplate,
+  WorkoutTemplateEdit
 }
