@@ -45,7 +45,15 @@ class Workouts extends Component {
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Row>
-          <Col md={6}>
+          <Col sm={6}>
+            <Button
+              title="New Workout Template"
+              onClick={this.showNewWorkoutTemplate}
+            >
+              <span className="glyphicon glyphicon-plus" /> Template
+            </Button>
+          </Col>
+          <Col sm={6}>
             <FormControl
               componentClass="select"
               placeholder="Workout Template"
@@ -53,14 +61,6 @@ class Workouts extends Component {
             />
             <Button bsStyle="primary" title="New Workout">
               <span className="glyphicon glyphicon-plus" /> Workout
-            </Button>
-          </Col>
-          <Col md={6} className="text-right">
-            <Button
-              title="New Workout Template"
-              onClick={this.showNewWorkoutTemplate}
-            >
-              <span className="glyphicon glyphicon-plus" /> Template
             </Button>
           </Col>
         </Row>

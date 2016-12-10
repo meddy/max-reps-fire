@@ -38,10 +38,10 @@ class WorkoutTemplate extends Component {
         </Breadcrumb>
         <ButtonToolbar>
           <ButtonGroup>
-            <Button>
+            <Button bsStyle="primary" title="Add Workout">
               <span className="glyphicon glyphicon-plus" /> Workout
             </Button>
-            <Button>
+            <Button title="Edit Workout Template">
               <span className="glyphicon glyphicon-edit" /> Template
             </Button>
           </ButtonGroup>
