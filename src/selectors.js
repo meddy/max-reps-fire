@@ -6,3 +6,11 @@ export const getWorkoutTemplate = (state, props) => {
   const {workoutTemplateKey} = props.params;
   return state.workoutTemplate.data[workoutTemplateKey];
 };
+
+export const getSelectExercises = state => {
+  return Object
+    .keys(state.exercise.system)
+    .concat(Object.keys(state.exercise.user))
+    .sort()
+    .map(exercise => ({value: exercise, label: exercise}));
+};
