@@ -5,17 +5,13 @@ import {addExercise, requestExercises, removeExercise} from '../actionCreators';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
 
 class Exercises extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      newExerciseVisible: false,
-      deleteExercise: {
-        visible: false,
-        name: null
-      }
-    };
-  }
+  state = {
+    newExerciseVisible: false,
+    deleteExercise: {
+      visible: false,
+      name: null
+    }
+  };
 
   componentDidMount() {
     const {dispatch} = this.props;

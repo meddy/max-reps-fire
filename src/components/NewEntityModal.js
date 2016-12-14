@@ -2,23 +2,17 @@ import React, {Component, PropTypes} from 'react';
 import {Button, FormControl, FormGroup, Modal} from 'react-bootstrap';
 
 export default class NewEntityModal extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    value: ''
+  };
 
-    this.state = {
-      value: ''
-    };
-
-    this.onClickSubmit = this.onClickSubmit.bind(this);
-  }
-
-  onClickSubmit(event) {
+  onClickSubmit = (event) => {
     const {onSubmit} = this.props;
 
     event.preventDefault();
     onSubmit(this.state.value);
     this.setState({value: ''});
-  }
+  };
 
   render() {
     const {onHide, show, title, getValidationState} = this.props;

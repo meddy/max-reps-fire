@@ -4,25 +4,22 @@ import Select from 'react-select';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 
 export default class NewExerciseTemplateModal extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    exercise: '',
+    reps: {
+      min: '',
+      max: ''
+    },
+    sets: {
+      min: '',
+      max: ''
+    },
+    rest: {
+      min: '',
+      max: ''
+    }
+  };
 
-    this.state = {
-      exercise: '',
-      reps: {
-        min: '',
-        max: ''
-      },
-      sets: {
-        min: '',
-        max: ''
-      },
-      rest: {
-        min: '',
-        max: ''
-      }
-    };
-  }
   render() {
     const {exercises, onHide, show, title} = this.props;
 

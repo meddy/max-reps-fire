@@ -4,15 +4,12 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import {addWorkoutTemplate} from '../actionCreators';
 import {NewEntityModal} from '../components';
+import {getWorkoutTemplateNames} from '../selectors';
 
 class Workouts extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      newWorkoutTemplateVisible: false
-    };
-  }
+  state = {
+    newWorkoutTemplateVisible: false
+  };
 
   showNewWorkoutTemplate = () => {
     this.setState({newWorkoutTemplateVisible: true});
@@ -78,7 +75,7 @@ class Workouts extends Component {
 
 function mapStateToProps(state) {
   return {
-    workoutTemplateNames: Object.keys(state.workoutTemplate.data)
+    workoutTemplateNames: getWorkoutTemplateNames(state)
   };
 }
 

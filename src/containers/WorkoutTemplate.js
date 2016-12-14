@@ -8,13 +8,11 @@ import {removeWorkoutTemplate} from '../actionCreators';
 import {getWorkoutTemplate} from '../selectors';
 
 class WorkoutTemplate extends Component {
-  constructor(props) {
-    super(props);
+  removeOnUnmount = false;
 
-    this.state = {
-      deleteWorkoutTemplateVisible: false
-    };
-  }
+  state = {
+    deleteWorkoutTemplateVisible: false
+  };
 
   showNewWorkoutTemplate = () => {
     this.setState({deleteWorkoutTemplateVisible: true});
@@ -25,10 +23,16 @@ class WorkoutTemplate extends Component {
   };
 
   onConfirmDeleteWorkoutTemplate = () => {
-    const {name, dispatch} = this.props;
-    dispatch(removeWorkoutTemplate(name));
     browserHistory.goBack();
+    this.removeOnUnmount = true;
   };
+
+  componentWillUnmount() {
+    const {name, dispatch} = this.props;
+    if (this.removeOnUnmount) {
+      dispatch(removeWorkoutTemplate(name));
+    }
+  }
 
   render() {
     const {name} = this.props;

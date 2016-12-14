@@ -11,14 +11,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.renderNavbar = this.renderNavbar.bind(this);
-    this.renderWorkoutTemplateMenu = this.renderWorkoutTemplateMenu.bind(this);
-    this.handleSignOut = this.handleSignOut.bind(this);
-  }
-
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(requestWorkoutTemplates());
@@ -31,12 +23,12 @@ class App extends Component {
     }
   }
 
-  handleSignOut() {
+  handleSignOut = () => {
     const {dispatch} = this.props;
     dispatch(requestSignOut());
-  }
+  };
 
-  renderNavbar() {
+  renderNavbar = () => {
     const {authenticated} = this.props;
     if (!authenticated) {
       return null;
@@ -58,9 +50,9 @@ class App extends Component {
         <Button type="button" onClick={this.handleSignOut}>Sign Out</Button>
       </Navbar.Form>
     </Navbar.Collapse>;
-  }
+  };
 
-  renderWorkoutTemplateMenu() {
+  renderWorkoutTemplateMenu = () => {
     const {workoutTemplates} = this.props;
     return workoutTemplates.map(workoutTemplate => {
       return <LinkContainer
@@ -70,7 +62,7 @@ class App extends Component {
         <MenuItem>{workoutTemplate.name}</MenuItem>
       </LinkContainer>;
     });
-  }
+  };
 
   render() {
     const {children} = this.props;

@@ -7,16 +7,12 @@ import {LoadingIndicator, NewExerciseTemplateModal} from '../components';
 import {getSelectExercises, getWorkoutTemplate} from '../selectors';
 
 class WorkoutTemplateEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      exerciseTemplate: {
-        title: null,
-        visible: false
-      }
-    };
-  }
+  state = {
+    exerciseTemplate: {
+      title: null,
+      visible: false
+    }
+  };
 
   componentDidMount() {
     const {dispatch} = this.props;
