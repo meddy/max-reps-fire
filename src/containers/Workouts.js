@@ -78,7 +78,7 @@ class Workouts extends Component {
 
 function mapStateToProps(state) {
   return {
-    workoutTemplateNames: Object.keys(state.workoutTemplate)
+    workoutTemplateNames: Object.keys(state.workoutTemplate.data)
   };
 }
 
