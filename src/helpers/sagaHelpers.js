@@ -19,7 +19,15 @@ export function createWatchPath(pathName, receiveActionCreator, actionArgs = [])
 export function createAddItem(pathName) {
   return function*(action) {
     const uid = yield select(getUid);
-    yield call(setItem, paths[pathName](uid), action.key, action.value);
+    const path = paths[pathName](uid);
+    const {key, value} = action;
+
+    if (value) {
+      yield call(setItem, path, key, value);
+    } else {
+      yield call(pushItem, path, value);
+    }
+
   };
 }
 
@@ -44,4 +52,8 @@ function createDbValueChannel(path) {
 function setItem(path, key, value) {
   path = path + '/' + key;
   return db.ref(path).set(value);
+}
+
+function pushItem(path, value) {
+  return db.ref(path).push(value);
 }

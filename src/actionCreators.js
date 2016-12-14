@@ -29,6 +29,16 @@ export function removeWorkoutTemplate(name) {
   };
 }
 
+export function addExerciseTemplate(exercise, reps, sets, rest) {
+  return {
+    type: types.ADD_EXERCISE_TEMPLATE,
+    exercise,
+    reps,
+    sets,
+    rest
+  };
+}
+
 export function receiveExercises(exercises, source) {
   return {type: types.RECEIVE_EXERCISES, exercises, source};
 }
