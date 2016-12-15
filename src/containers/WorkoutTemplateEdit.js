@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {requestExercises} from '../actionCreators';
+import {addExerciseTemplate, requestExercises} from '../actionCreators';
 import {LoadingIndicator, NewExerciseTemplateModal} from '../components';
 import {getSelectExercises, getWorkoutTemplate} from '../selectors';
 
@@ -19,12 +19,20 @@ class WorkoutTemplateEdit extends Component {
     dispatch(requestExercises());
   }
 
+  // We can probably turn these into mixins or something or some sort of abstraction
   showNewExerciseTemplate = () => {
     this.setState({exerciseTemplate: {visible: true}});
   };
 
   hideNewExerciseTemplate = () => {
     this.setState({exerciseTemplate: {visible: false}});
+  };
+
+  onSubmitNewExerciseTemplate = value => {
+    const {dispatch} = this.props;
+    dispatch(addExerciseTemplate(value));
+
+    this.hideNewExerciseTemplate();
   };
 
   render() {
@@ -49,10 +57,11 @@ class WorkoutTemplateEdit extends Component {
           </ButtonToolbar>
         </Col>
         <NewExerciseTemplateModal
+          exercises={exercises}
+          onSubmit={this.onSubmitNewExerciseTemplate}
           onHide={this.hideNewExerciseTemplate}
           show={this.state.exerciseTemplate.visible}
           title="Add Exercise Template"
-          exercises={exercises}
         />
       </Row>
     </LoadingIndicator>;

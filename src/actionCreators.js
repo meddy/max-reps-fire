@@ -1,3 +1,4 @@
+// we should move these files under actions directory
 import * as types from './actionTypes';
 
 export function addExercise(name) {
@@ -29,13 +30,10 @@ export function removeWorkoutTemplate(name) {
   };
 }
 
-export function addExerciseTemplate(exercise, reps, sets, rest) {
+export function addExerciseTemplate(exerciseTemplate) {
   return {
     type: types.ADD_EXERCISE_TEMPLATE,
-    exercise,
-    reps,
-    sets,
-    rest
+    ...exerciseTemplate
   };
 }
 

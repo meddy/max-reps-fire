@@ -4,7 +4,7 @@ import Select from 'react-select';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 
 export default class NewExerciseTemplateModal extends Component {
-  state = {
+  initialState = {
     exercise: '',
     reps: {
       min: '',
@@ -18,6 +18,20 @@ export default class NewExerciseTemplateModal extends Component {
       min: '',
       max: ''
     }
+  };
+
+  constructor(props) {
+    super(props);
+    this.state = {...this.initialState};
+  }
+
+  onClickSubmit = event => {
+    const {onSubmit} = this.props;
+
+    event.preventDefault();
+    console.log(this.state);
+    onSubmit(this.state);
+    this.setState(this.initialState);
   };
 
   render() {
@@ -36,6 +50,7 @@ export default class NewExerciseTemplateModal extends Component {
           <Select
             name="exercise"
             options={exercises}
+            // need to probably change this to have value/label
             onChange={exercise => this.setState({exercise})}
             value={this.state.exercise}
           />
@@ -75,9 +90,8 @@ NewExerciseTemplateModal.propTypes = {
       label: PropTypes.string
     })
   ).isRequired,
-  onClickSubmit: PropTypes.func,
+  onSubmit: PropTypes.func.isRequired,
   onHide: Modal.propTypes.onHide,
   show: Modal.propTypes.show,
   title: PropTypes.string.isRequired,
-
 };

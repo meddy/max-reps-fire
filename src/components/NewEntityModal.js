@@ -6,7 +6,7 @@ export default class NewEntityModal extends Component {
     value: ''
   };
 
-  onClickSubmit = (event) => {
+  onClickSubmit = event => {
     const {onSubmit} = this.props;
 
     event.preventDefault();

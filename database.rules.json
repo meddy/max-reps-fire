@@ -46,23 +46,29 @@
             ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
             "$exerciseTemplateId": {
               ".validate": "newData.hasChildren(['setsMin', 'setsMax', 'repsMin', 'repsMax', 'restMin', 'restMax', 'order', 'exercise'])",
-              "setsMin": {
-                ".validate": "newData.isNumber()"
+              "sets": {
+                "min": {
+                  ".validate": "newData.isNumber()"
+                },
+                "max": {
+                  ".validate": "newData.isNumber()"
+                }
               },
-              "setsMax": {
-                ".validate": "newData.isNumber()"
+              "reps": {
+                "min": {
+                  ".validate": "newData.isNumber()"
+                },
+                "max": {
+                  ".validate": "newData.isNumber()"
+                }
               },
-              "repsMin": {
-                ".validate": "newData.isNumber()"
-              },
-              "repsMax": {
-                ".validate": "newData.isNumber()"
-              },
-              "restMin": {
-                ".validate": "newData.isNumber()"
-              },
-              "restMax": {
-                ".validate": "newData.isNumber()"
+              "rest": {
+                "min": {
+                  ".validate": "newData.isNumber()"
+                },
+                "max": {
+                  ".validate": "newData.isNumber()"
+                }
               },
               "order": {
                 ".validate": "newData.isNumber()"
