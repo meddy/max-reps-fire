@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {addExercise, requestExercises, removeExercise} from '../actionCreators';
+import {addExercise, requestExercises, removeExercise} from '../actions/creators';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
 
 class Exercises extends Component {

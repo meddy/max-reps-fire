@@ -1,4 +1,4 @@
-import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actionTypes';
+import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actions/types';
 
 const initialState = {
   user: {},

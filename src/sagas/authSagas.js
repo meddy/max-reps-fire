@@ -1,7 +1,7 @@
 import {browserHistory} from 'react-router';
 import {apply, call, take, put} from 'redux-saga/effects';
-import {receiveSignIn, receiveSignOut, touchAuth} from '../actionCreators';
-import {REQUEST_SIGN_OUT} from '../actionTypes';
+import {receiveSignIn, receiveSignOut, touchAuth} from '../actions/creators';
+import {REQUEST_SIGN_OUT} from '../actions/types';
 import {auth} from '../bootstrap/firebaseServices';
 
 export function* handleAuthFlow() {

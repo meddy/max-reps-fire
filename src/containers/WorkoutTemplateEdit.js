@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {addExerciseTemplate, requestExercises} from '../actionCreators';
+import {addExerciseTemplate, requestExercises} from '../actions/creators';
 import {LoadingIndicator, NewExerciseTemplateModal} from '../components';
 import {getSelectExercises, getWorkoutTemplate} from '../selectors';
 

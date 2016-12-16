@@ -1,4 +1,4 @@
-import {receiveWorkoutTemplates} from '../actionCreators';
+import {receiveWorkoutTemplates} from '../actions/creators';
 import {createAddItem, createRemoveItem, createWatchPath} from '../helpers/sagaHelpers';
 
 const pathName = 'workoutTemplates';

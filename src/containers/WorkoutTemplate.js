@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {ConfirmModal} from '../components';
-import {removeWorkoutTemplate} from '../actionCreators';
+import {removeWorkoutTemplate} from '../actions/creators';
 import {getWorkoutTemplate} from '../selectors';
 
 class WorkoutTemplate extends Component {

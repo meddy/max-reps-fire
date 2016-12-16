@@ -1,5 +1,4 @@
-// we should move these files under actions directory
-import * as types from './actionTypes';
+import * as types from './types';
 
 export function addExercise(name) {
   return {

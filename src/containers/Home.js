@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Row, Well} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {requestSignIn} from '../actionCreators';
+import {requestSignIn} from '../actions/creators';
 import {auth, authProvider} from '../bootstrap/firebaseServices';
 import {LoadingIndicator} from '../components';
 import signInImage from '../resources/google-sign-in.png';

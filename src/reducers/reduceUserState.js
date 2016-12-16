@@ -1,4 +1,4 @@
-import {RECEIVE_SIGN_IN, RECEIVE_SIGN_OUT, TOUCH_AUTH} from '../actionTypes';
+import {RECEIVE_SIGN_IN, RECEIVE_SIGN_OUT, TOUCH_AUTH} from '../actions/types';
 
 const initialState = {
   authenticated: false,

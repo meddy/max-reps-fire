@@ -1,5 +1,5 @@
 import {call, fork, put} from 'redux-saga/effects';
-import {receiveExercises} from '../actionCreators';
+import {receiveExercises} from '../actions/creators';
 import {db} from '../bootstrap/firebaseServices';
 import {createWatchPath, createAddItem, createRemoveItem} from '../helpers/sagaHelpers';
 

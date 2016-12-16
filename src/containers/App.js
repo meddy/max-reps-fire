@@ -3,7 +3,7 @@ import {Button, Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-b
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
-import {requestSignOut, requestWorkoutTemplates} from '../actionCreators';
+import {requestSignOut, requestWorkoutTemplates} from '../actions/creators';
 
 let DevTools = null;
 if (process.env.NODE_ENV === 'development') {

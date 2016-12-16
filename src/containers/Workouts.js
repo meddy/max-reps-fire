@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
-import {addWorkoutTemplate} from '../actionCreators';
+import {addWorkoutTemplate} from '../actions/creators';
 import {NewEntityModal} from '../components';
 import {getWorkoutTemplateNames} from '../selectors';
 

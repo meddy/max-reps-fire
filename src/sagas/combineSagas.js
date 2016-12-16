@@ -9,7 +9,7 @@ import {
   REQUEST_EXERCISES,
   REQUEST_SIGN_IN,
   REQUEST_WORKOUT_TEMPLATES
-} from '../actionTypes';
+} from '../actions/types';
 import {handleAuthFlow} from './authSagas';
 import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
 import {addExerciseTemplate} from './exerciseTemplateSagas';
