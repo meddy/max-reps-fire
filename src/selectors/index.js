@@ -1,3 +1,5 @@
+import {createSelector} from 'reselect'
+
 export const getUid = state => state.user.uid;
 export const getAuthReceived = state => state.user.received;
 export const getAuthenticated = state => state.user.authenticated;
@@ -16,3 +18,16 @@ export const getSelectExercises = state => {
     .sort()
     .map(exercise => ({value: exercise, label: exercise}));
 };
+
+export const getExercisePath = createSelector(
+  getUid,
+  uid => `/users/${uid}/exercises`
+);
+export const getExerciseTemplatePath = createSelector(
+  getUid,
+  uid => `/users/${uid}/exerciseTemplates`
+);
+export const getWorkoutTemplatePath = createSelector(
+  getUid,
+  uid => `/users/${uid}/workoutTemplates`
+);

@@ -2,12 +2,16 @@ import {call, fork, put} from 'redux-saga/effects';
 import {receiveExercises} from '../actions/creators';
 import {db} from '../bootstrap/firebaseServices';
 import {createWatchPath, createAddItem, createRemoveItem} from '../helpers/sagaHelpers';
+import {getExercisePath} from '../selectors';
 
-const pathName = 'exercises';
+export const channelExercises = createWatchPath(
+  getExercisePath,
+  receiveExercises,
+  ['user']
+);
 
-export const channelExercises = createWatchPath(pathName, receiveExercises, ['user']);
-export const addExercise = createAddItem(pathName);
-export const removeExercise = createRemoveItem(pathName);
+export const addExercise = createAddItem(getExercisePath);
+export const removeExercise = createRemoveItem(getExercisePath);
 
 export function* fetchExercises() {
   const exercises = yield call(fetchSystemExercises);

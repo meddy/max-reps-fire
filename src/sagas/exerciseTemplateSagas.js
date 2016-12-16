@@ -1,4 +1,4 @@
 import {createAddItem} from '../helpers/sagaHelpers';
+import {getExerciseTemplatePath} from '../selectors';
 
-const pathName = 'exerciseTemplates';
-export const addExerciseTemplate = createAddItem(pathName);
+export const addExerciseTemplate = createAddItem(getExerciseTemplatePath);

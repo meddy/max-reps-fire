@@ -1,8 +1,11 @@
 import {receiveWorkoutTemplates} from '../actions/creators';
 import {createAddItem, createRemoveItem, createWatchPath} from '../helpers/sagaHelpers';
+import {getWorkoutTemplatePath} from '../selectors';
 
-const pathName = 'workoutTemplates';
+export const channelWorkoutTemplates = createWatchPath(
+  getWorkoutTemplatePath,
+  receiveWorkoutTemplates
+);
 
-export const channelWorkoutTemplates = createWatchPath(pathName, receiveWorkoutTemplates);
-export const addWorkoutTemplate = createAddItem(pathName);
-export const removeWorkoutTemplate = createRemoveItem(pathName);
+export const addWorkoutTemplate = createAddItem(getWorkoutTemplatePath);
+export const removeWorkoutTemplate = createRemoveItem(getWorkoutTemplatePath);

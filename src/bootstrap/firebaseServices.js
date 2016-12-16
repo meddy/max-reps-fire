@@ -10,17 +10,9 @@ const db = app.database();
 const auth = app.auth();
 const authProvider = new firebase.auth.GoogleAuthProvider();
 
-// These should probably live as selectors
-const paths = {
-  exercises: uid => `/users/${uid}/exercises`,
-  exerciseTemplates: uid => `/users/${uid}/exerciseTemplates`,
-  workoutTemplates: uid => `/users/${uid}/workoutTemplates`
-};
-
 export {
   app,
   db,
   auth,
-  authProvider,
-  paths
+  authProvider
 };

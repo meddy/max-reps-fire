@@ -1,12 +1,10 @@
 import {eventChannel} from 'redux-saga';
 import {call, put, select, take} from 'redux-saga/effects';
-import {getUid} from '../selectors';
 import {db, paths} from '../bootstrap/firebaseServices';
 
-export function createWatchPath(pathName, receiveActionCreator, actionArgs = []) {
+export function createWatchPath(pathSelector, receiveActionCreator, actionArgs = []) {
   return function*() {
-    const uid = yield select(getUid);
-    const path = paths[pathName](uid);
+    const path = yield select(pathSelector);
     const valueChannel = yield call(createDbValueChannel, path);
 
     while (true) {
@@ -16,10 +14,9 @@ export function createWatchPath(pathName, receiveActionCreator, actionArgs = [])
   };
 }
 
-export function createAddItem(pathName) {
+export function createAddItem(pathSelector) {
   return function*(action) {
-    const uid = yield select(getUid);
-    const path = paths[pathName](uid);
+    const path = yield select(pathSelector);
     const {key, value} = action;
 
     if (value) {
@@ -31,10 +28,10 @@ export function createAddItem(pathName) {
   };
 }
 
-export function createRemoveItem(pathName) {
+export function createRemoveItem(pathSelector) {
   return function*(action) {
-    const uid = yield select(getUid);
-    yield call(setItem, paths[pathName](uid), action.key, null);
+    const path = yield select(pathSelector);
+    yield call(setItem, path, action.key, null);
   };
 }
 
