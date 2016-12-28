@@ -5,7 +5,7 @@ const initialState = {
   system: {}
 };
 
-export default function reduceExerciseState(state = initialState, action) {
+export default function reduceExercise(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_EXERCISES:
       return {

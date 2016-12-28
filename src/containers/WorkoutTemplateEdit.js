@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
 import {addExerciseTemplate, requestExercises} from '../actions/creators';
 import {LoadingIndicator, NewExerciseTemplateModal} from '../components';
-import {getSelectExercises, getWorkoutTemplate} from '../selectors';
+import {getSelectExercises, getWorkoutTemplate} from '../helpers/selectors';
 
 class WorkoutTemplateEdit extends Component {
   state = {
@@ -85,4 +85,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(WorkoutTemplateEdit)
+export default connect(mapStateToProps)(WorkoutTemplateEdit);

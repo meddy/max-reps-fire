@@ -4,7 +4,7 @@ import {browserHistory, IndexRoute, Route, Router} from 'react-router';
 import {requestSignIn, requestWorkoutTemplates} from '../actions/creators';
 import {NoMatch, App, Exercises, Home, Workouts, WorkoutTemplate, WorkoutTemplateEdit} from '../containers';
 import {composeChecks, createGuard, createStateCheck} from '../helpers/guardHelpers';
-import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../selectors';
+import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../helpers/selectors';
 
 export default function createRouter(store) {
   const isAuthenticated = createStateCheck(

@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
-import reduceExerciseState from './reduceExerciseState';
-import reduceUserState from './reduceUserState';
-import reduceWorkoutTemplateState from './reduceWorkoutTemplateState';
+import reduceExercise from './reduceExercise';
+import reduceUser from './reduceUser';
+import reduceWorkoutTemplate from './reduceWorkoutTemplate';
 
 export default combineReducers({
-  exercise: reduceExerciseState,
-  user: reduceUserState,
-  workoutTemplate: reduceWorkoutTemplateState
+  exercise: reduceExercise,
+  user: reduceUser,
+  workoutTemplate: reduceWorkoutTemplate
 });

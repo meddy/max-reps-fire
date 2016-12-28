@@ -5,7 +5,7 @@ const initialState = {
   received: false
 };
 
-export default function reduceWorkoutTemplateState(state = initialState, action) {
+export default function reduceWorkoutTemplate(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_WORKOUT_TEMPLATES:
       return {

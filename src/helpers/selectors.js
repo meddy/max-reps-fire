@@ -19,15 +19,6 @@ export const getSelectExercises = state => {
     .map(exercise => ({value: exercise, label: exercise}));
 };
 
-export const getExercisePath = createSelector(
-  getUid,
-  uid => `/users/${uid}/exercises`
-);
-export const getExerciseTemplatePath = createSelector(
-  getUid,
-  uid => `/users/${uid}/exerciseTemplates`
-);
-export const getWorkoutTemplatePath = createSelector(
-  getUid,
-  uid => `/users/${uid}/workoutTemplates`
-);
+export const getExercisePath = createSelector(getUid, uid => `/users/${uid}/exercises`);
+export const getExerciseTemplatePath = createSelector(getUid, uid => `/users/${uid}/exerciseTemplates`);
+export const getWorkoutTemplatePath = createSelector(getUid, uid => `/users/${uid}/workoutTemplates`);

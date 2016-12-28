@@ -5,7 +5,7 @@ import {browserHistory} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {ConfirmModal} from '../components';
 import {removeWorkoutTemplate} from '../actions/creators';
-import {getWorkoutTemplate} from '../selectors';
+import {getWorkoutTemplate} from '../helpers/selectors';
 
 class WorkoutTemplate extends Component {
   removeOnUnmount = false;

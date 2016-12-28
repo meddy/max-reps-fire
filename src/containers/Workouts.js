@@ -3,8 +3,8 @@ import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import {addWorkoutTemplate} from '../actions/creators';
+import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {NewEntityModal} from '../components';
-import {getWorkoutTemplateNames} from '../selectors';
 
 class Workouts extends Component {
   state = {

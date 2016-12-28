@@ -7,7 +7,7 @@ const initialState = {
   uid: null
 };
 
-export default function reduceUserState(state = initialState, action) {
+export default function reduceUser(state = initialState, action) {
   switch (action.type) {
     case RECEIVE_SIGN_IN:
       return {
