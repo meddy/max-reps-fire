@@ -1,4 +1,4 @@
-import {takeEvery, takeLatest} from 'redux-saga';
+import {takeEvery, takeLatest} from 'redux-saga/effects';
 import {
   ADD_EXERCISE,
   ADD_EXERCISE_TEMPLATE,
