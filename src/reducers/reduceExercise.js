@@ -1,22 +1,14 @@
 import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actions/types';
+import createReducer from '../helpers/createReducer';
 
 const initialState = {
   user: {},
   system: {}
 };
 
-export default function reduceExercise(state = initialState, action) {
-  switch (action.type) {
-    case RECEIVE_EXERCISES:
-      return {
-        ...state,
-        [action.source]: action.exercises
-      };
+const actionMap = {
+  [RECEIVE_EXERCISES]: (state, action) => ({...state, [action.source]: action.exercises}),
+  [REQUEST_SIGN_OUT]: () => ({...initialState})
+};
 
-    case REQUEST_SIGN_OUT:
-      return initialState;
-
-    default:
-      return state;
-  }
-}
+export default createReducer(initialState, actionMap);

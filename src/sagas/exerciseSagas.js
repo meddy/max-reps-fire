@@ -4,10 +4,11 @@ import {db} from '../bootstrap/firebaseServices';
 import {createWatchPath, createAddItem, createRemoveItem} from '../helpers/sagaHelpers';
 import {getExercisePath} from '../helpers/selectors';
 
+const exerciseSource = 'user';
 export const channelExercises = createWatchPath(
   getExercisePath,
   receiveExercises,
-  ['user']
+  [exerciseSource]
 );
 
 export const addExercise = createAddItem(getExercisePath);

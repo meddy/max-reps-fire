@@ -1,22 +1,20 @@
 import {RECEIVE_WORKOUT_TEMPLATES, RECEIVE_SIGN_OUT} from '../actions/types';
+import createReducer from '../helpers/createReducer';
 
 const initialState = {
   data: {},
   received: false
 };
 
-export default function reduceWorkoutTemplate(state = initialState, action) {
-  switch (action.type) {
-    case RECEIVE_WORKOUT_TEMPLATES:
-      return {
-        data: action.workoutTemplates,
-        received: true
-      };
+const actionMap = {
+  [RECEIVE_WORKOUT_TEMPLATES]: (state, action) => {
+    return {
+      ...state,
+      data: action.workoutTemplates,
+      received: true
+    };
+  },
+  [RECEIVE_SIGN_OUT]: () => ({...initialState})
+};
 
-    case RECEIVE_SIGN_OUT:
-      return initialState;
-
-    default:
-      return state;
-  }
-}
+export default createReducer(initialState, actionMap);

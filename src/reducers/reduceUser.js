@@ -1,4 +1,5 @@
 import {RECEIVE_SIGN_IN, RECEIVE_SIGN_OUT, TOUCH_AUTH} from '../actions/types';
+import createReducer from '../helpers/createReducer';
 
 const initialState = {
   authenticated: false,
@@ -7,32 +8,25 @@ const initialState = {
   uid: null
 };
 
-export default function reduceUser(state = initialState, action) {
-  switch (action.type) {
-    case RECEIVE_SIGN_IN:
-      return {
-        ...state,
-        authenticated: true,
-        name: action.name,
-        received: true,
-        uid: action.uid
-      };
+const actionMap = {
+  [RECEIVE_SIGN_IN]: (state, action) => {
+    return {
+      ...state,
+      authenticated: true,
+      name: action.name,
+      received: true,
+      uid: action.uid
+    };
+  },
+  [RECEIVE_SIGN_OUT]: state => {
+    return {
+      ...state,
+      authenticated: false,
+      name: null,
+      uid: null
+    };
+  },
+  [TOUCH_AUTH]: state => ({...state, received: true})
+};
 
-    case RECEIVE_SIGN_OUT:
-      return {
-        ...state,
-        authenticated: false,
-        name: null,
-        uid: null
-      };
-
-    case TOUCH_AUTH:
-      return {
-        ...state,
-        received: true
-      };
-
-    default:
-      return state;
-  }
-}
+export default createReducer(initialState, actionMap);

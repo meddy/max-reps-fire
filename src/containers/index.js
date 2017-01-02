@@ -1,5 +1,4 @@
 import App from './App';
-import DevTools from './DevTools';
 import Exercises from './Exercises';
 import Home from './Home';
 import NoMatch from './NoMatch';
@@ -9,7 +8,6 @@ import WorkoutTemplateEdit from './WorkoutTemplateEdit';
 
 export {
   App,
-  DevTools,
   Exercises,
   Home,
   NoMatch,

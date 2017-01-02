@@ -1,5 +1,4 @@
-import {takeLatest} from 'redux-saga';
-import {call, take} from 'redux-saga/effects';
+import {takeEvery, takeLatest} from 'redux-saga';
 import {
   ADD_EXERCISE,
   ADD_EXERCISE_TEMPLATE,
@@ -29,18 +28,15 @@ export default function* combineSagas() {
 }
 
 function* watchAuth() {
-  while (true) {
-    yield take(REQUEST_SIGN_IN);
-    yield call(handleAuthFlow);
-  }
+  yield takeLatest(REQUEST_SIGN_IN, handleAuthFlow);
 }
 
 function* watchAddExercise() {
-  yield takeLatest(ADD_EXERCISE, addExercise);
+  yield takeEvery(ADD_EXERCISE, addExercise);
 }
 
 function* watchRemoveExercise() {
-  yield takeLatest(REMOVE_EXERCISE, removeExercise);
+  yield takeEvery(REMOVE_EXERCISE, removeExercise);
 }
 
 function* watchRequestExercises() {
@@ -48,15 +44,15 @@ function* watchRequestExercises() {
 }
 
 function* watchAddExerciseTemplate() {
-  yield takeLatest(ADD_EXERCISE_TEMPLATE, addExerciseTemplate);
+  yield takeEvery(ADD_EXERCISE_TEMPLATE, addExerciseTemplate);
 }
 
 function* watchAddWorkoutTemplate() {
-  yield takeLatest(ADD_WORKOUT_TEMPLATE, addWorkoutTemplate);
+  yield takeEvery(ADD_WORKOUT_TEMPLATE, addWorkoutTemplate);
 }
 
 function* watchRemoveWorkoutTemplate() {
-  yield takeLatest(REMOVE_WORKOUT_TEMPLATE, removeWorkoutTemplate);
+  yield takeEvery(REMOVE_WORKOUT_TEMPLATE, removeWorkoutTemplate);
 }
 
 function* watchRequestWorkoutTemplates() {

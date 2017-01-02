@@ -5,11 +5,6 @@ import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {requestSignOut, requestWorkoutTemplates} from '../actions/creators';
 
-let DevTools = null;
-if (process.env.NODE_ENV === 'development') {
-  DevTools = require('./DevTools').default;
-}
-
 class App extends Component {
   componentDidMount() {
     const {dispatch} = this.props;
@@ -80,7 +75,6 @@ class App extends Component {
       </Navbar>
       <Grid className="container theme-showcase">
         {children}
-        {DevTools && <DevTools />}
       </Grid>
     </div>;
   }
