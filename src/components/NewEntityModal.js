@@ -6,11 +6,10 @@ export default class NewEntityModal extends Component {
     value: ''
   };
 
-  onClickSubmit = event => {
-    const {onSubmit} = this.props;
-
+  onSubmit = event => {
     event.preventDefault();
-    onSubmit(this.state.value);
+
+    this.props.onSubmit(this.state.value);
     this.setState({value: ''});
   };
 
@@ -26,7 +25,7 @@ export default class NewEntityModal extends Component {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <form>
+        <form onSubmit={this.onSubmit}>
           <FormGroup
             controlId="formBasicText"
             validationState={validationState}
@@ -43,7 +42,6 @@ export default class NewEntityModal extends Component {
             type="submit"
             bsStyle="success"
             disabled={validationState !== 'success'}
-            onClick={this.onClickSubmit}
             block
           >
             Add

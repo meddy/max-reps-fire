@@ -11,14 +11,13 @@ export default class ExerciseTemplateControl extends Component {
     };
   }
 
-  onChange = (key, value) => {
-    this.setState({[key]: value}, () => this.props.onChange(this.state));
+  onChange = (property, value) => {
+    this.setState({[property]: value}, () => this.props.onChange(this.state));
   };
 
   render() {
-    const {label} = this.props;
     return <FormGroup className="text-center">
-      <h5>{label}</h5>
+      <h5>{this.props.label}</h5>
       <Form inline>
         <FormControl
           type="number"

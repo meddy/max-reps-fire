@@ -7,6 +7,7 @@ import {composeChecks, createGuard, createStateCheck} from '../helpers/guardHelp
 import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../helpers/selectors';
 
 export default function createRouter(store) {
+  // Need to potentially rework this because you can put guards on a parent route.
   const isAuthenticated = createStateCheck(
     requestSignIn,
     getAuthReceived,

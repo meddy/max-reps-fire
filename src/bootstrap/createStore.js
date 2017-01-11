@@ -8,9 +8,9 @@ export default function () {
   let composeEnhancers;
 
   if (process.env.NODE_ENV === 'production') {
-    composeEnhancers = compose
+    composeEnhancers = compose;
   } else {
-    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   }
 
   const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));

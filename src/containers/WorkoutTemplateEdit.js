@@ -20,6 +20,7 @@ class WorkoutTemplateEdit extends Component {
   }
 
   // We can probably turn these into mixins or something or some sort of abstraction
+  // prob not worth atm
   showNewExerciseTemplate = () => {
     this.setState({exerciseTemplate: {visible: true}});
   };

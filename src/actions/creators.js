@@ -8,6 +8,13 @@ export function addExercise(name) {
   };
 }
 
+export function addExerciseTemplate(exerciseTemplate) {
+  return {
+    type: types.ADD_EXERCISE_TEMPLATE,
+    ...exerciseTemplate
+  };
+}
+
 export function addWorkoutTemplate(name) {
   return {
     type: types.ADD_WORKOUT_TEMPLATE,
@@ -29,19 +36,20 @@ export function removeWorkoutTemplate(name) {
   };
 }
 
-export function addExerciseTemplate(exerciseTemplate) {
+export function receiveExercises(exercises, source) {
   return {
-    type: types.ADD_EXERCISE_TEMPLATE,
-    ...exerciseTemplate
+    type: types.RECEIVE_EXERCISES,
+    exercises,
+    source
   };
 }
 
-export function receiveExercises(exercises, source) {
-  return {type: types.RECEIVE_EXERCISES, exercises, source};
-}
-
 export function receiveSignIn(name, uid) {
-  return {type: types.RECEIVE_SIGN_IN, name, uid};
+  return {
+    type: types.RECEIVE_SIGN_IN,
+    name,
+    uid
+  };
 }
 
 export function receiveSignOut() {
@@ -49,7 +57,10 @@ export function receiveSignOut() {
 }
 
 export function receiveWorkoutTemplates(workoutTemplates) {
-  return {type: types.RECEIVE_WORKOUT_TEMPLATES, workoutTemplates};
+  return {
+    type: types.RECEIVE_WORKOUT_TEMPLATES,
+    workoutTemplates
+  };
 }
 
 export function requestExercises() {

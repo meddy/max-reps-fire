@@ -7,8 +7,7 @@ import {requestSignOut, requestWorkoutTemplates} from '../actions/creators';
 
 class App extends Component {
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(requestWorkoutTemplates());
+    this.props.dispatch(requestWorkoutTemplates());
   }
 
   componentDidUpdate() {
@@ -19,13 +18,11 @@ class App extends Component {
   }
 
   handleSignOut = () => {
-    const {dispatch} = this.props;
-    dispatch(requestSignOut());
+    this.props.dispatch(requestSignOut());
   };
 
   renderNavbar = () => {
-    const {authenticated} = this.props;
-    if (!authenticated) {
+    if (!this.props.authenticated) {
       return null;
     }
 
@@ -48,8 +45,7 @@ class App extends Component {
   };
 
   renderWorkoutTemplateMenu = () => {
-    const {workoutTemplates} = this.props;
-    return workoutTemplates.map(workoutTemplate => {
+    return this.props.workoutTemplates.map(workoutTemplate => {
       return <LinkContainer
         key={workoutTemplate.name}
         to={`/workout-template/${workoutTemplate.name}`}
@@ -60,7 +56,6 @@ class App extends Component {
   };
 
   render() {
-    const {children} = this.props;
     return <div>
       <Navbar inverse fixedTop>
         <div className="container">
@@ -74,7 +69,7 @@ class App extends Component {
         </div>
       </Navbar>
       <Grid className="container theme-showcase">
-        {children}
+        {this.props.children}
       </Grid>
     </div>;
   }

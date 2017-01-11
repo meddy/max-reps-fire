@@ -3,6 +3,7 @@ import {Button, ControlLabel, FormGroup, Modal} from 'react-bootstrap';
 import Select from 'react-select';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 
+// This should both new and edit, with a prop to disable changing the exercise
 export default class NewExerciseTemplateModal extends Component {
   initialState = {
     exercise: '',
@@ -26,10 +27,9 @@ export default class NewExerciseTemplateModal extends Component {
   }
 
   onClickSubmit = event => {
-    const {onSubmit} = this.props;
-
     event.preventDefault();
-    console.log(this.state);
+
+    const {onSubmit} = this.props;
     onSubmit(this.state);
     this.setState(this.initialState);
   };

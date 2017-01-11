@@ -1,8 +1,7 @@
 import React, {PropTypes} from 'react';
-import {Button, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Button, Glyphicon, ListGroup, ListGroupItem} from 'react-bootstrap';
 
-export default function ExerciseList(props) {
-  const {onClickDelete, items} = props;
+export default function ExerciseList({onClickDelete, items}) {
   return <ListGroup>
     {items.map(exercise => {
       return <ListGroupItem key={exercise} className="clearfix">
@@ -11,10 +10,10 @@ export default function ExerciseList(props) {
           bsStyle="danger"
           bsSize="xsmall"
           title="Delete Exercises"
-          onClick={() => props.onClickDelete(exercise)}
+          onClick={() => onClickDelete(exercise)}
           className="pull-right"
         >
-          <span className="glyphicon glyphicon-trash" />
+          <Glyphicon glyph="trash" />
         </Button>}
       </ListGroupItem>;
     })}
