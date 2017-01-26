@@ -3,41 +3,31 @@ import {Breadcrumb, Button, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
 import {addExerciseTemplate, requestExercises} from '../actions/creators';
-import {LoadingIndicator, NewExerciseTemplateModal} from '../components';
+import {LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
 import {getSelectExercises, getWorkoutTemplate} from '../helpers/selectors';
 
 class WorkoutTemplateEdit extends Component {
-  state = {
-    exerciseTemplate: {
-      title: null,
-      visible: false
-    }
-  };
-
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(requestExercises());
   }
 
-  // We can probably turn these into mixins or something or some sort of abstraction
-  // prob not worth atm
-  showNewExerciseTemplate = () => {
-    this.setState({exerciseTemplate: {visible: true}});
-  };
-
-  hideNewExerciseTemplate = () => {
-    this.setState({exerciseTemplate: {visible: false}});
-  };
-
   onSubmitNewExerciseTemplate = value => {
-    const {dispatch} = this.props;
-    dispatch(addExerciseTemplate(value));
+    const {dispatch, hideModal} = this.props;
 
-    this.hideNewExerciseTemplate();
+    dispatch(addExerciseTemplate(value));
+    hideModal('exerciseTemplate');
   };
 
   render() {
-    const {exercises, name} = this.props;
+    const {
+      exercises,
+      isModalVisible,
+      hideModal,
+      name,
+      showModal
+    } = this.props;
+
     return <LoadingIndicator loading={!exercises.length}>
       <Row>
         <Col lg={8} lgOffset={2}>
@@ -51,7 +41,7 @@ class WorkoutTemplateEdit extends Component {
             <Button
               bsStyle="primary"
               title="Add Workout"
-              onClick={this.showNewExerciseTemplate}
+              onClick={() => showModal('exerciseTemplate')}
             >
               <span className="glyphicon glyphicon-plus" /> Template
             </Button>
@@ -60,8 +50,8 @@ class WorkoutTemplateEdit extends Component {
         <NewExerciseTemplateModal
           exercises={exercises}
           onSubmit={this.onSubmitNewExerciseTemplate}
-          onHide={this.hideNewExerciseTemplate}
-          show={this.state.exerciseTemplate.visible}
+          onHide={() => hideModal('exerciseTemplate')}
+          show={isModalVisible('exerciseTemplate')}
           title="Add Exercise Template"
         />
       </Row>
@@ -76,7 +66,10 @@ WorkoutTemplateEdit.propTypes = {
       value: PropTypes.string,
       label: PropTypes.string
     })
-  ).isRequired
+  ).isRequired,
+  isModalVisible: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -86,4 +79,4 @@ function mapStateToProps(state, props) {
   };
 }
 
-export default connect(mapStateToProps)(WorkoutTemplateEdit);
+export default connect(mapStateToProps)(withModals(WorkoutTemplateEdit, ['exerciseTemplate']));

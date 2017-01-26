@@ -4,6 +4,7 @@ import ExerciseList from './ExerciseList';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 import NewEntityModal from './NewEntityModal';
 import NewExerciseTemplateModal from './NewExerciseTemplateModal';
+import withModals from './withModals';
 
 export {
   ConfirmModal,
@@ -11,5 +12,6 @@ export {
   ExerciseTemplateControl,
   LoadingIndicator,
   NewEntityModal,
-  NewExerciseTemplateModal
+  NewExerciseTemplateModal,
+  withModals
 }
