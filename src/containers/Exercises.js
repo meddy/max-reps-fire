@@ -2,15 +2,11 @@ import React, {Component, PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {addExercise, requestExercises, removeExercise} from '../actions/creators';
-import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal} from '../components';
+import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal, withModals} from '../components';
 
 class Exercises extends Component {
   state = {
-    newExerciseVisible: false,
-    deleteExercise: {
-      visible: false,
-      name: null
-    }
+    exercise: null
   };
 
   componentDidMount() {
@@ -18,44 +14,18 @@ class Exercises extends Component {
     dispatch(requestExercises());
   }
 
-  showNewExercise = () => {
-    this.setState({newExerciseVisible: true});
-  };
-
-  hideNewExercise = () => {
-    this.setState({newExerciseVisible: false});
-  };
-
-  showDeleteExercise = name => {
-    this.setState({
-      deleteExercise: {
-        visible: true,
-        name
-      }
-    });
-  };
-
-  hideDeleteExercise = () => {
-    this.setState({
-      deleteExercise: {
-        visible: false,
-        title: null
-      }
-    });
-  };
-
   onSubmitNewExercise = value => {
-    const {dispatch} = this.props;
-    dispatch(addExercise(value));
+    const {dispatch, hideModal} = this.props;
 
-    this.hideNewExercise();
+    dispatch(addExercise(value));
+    hideModal('newExercise');
   };
 
   onConfirmDeleteExercise = () => {
-    const {dispatch} = this.props;
-    dispatch(removeExercise(this.state.deleteExercise.name));
+    const {dispatch, hideModal} = this.props;
 
-    this.hideDeleteExercise();
+    dispatch(removeExercise(this.state.exercise));
+    hideModal('deleteExercise');
   };
 
   getNameValidationState = value => {
@@ -73,7 +43,7 @@ class Exercises extends Component {
   };
 
   render() {
-    const {system, user} = this.props;
+    const {hideModal, isModalVisible, showModal, system, user} = this.props;
 
     return <LoadingIndicator loading={!system.length && !user.length}>
       <Row>
@@ -84,29 +54,31 @@ class Exercises extends Component {
               bsStyle="success"
               title="New Workout"
               className="pull-right"
-              onClick={this.showNewExercise}
+              onClick={() => showModal('newExercise')}
             >
               <span className="glyphicon glyphicon-plus" /> Exercise
             </Button>
           </div>
-          <ExerciseList items={user} onClickDelete={this.showDeleteExercise} />
+          <ExerciseList items={user} onClickDelete={exercise => {
+            this.setState({exercise}, () => this.props.showModal('deleteExercise'));
+          }} />
         </Col>
         <Col lg={6} lgOffset={3}>
           <h4>System Defined</h4>
           <ExerciseList items={system} />
         </Col>
         <NewEntityModal
-          onHide={this.hideNewExercise}
+          onHide={() => hideModal('newExercise')}
           onSubmit={this.onSubmitNewExercise}
-          show={this.state.newExerciseVisible}
+          show={isModalVisible('newExercise')}
           title="Add New Exercise"
           getValidationState={this.getNameValidationState}
         />
         <ConfirmModal
-          onHide={this.hideDeleteExercise}
+          onHide={() => hideModal('deleteExercise')}
           onConfirm={this.onConfirmDeleteExercise}
-          show={this.state.deleteExercise.visible}
-          title={`Delete ${this.state.deleteExercise.name}?`}
+          show={isModalVisible('deleteExercise')}
+          title={`Delete ${this.state.exercise}?`}
         />
       </Row>
     </LoadingIndicator>;
@@ -116,7 +88,10 @@ class Exercises extends Component {
 Exercises.propTypes = {
   dispatch: PropTypes.func.isRequired,
   system: PropTypes.arrayOf(PropTypes.string).isRequired,
-  user: PropTypes.arrayOf(PropTypes.string).isRequired
+  user: PropTypes.arrayOf(PropTypes.string).isRequired,
+  hideModal: PropTypes.func.isRequired,
+  isModalVisible: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired
 };
 
 Exercises.defaultProps = {
@@ -131,4 +106,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Exercises)
+export default connect(mapStateToProps)(withModals(Exercises, ['newExercise', 'deleteExercise']));

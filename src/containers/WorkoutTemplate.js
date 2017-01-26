@@ -3,26 +3,15 @@ import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Row} from 'react-bo
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
-import {ConfirmModal} from '../components';
+import {ConfirmModal, withModals} from '../components';
 import {removeWorkoutTemplate} from '../actions/creators';
 import {getWorkoutTemplate} from '../helpers/selectors';
 
 class WorkoutTemplate extends Component {
   removeOnUnmount = false;
 
-  state = {
-    deleteWorkoutTemplateVisible: false
-  };
-
-  showNewWorkoutTemplate = () => {
-    this.setState({deleteWorkoutTemplateVisible: true});
-  };
-
-  hideNewWorkoutTemplate = () => {
-    this.setState({deleteWorkoutTemplateVisible: false});
-  };
-
   onConfirmDeleteWorkoutTemplate = () => {
+    // This needs to explicitly go back to the workouts page.
     browserHistory.goBack();
     this.removeOnUnmount = true;
   };
@@ -35,7 +24,7 @@ class WorkoutTemplate extends Component {
   }
 
   render() {
-    const {name} = this.props;
+    const {hideModal, isModalVisible, name, showModal} = this.props;
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Breadcrumb>
@@ -56,7 +45,7 @@ class WorkoutTemplate extends Component {
             <Button
               bsStyle="danger"
               title="Delete Workout Template"
-              onClick={this.showNewWorkoutTemplate}
+              onClick={() => showModal('workoutTemplate')}
             >
               <span className="glyphicon glyphicon-trash" /> Template
             </Button>
@@ -64,9 +53,9 @@ class WorkoutTemplate extends Component {
         </ButtonToolbar>
       </Col>
       <ConfirmModal
-        onHide={this.hideNewWorkoutTemplate}
+        onHide={() => hideModal('workoutTemplate')}
         onConfirm={this.onConfirmDeleteWorkoutTemplate}
-        show={this.state.deleteWorkoutTemplateVisible}
+        show={isModalVisible('workoutTemplate')}
         title={`Delete ${name}?`}
       />
     </Row>;
@@ -74,7 +63,10 @@ class WorkoutTemplate extends Component {
 }
 
 WorkoutTemplate.propTypes = {
-  name: PropTypes.string.isRequired
+  name: PropTypes.string.isRequired,
+  isModalVisible: PropTypes.func.isRequired,
+  hideModal: PropTypes.func.isRequired,
+  showModal: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state, props) {
@@ -82,4 +74,4 @@ function mapStateToProps(state, props) {
   return {name};
 }
 
-export default connect(mapStateToProps)(WorkoutTemplate);
+export default connect(mapStateToProps)(withModals(WorkoutTemplate, ['workoutTemplate']));
