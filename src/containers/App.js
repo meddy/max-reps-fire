@@ -12,6 +12,7 @@ class App extends Component {
 
   componentDidUpdate() {
     const {authenticated, dispatch, workoutTemplatesReceived} = this.props;
+
     if (authenticated && !workoutTemplatesReceived) {
       dispatch(requestWorkoutTemplates());
     }

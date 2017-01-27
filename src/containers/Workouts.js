@@ -1,20 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, FormControl, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import {withRouter} from 'react-router';
 import {addWorkoutTemplate} from '../actions/creators';
 import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {NewEntityModal, withModals} from '../components';
 
 class Workouts extends Component {
   onSubmitNewWorkoutTemplate = value => {
-    const {dispatch, hideModal} = this.props;
+    const {dispatch, hideModal, router} = this.props;
 
     dispatch(addWorkoutTemplate(value));
     hideModal('workoutTemplate');
-
-    // Do we actually want to use browserhistory directly here?
-    browserHistory.push(`/workout-template/${value}`);
+    router.push(`/workout-template/${value}`);
   };
 
   getNameValidationState = (value) => {
@@ -29,6 +27,7 @@ class Workouts extends Component {
 
   render() {
     const {hideModal, isModalVisible, showModal} = this.props;
+
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Row>
@@ -75,4 +74,5 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withModals(Workouts, ['workoutTemplate']));
+const WrappedComponent = withRouter(withModals(Workouts, ['workoutTemplate']));
+export default connect(mapStateToProps)(WrappedComponent);

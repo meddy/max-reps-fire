@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {browserHistory} from 'react-router';
+import {withRouter} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {ConfirmModal, withModals} from '../components';
 import {removeWorkoutTemplate} from '../actions/creators';
@@ -11,13 +11,13 @@ class WorkoutTemplate extends Component {
   removeOnUnmount = false;
 
   onConfirmDeleteWorkoutTemplate = () => {
-    // This needs to explicitly go back to the workouts page.
-    browserHistory.goBack();
+    this.props.router.replace('/workouts');
     this.removeOnUnmount = true;
   };
 
   componentWillUnmount() {
     const {name, dispatch} = this.props;
+
     if (this.removeOnUnmount) {
       dispatch(removeWorkoutTemplate(name));
     }
@@ -25,6 +25,7 @@ class WorkoutTemplate extends Component {
 
   render() {
     const {hideModal, isModalVisible, name, showModal} = this.props;
+
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Breadcrumb>
@@ -74,4 +75,5 @@ function mapStateToProps(state, props) {
   return {name};
 }
 
-export default connect(mapStateToProps)(withModals(WorkoutTemplate, ['workoutTemplate']));
+const WrappedComponent = withRouter(withModals(WorkoutTemplate, ['workoutTemplate']));
+export default connect(mapStateToProps)(WrappedComponent);

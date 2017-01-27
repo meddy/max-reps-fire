@@ -22,8 +22,8 @@ class WorkoutTemplateEdit extends Component {
   render() {
     const {
       exercises,
-      isModalVisible,
       hideModal,
+      isModalVisible,
       name,
       showModal
     } = this.props;
@@ -60,15 +60,15 @@ class WorkoutTemplateEdit extends Component {
 }
 
 WorkoutTemplateEdit.propTypes = {
-  name: PropTypes.string.isRequired,
   exercises: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string
     })
   ).isRequired,
-  isModalVisible: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
+  isModalVisible: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
   showModal: PropTypes.func.isRequired
 };
 

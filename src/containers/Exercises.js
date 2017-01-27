@@ -87,11 +87,11 @@ class Exercises extends Component {
 
 Exercises.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  system: PropTypes.arrayOf(PropTypes.string).isRequired,
-  user: PropTypes.arrayOf(PropTypes.string).isRequired,
   hideModal: PropTypes.func.isRequired,
   isModalVisible: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired
+  showModal: PropTypes.func.isRequired,
+  system: PropTypes.arrayOf(PropTypes.string).isRequired,
+  user: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 Exercises.defaultProps = {

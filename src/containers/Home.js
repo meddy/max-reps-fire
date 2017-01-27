@@ -14,6 +14,7 @@ class Home extends Component {
 
   componentDidMount() {
     const {authenticated, dispatch} = this.props;
+
     if (!authenticated) {
       dispatch(requestSignIn());
     }
@@ -21,6 +22,7 @@ class Home extends Component {
 
   render() {
     const {authenticated, authReceived} = this.props;
+
     return <Row>
       <Well>Max Reps Fire is a weight lifting log app.</Well>
       <LoadingIndicator loading={!authReceived}>
