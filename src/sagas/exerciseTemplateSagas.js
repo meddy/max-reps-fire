@@ -1,4 +1,6 @@
-import {createAddItem} from '../helpers/sagaHelpers';
+import createDatabaseSagas from '../helpers/createDatabaseSagas';
 import {getExerciseTemplatePath} from '../helpers/selectors';
 
-export const addExerciseTemplate = createAddItem(getExerciseTemplatePath);
+const exerciseTemplateSagas = createDatabaseSagas(getExerciseTemplatePath);
+
+export const addExerciseTemplate = exerciseTemplateSagas.addItem;

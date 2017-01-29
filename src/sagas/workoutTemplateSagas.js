@@ -1,11 +1,9 @@
 import {receiveWorkoutTemplates} from '../actions/creators';
-import {createAddItem, createRemoveItem, createWatchPath} from '../helpers/sagaHelpers';
+import createDatabaseSagas from '../helpers/createDatabaseSagas';
 import {getWorkoutTemplatePath} from '../helpers/selectors';
 
-export const channelWorkoutTemplates = createWatchPath(
-  getWorkoutTemplatePath,
-  receiveWorkoutTemplates
-);
+const workoutTemplateSagas = createDatabaseSagas(getWorkoutTemplatePath);
 
-export const addWorkoutTemplate = createAddItem(getWorkoutTemplatePath);
-export const removeWorkoutTemplate = createRemoveItem(getWorkoutTemplatePath);
+export const channelWorkoutTemplates = workoutTemplateSagas.createWatchPath(receiveWorkoutTemplates);
+export const addWorkoutTemplate = workoutTemplateSagas.addItem;
+export const removeWorkoutTemplate = workoutTemplateSagas.removeItem;
