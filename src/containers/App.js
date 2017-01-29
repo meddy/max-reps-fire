@@ -1,9 +1,11 @@
+import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
 import {Button, Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
 import {requestSignOut, requestWorkoutTemplates} from '../actions/creators';
+import {getAuthenticated, getWorkoutTemplatesReceived} from '../helpers/selectors';
 
 class App extends Component {
   componentDidMount() {
@@ -83,9 +85,9 @@ App.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    authenticated: state.user.authenticated,
-    workoutTemplatesReceived: state.workoutTemplate.received,
-    workoutTemplates: Object.values(state.workoutTemplate.data)
+    authenticated: getAuthenticated(state),
+    workoutTemplatesReceived: getWorkoutTemplatesReceived(state),
+    workoutTemplates: values(state.workoutTemplate.data)
   };
 }
 

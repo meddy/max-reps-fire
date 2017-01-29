@@ -1,3 +1,4 @@
+import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
@@ -101,8 +102,8 @@ Exercises.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    system: Object.values(state.exercise.system),
-    user: Object.values(state.exercise.user)
+    system: values(state.exercise.system),
+    user: values(state.exercise.user)
   };
 }
 

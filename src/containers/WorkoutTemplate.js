@@ -71,8 +71,9 @@ WorkoutTemplate.propTypes = {
 };
 
 function mapStateToProps(state, props) {
-  const {name} = getWorkoutTemplate(state, props);
-  return {name};
+  return {
+    name: getWorkoutTemplate(state, props).name
+  };
 }
 
 const WrappedComponent = withRouter(withModals(WorkoutTemplate, ['workoutTemplate']));

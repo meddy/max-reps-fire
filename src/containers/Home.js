@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {requestSignIn} from '../actions/creators';
 import {auth, authProvider} from '../bootstrap/firebaseServices';
 import {LoadingIndicator} from '../components';
+import {getAuthenticated, getAuthReceived} from '../helpers/selectors';
 import signInImage from '../resources/google-sign-in.png';
 import '../resources/spinner.css';
 
@@ -40,10 +41,9 @@ Home.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const {authenticated, received} = state.user;
   return {
-    authenticated,
-    authReceived: received
+    authenticated: getAuthenticated(state),
+    authReceived: getAuthReceived(state)
   };
 }
 
