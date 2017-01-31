@@ -5,7 +5,7 @@ export default function LoadingIndicator({children, loading}) {
     return <div className="loader">Loading...</div>;
   }
 
-  return children;
+  return <div>{children}</div>;
 }
 
 LoadingIndicator.propTypes = {
