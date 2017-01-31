@@ -45,7 +45,7 @@
             // exercise templates are children of an existing workout template
             ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
             "$exerciseTemplateId": {
-              ".validate": "newData.hasChildren(['setsMin', 'setsMax', 'repsMin', 'repsMax', 'restMin', 'restMax', 'order', 'exercise'])",
+              ".validate": "newData.hasChildren(['sets', 'reps', 'rest', 'order', 'exercise'])",
               "sets": {
                 "min": {
                   ".validate": "newData.isNumber()"
@@ -87,7 +87,7 @@
             ".write": "auth != null && auth.uid === $userId && data.parent().child('exercises/' + $exerciseId).exists() || root.child('exercises/' + $exerciseId).exists()",
             ".validate": "newData.hasChildren(['weight', 'reps', 'restLength'])",
             "weight": {
-              ".validate": "newData.isNumber()",
+              ".validate": "newData.isNumber()"
             },
             "reps": {
               ".validate": "newData.isNumber()"

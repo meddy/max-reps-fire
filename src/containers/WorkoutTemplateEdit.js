@@ -2,14 +2,15 @@ import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonToolbar, Col, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {addExerciseTemplate, requestExercises} from '../actions/creators';
+import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actions/creators';
 import {LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
 import {getSelectExercises, getWorkoutTemplate} from '../helpers/selectors';
 
 class WorkoutTemplateEdit extends Component {
   componentDidMount() {
-    const {dispatch} = this.props;
+    const {dispatch, name} = this.props;
     dispatch(requestExercises());
+    dispatch(requestExerciseTemplates(name));
   }
 
   onSubmitNewExerciseTemplate = value => {

@@ -6,12 +6,13 @@ import {
   REMOVE_EXERCISE,
   REMOVE_WORKOUT_TEMPLATE,
   REQUEST_EXERCISES,
+  REQUEST_EXERCISE_TEMPLATES,
   REQUEST_SIGN_IN,
   REQUEST_WORKOUT_TEMPLATES
 } from '../actions/types';
 import {handleAuthFlow} from './authSagas';
 import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
-import {addExerciseTemplate} from './exerciseTemplateSagas';
+import {addExerciseTemplate, channelExerciseTemplates} from './exerciseTemplateSagas';
 import {addWorkoutTemplate, channelWorkoutTemplates, removeWorkoutTemplate} from './workoutTemplateSagas';
 
 export default function* combineSagas() {
@@ -23,6 +24,7 @@ export default function* combineSagas() {
     watchRemoveExercise(),
     watchRemoveWorkoutTemplate(),
     watchRequestExercises(),
+    watchRequestExerciseTemplates(),
     watchRequestWorkoutTemplates()
   ];
 }
@@ -45,6 +47,10 @@ function* watchRequestExercises() {
 
 function* watchAddExerciseTemplate() {
   yield takeEvery(ADD_EXERCISE_TEMPLATE, addExerciseTemplate);
+}
+
+function* watchRequestExerciseTemplates() {
+  yield takeLatest(REQUEST_EXERCISE_TEMPLATES, channelExerciseTemplates);
 }
 
 function* watchAddWorkoutTemplate() {
