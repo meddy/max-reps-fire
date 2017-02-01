@@ -1,6 +1,6 @@
 import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
-import {Button, Col, Row} from 'react-bootstrap';
+import {Button, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {addExercise, requestExercises, removeExercise} from '../actions/creators';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal, withModals} from '../components';
@@ -57,7 +57,7 @@ class Exercises extends Component {
               className="pull-right"
               onClick={() => showModal('newExercise')}
             >
-              <span className="glyphicon glyphicon-plus" /> Exercise
+              <Glyphicon glyph="plus" /> Exercise
             </Button>
           </div>
           <ExerciseList items={user} onClickDelete={exercise => {

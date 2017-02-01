@@ -1,5 +1,16 @@
 import React, {Component, PropTypes} from 'react';
-import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, ListGroup, ListGroupItem, Row} from 'react-bootstrap';
+import {
+  Breadcrumb,
+  Button,
+  ButtonGroup,
+  ButtonToolbar,
+  Col,
+  Glyphicon,
+  Label,
+  ListGroup,
+  ListGroupItem,
+  Row
+} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
 import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actions/creators';
@@ -19,6 +30,25 @@ class WorkoutTemplateEdit extends Component {
 
     dispatch(addExerciseTemplate(value));
     hideModal('exerciseTemplate');
+  };
+
+  renderExerciseTemplate = ({exercise, key, reps, rest, sets}) => {
+    return <ListGroupItem key={key}>
+      <div className="clearfix">
+        <h4 className="pull-left">{exercise}</h4>
+        <Button className="pull-right"><Glyphicon glyph="edit" /></Button>
+      </div>
+      <ul className="list-inline">
+        <li><Label>Reps</Label>
+          <code>{`${reps.min} - ${reps.max}`}</code></li>
+
+        <li><Label>Sets</Label>
+          <code>{`${sets.min} - ${sets.max}`}</code></li>
+
+        <li><Label>Rest</Label>
+          <code>{`${rest.min}' - ${rest.max}'`}</code></li>
+      </ul>
+    </ListGroupItem>;
   };
 
   render() {
@@ -47,7 +77,7 @@ class WorkoutTemplateEdit extends Component {
                 title="Add Workout"
                 onClick={() => showModal('exerciseTemplate')}
               >
-                <span className="glyphicon glyphicon-plus" /> Template
+                <Glyphicon glyph="plus"/> Template
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
@@ -56,23 +86,7 @@ class WorkoutTemplateEdit extends Component {
       <Row>
         <Col lg={8} lgOffset={2}>
           <ListGroup>
-            {exerciseTemplates.map(exerciseTemplate => {
-                const {exercise, key, reps, rest, sets} = exerciseTemplate;
-                return <ListGroupItem key={key}>
-                  <h3>
-                    {exercise}
-                    &nbsp;
-                    <small>
-                      {`${reps.min} - ${reps.max}`}
-                      <strong>&nbsp;X&nbsp;</strong>
-                      {`${sets.min} - ${sets.max}`}
-                      <strong>&nbsp;rest&nbsp;</strong>
-                      {`${rest.min}' - ${rest.max}'`}
-                    </small>
-                  </h3>
-                </ListGroupItem>;
-              }
-            )}
+            {exerciseTemplates.map(this.renderExerciseTemplate)}
           </ListGroup>
         </Col>
       </Row>

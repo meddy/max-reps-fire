@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react';
+import {PropTypes} from 'react';
 
 export const rangeShape = PropTypes.shape({
   min: PropTypes.number.isRequired,

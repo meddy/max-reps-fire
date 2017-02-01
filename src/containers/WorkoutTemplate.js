@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Row} from 'react-bootstrap';
+import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
@@ -34,13 +34,13 @@ class WorkoutTemplate extends Component {
         <ButtonToolbar>
           <ButtonGroup>
             <Button bsStyle="primary" title="Add Workout">
-              <span className="glyphicon glyphicon-plus" /> Workout
+              <Glyphicon glyph="plus" /> Workout
             </Button>
           </ButtonGroup>
           <ButtonGroup>
             <LinkContainer to={`/workout-template/${name}/edit`}>
               <Button title="Edit Workout Template">
-                <span className="glyphicon glyphicon-edit" /> Template
+                <Glyphicon glyph="edit" /> Template
               </Button>
             </LinkContainer>
             <Button
@@ -48,7 +48,7 @@ class WorkoutTemplate extends Component {
               title="Delete Workout Template"
               onClick={() => showModal('workoutTemplate')}
             >
-              <span className="glyphicon glyphicon-trash" /> Template
+              <Glyphicon glyph="trash" /> Template
             </Button>
           </ButtonGroup>
         </ButtonToolbar>

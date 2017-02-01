@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Form, FormControl, FormGroup} from 'react-bootstrap';
+import {Form, FormControl, FormGroup, Glyphicon} from 'react-bootstrap';
 
 export default class ExerciseTemplateControl extends Component {
   constructor(props) {
@@ -22,13 +22,13 @@ export default class ExerciseTemplateControl extends Component {
         <FormControl
           type="number"
           value={this.state.min}
-          onChange={e => this.onChange('min',  e.target.value)}
+          onChange={e => this.onChange('min', e.target.value)}
         />
-        <span className="glyphicon glyphicon-minus" />
+        <Glyphicon glyph="minus" />
         <FormControl
           type="number"
           value={this.state.max}
-          onChange={e => this.onChange('max',  e.target.value)}
+          onChange={e => this.onChange('max', e.target.value)}
         />
       </Form>
     </FormGroup>;

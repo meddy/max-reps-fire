@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {Button, Col, FormControl, Row} from 'react-bootstrap';
+import {Button, Col, FormControl, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
 import {addWorkoutTemplate} from '../actions/creators';
@@ -36,7 +36,7 @@ class Workouts extends Component {
               title="New Workout Template"
               onClick={() => showModal('workoutTemplate')}
             >
-              <span className="glyphicon glyphicon-plus" /> Template
+              <Glyphicon glyph="plus" /> Template
             </Button>
           </Col>
           <Col sm={6}>
@@ -46,7 +46,7 @@ class Workouts extends Component {
               className="select-action"
             />
             <Button bsStyle="primary" title="New Workout">
-              <span className="glyphicon glyphicon-plus" /> Workout
+              <Glyphicon glyph="plus" /> Workout
             </Button>
           </Col>
         </Row>
