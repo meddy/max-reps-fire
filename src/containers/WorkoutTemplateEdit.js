@@ -14,46 +14,70 @@ import {
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
 import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actions/creators';
-import {LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
+import {EditExerciseTemplateModal, LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
 import {getExerciseOptions, getExerciseTemplates, getWorkoutTemplate} from '../helpers/selectors';
 import {exerciseTemplateShape} from '../helpers/shapes';
 
 class WorkoutTemplateEdit extends Component {
+  state = {
+    exerciseTemplate: null
+  };
+
   componentDidMount() {
     const {dispatch, name} = this.props;
     dispatch(requestExercises());
     dispatch(requestExerciseTemplates(name));
   }
 
+  onSubmitUpdateExerciseTemplate = () => {
+
+  };
+
   onSubmitNewExerciseTemplate = value => {
     const {dispatch, hideModal} = this.props;
 
     dispatch(addExerciseTemplate(value));
-    hideModal('exerciseTemplate');
+    hideModal('create');
   };
 
-  renderExerciseTemplate = ({exercise, key, reps, rest, sets}) => {
+  renderExerciseTemplate = exerciseTemplate => {
+    const {exercise, key, reps, rest, sets} = exerciseTemplate;
     return <ListGroupItem key={key}>
       <div className="clearfix">
         <h4 className="pull-left">{exercise}</h4>
-        <Button className="pull-right"><Glyphicon glyph="edit" /></Button>
+        <ButtonGroup className="pull-right">
+          <Button onClick={() => {
+            this.setState({exerciseTemplate});
+            this.props.showModal('edit');
+          }}>
+            <Glyphicon glyph="edit" />
+          </Button>
+          <Button bsStyle="danger">
+            <Glyphicon glyph="trash" />
+          </Button>
+        </ButtonGroup>
+
       </div>
       <ul className="list-inline">
-        <li><Label>Reps</Label>
-          <code>{`${reps.min} - ${reps.max}`}</code></li>
-
-        <li><Label>Sets</Label>
-          <code>{`${sets.min} - ${sets.max}`}</code></li>
-
-        <li><Label>Rest</Label>
-          <code>{`${rest.min}' - ${rest.max}'`}</code></li>
+        <li>
+          <Label>Reps</Label>
+          <code>{`${reps.min} - ${reps.max}`}</code>
+        </li>
+        <li>
+          <Label>Sets</Label>
+          <code>{`${sets.min} - ${sets.max}`}</code>
+        </li>
+        <li>
+          <Label>Rest</Label>
+          <code>{`${rest.min}' - ${rest.max}'`}</code>
+        </li>
       </ul>
     </ListGroupItem>;
   };
 
   render() {
     const {
-      exercises,
+      exerciseOptions,
       exerciseTemplates,
       hideModal,
       isModalVisible,
@@ -61,7 +85,7 @@ class WorkoutTemplateEdit extends Component {
       showModal
     } = this.props;
 
-    return <LoadingIndicator loading={!exercises.length}>
+    return <LoadingIndicator loading={!exerciseOptions.length}>
       <Row>
         <Col lg={8} lgOffset={2}>
           <Breadcrumb>
@@ -75,9 +99,9 @@ class WorkoutTemplateEdit extends Component {
               <Button
                 bsStyle="primary"
                 title="Add Workout"
-                onClick={() => showModal('exerciseTemplate')}
+                onClick={() => showModal('new')}
               >
-                <Glyphicon glyph="plus"/> Template
+                <Glyphicon glyph="plus" /> Template
               </Button>
             </ButtonGroup>
           </ButtonToolbar>
@@ -90,19 +114,25 @@ class WorkoutTemplateEdit extends Component {
           </ListGroup>
         </Col>
       </Row>
+      {this.state.exerciseTemplate && <EditExerciseTemplateModal
+        exerciseTemplate={this.state.exerciseTemplate}
+        onSubmit={this.onSubmitUpdateExerciseTemplate}
+        onHide={() => hideModal('edit')}
+        show={isModalVisible('edit')}
+      />}
       <NewExerciseTemplateModal
-        exercises={exercises}
+        exerciseOptions={exerciseOptions}
+        onHide={() => hideModal('new')}
         onSubmit={this.onSubmitNewExerciseTemplate}
-        onHide={() => hideModal('exerciseTemplate')}
-        show={isModalVisible('exerciseTemplate')}
-        title="Add Exercise Template"
+        title="New Exercise Template"
+        show={isModalVisible('new')}
       />
     </LoadingIndicator>;
   }
 }
 
 WorkoutTemplateEdit.propTypes = {
-  exercises: PropTypes.arrayOf(
+  exerciseOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string
@@ -119,9 +149,9 @@ function mapStateToProps(state, props) {
   const {name} = getWorkoutTemplate(state, props);
   return {
     name,
-    exercises: getExerciseOptions(state),
+    exerciseOptions: getExerciseOptions(state),
     exerciseTemplates: getExerciseTemplates(state, name)
   };
 }
 
-export default connect(mapStateToProps)(withModals(WorkoutTemplateEdit, ['exerciseTemplate']));
+export default connect(mapStateToProps)(withModals(WorkoutTemplateEdit, ['new', 'edit']));

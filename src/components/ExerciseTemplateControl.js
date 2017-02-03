@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
-import {Form, FormControl, FormGroup, Glyphicon} from 'react-bootstrap';
+import {Col, Form, FormControl, FormGroup, Glyphicon} from 'react-bootstrap';
+import {rangeShape} from '../helpers/shapes';
 
 export default class ExerciseTemplateControl extends Component {
   constructor(props) {
@@ -16,27 +17,31 @@ export default class ExerciseTemplateControl extends Component {
   };
 
   render() {
-    return <FormGroup className="text-center">
-      <h5>{this.props.label}</h5>
-      <Form inline>
-        <FormControl
-          type="number"
-          value={this.state.min}
-          onChange={e => this.onChange('min', e.target.value)}
-        />
-        <Glyphicon glyph="minus" />
-        <FormControl
-          type="number"
-          value={this.state.max}
-          onChange={e => this.onChange('max', e.target.value)}
-        />
-      </Form>
-    </FormGroup>;
+    return <Form horizontal>
+      <FormGroup className="exercise-template-control">
+        <Col sm={2}>
+          <label>{this.props.label}</label>
+        </Col>
+        <Col sm={10}>
+          <FormControl
+            type="number"
+            value={this.state.min}
+            onChange={e => this.onChange('min', e.target.value)}
+          />
+          <Glyphicon glyph="minus" />
+          <FormControl
+            type="number"
+            value={this.state.max}
+            onChange={e => this.onChange('max', e.target.value)}
+          />
+        </Col>
+      </FormGroup>
+    </Form>;
   }
 }
 
 ExerciseTemplateControl.propTypes = {
   label: PropTypes.string.isRequired,
   onChange: PropTypes.func,
-  value: PropTypes.shape({min: PropTypes.string, max: PropTypes.string})
+  value: rangeShape
 };

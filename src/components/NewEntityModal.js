@@ -17,10 +17,7 @@ export default class NewEntityModal extends Component {
     const {onHide, show, title, getValidationState} = this.props;
     const validationState = getValidationState(this.state.value);
 
-    return <Modal
-      show={show}
-      onHide={onHide}
-    >
+    return <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

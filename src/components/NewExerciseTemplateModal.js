@@ -3,28 +3,24 @@ import {Button, ControlLabel, FormGroup, Modal} from 'react-bootstrap';
 import Select from 'react-select';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 
-// This should both new and edit, with a prop to disable changing the exercise
 export default class NewExerciseTemplateModal extends Component {
   initialState = {
     exercise: '',
     reps: {
-      min: '',
-      max: ''
+      min: 0,
+      max: 0
     },
     sets: {
-      min: '',
-      max: ''
+      min: 0,
+      max: 0
     },
     rest: {
-      min: '',
-      max: ''
+      min: 0,
+      max: 0
     }
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {...this.initialState};
-  }
+  state = this.initialState;
 
   onClickSubmit = event => {
     event.preventDefault();
@@ -34,24 +30,23 @@ export default class NewExerciseTemplateModal extends Component {
     this.setState(this.initialState);
   };
 
-  render() {
-    const {exercises, onHide, show, title} = this.props;
+  getValidationState = () => this.state.exercise ? null : 'error';
 
-    return <Modal
-      show={show}
-      onHide={onHide}
-    >
+  render() {
+    const {exerciseOptions, onHide, show, title} = this.props;
+    const validationState = this.getValidationState();
+
+    return <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FormGroup controlId="exercise">
+        <FormGroup controlId="exercise" validationState={validationState}>
           <ControlLabel>Exercise</ControlLabel>
           <Select
             name="exercise"
-            options={exercises}
-            // need to probably change this to have value/label
-            onChange={exercise => this.setState({exercise})}
+            options={exerciseOptions}
+            onChange={option => this.setState({exercise: option.value})}
             value={this.state.exercise}
           />
         </FormGroup>
@@ -66,25 +61,28 @@ export default class NewExerciseTemplateModal extends Component {
           onChange={sets => this.setState({sets})}
         />
         <ExerciseTemplateControl
-          label="Rest"
+          label="Rest (Seconds)"
           value={this.state.rest}
           onChange={rest => this.setState({rest})}
         />
+      </Modal.Body>
+      <Modal.Footer>
         <Button
-          type="submit"
           bsStyle="success"
-          onClick={this.onClickSubmit}
           block
+          disabled={validationState === 'error'}
+          onClick={this.onClickSubmit}
+          type="submit"
         >
           Add
         </Button>
-      </Modal.Body>
+      </Modal.Footer>
     </Modal>;
   }
 }
 
 NewExerciseTemplateModal.propTypes = {
-  exercises: PropTypes.arrayOf(
+  exerciseOptions: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string,
       label: PropTypes.string

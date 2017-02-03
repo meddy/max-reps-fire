@@ -2,6 +2,11 @@
   .container {
     width: 750px;
   }
+
+  .exercise-template-control input {
+    display: inline-block;
+    width: auto;
+  }
 }
 @media (min-width: 1200px) {
   .container {
