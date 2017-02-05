@@ -26,13 +26,15 @@ export default class ExerciseTemplateControl extends Component {
           <FormControl
             type="number"
             value={this.state.min}
-            onChange={e => this.onChange('min', e.target.value)}
+            min={0}
+            onChange={e => this.onChange('min', e.target.value || 0)}
           />
           <Glyphicon glyph="minus" />
           <FormControl
             type="number"
             value={this.state.max}
-            onChange={e => this.onChange('max', e.target.value)}
+            min={0}
+            onChange={e => this.onChange('max', e.target.value || 0)}
           />
         </Col>
       </FormGroup>

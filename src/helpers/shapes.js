@@ -1,8 +1,8 @@
 import {PropTypes} from 'react';
 
 export const rangeShape = PropTypes.shape({
-  min: PropTypes.number.isRequired,
-  max: PropTypes.number.isRequired
+  min: PropTypes.number,
+  max: PropTypes.number
 });
 
 export const exerciseTemplateShape = PropTypes.shape({

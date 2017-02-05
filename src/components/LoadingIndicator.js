@@ -9,6 +9,6 @@ export default function LoadingIndicator({children, loading}) {
 }
 
 LoadingIndicator.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   loading: PropTypes.bool.isRequired
 };

@@ -42,3 +42,13 @@ label input[type="checkbox"] {
     margin-top: 20px;
   }
 }
+
+#sign-in {
+  padding: 0;
+}
+
+#sign-in img {
+  display: block;
+  height: 40px;
+  margin-top: 5px;
+}

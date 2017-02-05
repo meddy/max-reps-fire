@@ -1,20 +1,29 @@
 import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
-import {Button, Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap';
+import {Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
-import {requestSignOut, requestWorkoutTemplates} from '../actions/creators';
-import {getAuthenticated, getWorkoutTemplatesReceived} from '../helpers/selectors';
+import {requestSignIn, requestSignOut, requestWorkoutTemplates} from '../actions/creators';
+import {auth, authProvider} from '../bootstrap/firebaseServices';
+import {getAuthenticated, getAuthReceived, getWorkoutTemplatesReceived} from '../helpers/selectors';
+import signInImage from '../resources/google-sign-in.png';
 
 class App extends Component {
+  static handleSignInWithGoogle(e) {
+    e.preventDefault();
+    auth.signInWithRedirect(authProvider);
+  }
+
   componentDidMount() {
-    this.props.dispatch(requestWorkoutTemplates());
+    const {authenticated, dispatch} = this.props;
+    if (!authenticated) {
+      dispatch(requestSignIn());
+    }
   }
 
   componentDidUpdate() {
     const {authenticated, dispatch, workoutTemplatesReceived} = this.props;
-
     if (authenticated && !workoutTemplatesReceived) {
       dispatch(requestWorkoutTemplates());
     }
@@ -25,12 +34,8 @@ class App extends Component {
   };
 
   renderNavbar = () => {
-    if (!this.props.authenticated) {
-      return null;
-    }
-
     return <Navbar.Collapse>
-      <Nav>
+      {this.props.authenticated && <Nav>
         <LinkContainer to="/workouts">
           <NavItem>Workouts</NavItem>
         </LinkContainer>
@@ -40,10 +45,10 @@ class App extends Component {
         <LinkContainer to="/exercises">
           <NavItem>Exercises</NavItem>
         </LinkContainer>
+      </Nav>}
+      <Nav pullRight>
+        {this.renderAuthButton()}
       </Nav>
-      <Navbar.Form pullRight>
-        <Button type="button" onClick={this.handleSignOut}>Sign Out</Button>
-      </Navbar.Form>
     </Navbar.Collapse>;
   };
 
@@ -58,18 +63,34 @@ class App extends Component {
     });
   };
 
+  renderAuthButton = () => {
+    const {authenticated, authReceived} = this.props;
+
+    if (!authReceived) {
+      return null;
+    }
+
+    if (authenticated) {
+      return <NavItem onClick={this.handleSignOut}>
+        Sign Out
+      </NavItem>;
+    }
+
+    return <NavItem onClick={App.handleSignInWithGoogle} id="sign-in">
+      <img src={signInImage} alt="Google Sign In" />
+    </NavItem>;
+  };
+
   render() {
     return <div>
       <Navbar inverse fixedTop>
-        <div className="container">
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Max Reps Fire</Link>
-            </Navbar.Brand>
-            <Navbar.Toggle />
-          </Navbar.Header>
-          {this.renderNavbar()}
-        </div>
+        <Navbar.Header>
+          <Navbar.Brand>
+            <Link to="/">Max Reps Fire</Link>
+          </Navbar.Brand>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        {this.renderNavbar()}
       </Navbar>
       <Grid className="container theme-showcase">
         {this.props.children}
@@ -80,12 +101,14 @@ class App extends Component {
 
 App.propTypes = {
   authenticated: PropTypes.bool.isRequired,
+  authReceived: PropTypes.bool.isRequired,
   workoutTemplates: PropTypes.arrayOf(PropTypes.object).isRequired
 };
 
 function mapStateToProps(state) {
   return {
     authenticated: getAuthenticated(state),
+    authReceived: getAuthReceived(state),
     workoutTemplatesReceived: getWorkoutTemplatesReceived(state),
     workoutTemplates: values(state.workoutTemplate.data)
   };

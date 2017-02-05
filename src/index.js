@@ -7,6 +7,7 @@ import 'react-select/dist/react-select.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './resources/index.css';
 import './bootstrap/firebaseServices';
+import './resources/spinner.css';
 
 const store = createStore();
 
