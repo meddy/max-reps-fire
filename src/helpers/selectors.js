@@ -33,5 +33,12 @@ export const getExerciseTemplates = createSelector(
 );
 
 export const getExercisePath = createSelector(getUid, uid => `/users/${uid}/exercises`);
-export const getExerciseTemplatePath = createSelector(getUid, uid => `/users/${uid}/exerciseTemplates`);
 export const getWorkoutTemplatePath = createSelector(getUid, uid => `/users/${uid}/workoutTemplates`);
+export const getExerciseTemplatePath = createSelector(
+  getUid,
+  state => state.exerciseTemplate.selectedWorkoutTemplate,
+  (uid, workoutTemplate) => {
+    const path = `/users/${uid}/exerciseTemplates`;
+    return workoutTemplate ? `${path}/${workoutTemplate}` : path;
+  }
+);

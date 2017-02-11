@@ -33,10 +33,10 @@ class WorkoutTemplateEdit extends Component {
 
   };
 
-  onSubmitNewExerciseTemplate = value => {
-    const {dispatch, hideModal} = this.props;
+  onSubmitNewExerciseTemplate = exerciseTemplate => {
+    const {dispatch, name, hideModal} = this.props;
 
-    dispatch(addExerciseTemplate(value));
+    dispatch(addExerciseTemplate(name, exerciseTemplate));
     hideModal('create');
   };
 

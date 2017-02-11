@@ -1,12 +1,17 @@
 import {merge} from 'lodash/fp';
-import {RECEIVE_EXERCISE_TEMPLATES, RECEIVE_SIGN_OUT} from '../actions/types';
+import {ADD_EXERCISE_TEMPLATE, RECEIVE_EXERCISE_TEMPLATES, RECEIVE_SIGN_OUT} from '../actions/types';
 import createReducer from '../helpers/createReducer';
 
 const initialState = {
+  selectedWorkoutTemplate: null,
   dataByWorkoutTemplate: {}
 };
 
 const actionMap = {
+  [ADD_EXERCISE_TEMPLATE]: (state, action) => ({
+    ...state,
+    selectedWorkoutTemplate: action.workoutTemplate
+  }),
   [RECEIVE_EXERCISE_TEMPLATES]: (state, action) => {
     return merge(state, {
       dataByWorkoutTemplate: {

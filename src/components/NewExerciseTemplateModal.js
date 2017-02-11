@@ -5,7 +5,7 @@ import ExerciseTemplateControl from './ExerciseTemplateControl';
 
 export default class NewExerciseTemplateModal extends Component {
   initialState = {
-    exercise: '',
+    exercise: null,
     reps: {
       min: 0,
       max: 0
@@ -17,7 +17,8 @@ export default class NewExerciseTemplateModal extends Component {
     rest: {
       min: 0,
       max: 0
-    }
+    },
+    order: 1
   };
 
   state = this.initialState;
@@ -25,12 +26,11 @@ export default class NewExerciseTemplateModal extends Component {
   onClickSubmit = event => {
     event.preventDefault();
 
-    const {onSubmit} = this.props;
-    onSubmit(this.state);
+    this.props.onSubmit(this.state);
     this.setState(this.initialState);
   };
 
-  getValidationState = () => this.state.exercise ? null : 'error';
+  getValidationState = () => this.state.exercise ? 'success' : null;
 
   render() {
     const {exerciseOptions, onHide, show, title} = this.props;
@@ -41,12 +41,12 @@ export default class NewExerciseTemplateModal extends Component {
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FormGroup controlId="exercise" validationState={validationState}>
+        <FormGroup controlId="exercise">
           <ControlLabel>Exercise</ControlLabel>
           <Select
             name="exercise"
             options={exerciseOptions}
-            onChange={option => this.setState({exercise: option.value})}
+            onChange={option => this.setState({exercise: option ? option.value : null})}
             value={this.state.exercise}
           />
         </FormGroup>
@@ -70,7 +70,7 @@ export default class NewExerciseTemplateModal extends Component {
         <Button
           bsStyle="success"
           block
-          disabled={validationState === 'error'}
+          disabled={validationState !== 'success'}
           onClick={this.onClickSubmit}
           type="submit"
         >

@@ -16,10 +16,10 @@ export default function createDatabaseSagas(getPath) {
       };
     },
     addItem: function*(action) {
-      const path = yield select(getPath);
-      const {key, value} = action;
+      const {key, value, params} = action;
+      const path = yield select(getPath, params);
 
-      if (value) {
+      if (key) {
         yield call(setItem, path, key, value);
       } else {
         yield call(pushItem, path, value);

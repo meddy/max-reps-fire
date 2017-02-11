@@ -8,10 +8,11 @@ export function addExercise(name) {
   };
 }
 
-export function addExerciseTemplate(exerciseTemplate) {
+export function addExerciseTemplate(workoutTemplate, exerciseTemplate) {
   return {
     type: types.ADD_EXERCISE_TEMPLATE,
-    ...exerciseTemplate
+    value: exerciseTemplate,
+    workoutTemplate
   };
 }
 
