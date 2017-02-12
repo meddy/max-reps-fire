@@ -30,6 +30,15 @@ export function removeExercise(key) {
     key
   };
 }
+
+export function removeExerciseTemplate(workoutTemplate, key) {
+  return {
+    type: types.REMOVE_EXERCISE_TEMPLATE,
+    workoutTemplate,
+    key
+  };
+}
+
 export function removeWorkoutTemplate(key) {
   return {
     type: types.REMOVE_WORKOUT_TEMPLATE,
@@ -46,6 +55,7 @@ export function receiveExercises(exercises, source) {
 }
 
 export function receiveExerciseTemplates(exerciseTemplatesGrouped) {
+  console.log(exerciseTemplatesGrouped);
   return {
     type: types.RECEIVE_EXERCISE_TEMPLATES,
     exerciseTemplatesGrouped,

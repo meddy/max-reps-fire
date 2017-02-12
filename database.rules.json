@@ -30,7 +30,7 @@
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // workouts are children of an existing workout template
-            ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplates/' + $workoutTemplateId).exists()",
+            ".write": "auth != null && auth.uid === $userId && data.parent().parent().hasChild('workoutTemplates/' + $workoutTemplateId)",
             "$workoutId": {
               ".validate": "newData.hasChild('performed')",
               "$performed": {
@@ -43,7 +43,7 @@
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // exercise templates are children of an existing workout template
-            ".write": "auth != null && auth.uid === $userId && data.parent().child('workoutTemplate/' + $workoutTemplateId).exists()",
+            ".write": "auth != null && auth.uid === $userId && data.parent().parent().hasChild('workoutTemplates/' + $workoutTemplateId)",
             "$exerciseTemplateId": {
               ".validate": "newData.hasChildren(['sets', 'reps', 'rest', 'order', 'exercise'])",
               "sets": {

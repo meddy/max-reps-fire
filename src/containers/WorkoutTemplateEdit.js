@@ -37,7 +37,11 @@ class WorkoutTemplateEdit extends Component {
     const {dispatch, name, hideModal} = this.props;
 
     dispatch(addExerciseTemplate(name, exerciseTemplate));
-    hideModal('create');
+    hideModal('new');
+  };
+
+  onDeleteExerciseTemplate = () => {
+    const {dispatch, name} = this.props;
   };
 
   renderExerciseTemplate = exerciseTemplate => {
