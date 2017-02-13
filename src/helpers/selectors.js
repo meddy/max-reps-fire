@@ -23,7 +23,7 @@ export const getExerciseOptions = createSelector(
 );
 
 export const getExerciseTemplates = createSelector(
-  (state, workoutTemplateKey) => state.exerciseTemplate.dataByWorkoutTemplate[workoutTemplateKey] || {},
+  (state, workoutTemplate) => state.exerciseTemplate.dataByWorkoutTemplate[workoutTemplate] || {},
   exerciseTemplates => {
     return Object
       .keys(exerciseTemplates)

@@ -11,8 +11,7 @@ class Exercises extends Component {
   };
 
   componentDidMount() {
-    const {dispatch} = this.props;
-    dispatch(requestExercises());
+    this.props.dispatch(requestExercises());
   }
 
   onSubmitNewExercise = value => {

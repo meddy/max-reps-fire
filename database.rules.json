@@ -16,14 +16,12 @@
             ".validate": "newData.isString()"
           }
         },
-        "workoutTemplates": {
+        "workoutTemplates": {x`
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // data has a unique name
-            ".write": "auth != null && auth.uid === $userId && (!newData.exists() || newData.child('name').val() === $workoutTemplateId)",
-            "name": {
-              ".validate": "newData.isString()"
-            }
+            ".write": "auth != null && auth.uid === $userId && (!newData.exists() || newData.val() === $workoutTemplateId)",
+            ".validate": "newData.isString()"
           }
         },
         "workouts": {

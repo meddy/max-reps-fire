@@ -7,13 +7,11 @@ const initialState = {
 };
 
 const actionMap = {
-  [RECEIVE_WORKOUT_TEMPLATES]: (state, action) => {
-    return {
-      ...state,
-      data: action.workoutTemplates,
-      received: true
-    };
-  },
+  [RECEIVE_WORKOUT_TEMPLATES]: (state, action) => ({
+    ...state,
+    data: action.workoutTemplates,
+    received: true
+  }),
   [RECEIVE_SIGN_OUT]: () => ({...initialState})
 };
 

@@ -16,20 +16,20 @@ class WorkoutTemplate extends Component {
   };
 
   componentWillUnmount() {
-    const {name, dispatch} = this.props;
+    const {dispatch, workoutTemplate} = this.props;
 
     if (this.removeOnUnmount) {
-      dispatch(removeWorkoutTemplate(name));
+      dispatch(removeWorkoutTemplate(workoutTemplate));
     }
   }
 
   render() {
-    const {hideModal, isModalVisible, name, showModal} = this.props;
+    const {hideModal, isModalVisible, showModal, workoutTemplate} = this.props;
 
     return <Row>
       <Col lg={8} lgOffset={2}>
         <Breadcrumb>
-          <Breadcrumb.Item active>{name}</Breadcrumb.Item>
+          <Breadcrumb.Item active>{workoutTemplate}</Breadcrumb.Item>
         </Breadcrumb>
         <ButtonToolbar>
           <ButtonGroup>
@@ -38,7 +38,7 @@ class WorkoutTemplate extends Component {
             </Button>
           </ButtonGroup>
           <ButtonGroup>
-            <LinkContainer to={`/workout-template/${name}/edit`}>
+            <LinkContainer to={`/workout-template/${workoutTemplate}/edit`}>
               <Button title="Edit Workout Template">
                 <Glyphicon glyph="edit" /> Template
               </Button>
@@ -57,22 +57,22 @@ class WorkoutTemplate extends Component {
         onHide={() => hideModal('workoutTemplate')}
         onConfirm={this.onConfirmDeleteWorkoutTemplate}
         show={isModalVisible('workoutTemplate')}
-        title={`Delete ${name}?`}
+        title={`Delete ${workoutTemplate}?`}
       />
     </Row>;
   }
 }
 
 WorkoutTemplate.propTypes = {
-  name: PropTypes.string.isRequired,
   isModalVisible: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired
+  showModal: PropTypes.func.isRequired,
+  workoutTemplate: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state, props) {
   return {
-    name: getWorkoutTemplate(state, props).name
+    workoutTemplate: getWorkoutTemplate(state, props)
   };
 }
 

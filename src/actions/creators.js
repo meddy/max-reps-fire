@@ -20,7 +20,7 @@ export function addWorkoutTemplate(name) {
   return {
     type: types.ADD_WORKOUT_TEMPLATE,
     key: name,
-    value: {name}
+    value: name
   };
 }
 
@@ -55,7 +55,6 @@ export function receiveExercises(exercises, source) {
 }
 
 export function receiveExerciseTemplates(exerciseTemplatesGrouped) {
-  console.log(exerciseTemplatesGrouped);
   return {
     type: types.RECEIVE_EXERCISE_TEMPLATES,
     exerciseTemplatesGrouped,

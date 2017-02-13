@@ -39,32 +39,31 @@ function* watchAddExercise() {
   yield takeEvery(ADD_EXERCISE, addExercise);
 }
 
-function* watchRemoveExercise() {
-  yield takeEvery(REMOVE_EXERCISE, removeExercise);
-}
-
-function* watchRequestExercises() {
-  yield takeLatest(REQUEST_EXERCISES, fetchExercises);
-}
-
 function* watchAddExerciseTemplate() {
   yield takeEvery(ADD_EXERCISE_TEMPLATE, addExerciseTemplate);
-}
-
-function* watchRemoveExerciseTemplate() {
-  yield takeEvery(REMOVE_EXERCISE_TEMPLATE, removeExerciseTemplate);
-}
-
-function* watchRequestExerciseTemplates() {
-  yield takeLatest(REQUEST_EXERCISE_TEMPLATES, channelExerciseTemplates);
 }
 
 function* watchAddWorkoutTemplate() {
   yield takeEvery(ADD_WORKOUT_TEMPLATE, addWorkoutTemplate);
 }
 
+function* watchRemoveExercise() {
+  yield takeEvery(REMOVE_EXERCISE, removeExercise);
+}
+
+function* watchRemoveExerciseTemplate() {
+  yield takeEvery(REMOVE_EXERCISE_TEMPLATE, removeExerciseTemplate);
+}
 function* watchRemoveWorkoutTemplate() {
   yield takeEvery(REMOVE_WORKOUT_TEMPLATE, removeWorkoutTemplate);
+}
+
+function* watchRequestExercises() {
+  yield takeLatest(REQUEST_EXERCISES, fetchExercises);
+}
+
+function* watchRequestExerciseTemplates() {
+  yield takeLatest(REQUEST_EXERCISE_TEMPLATES, channelExerciseTemplates);
 }
 
 function* watchRequestWorkoutTemplates() {

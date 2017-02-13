@@ -55,10 +55,10 @@ class App extends Component {
   renderWorkoutTemplateMenu = () => {
     return this.props.workoutTemplates.map(workoutTemplate => {
       return <LinkContainer
-        key={workoutTemplate.name}
-        to={`/workout-template/${workoutTemplate.name}`}
+        key={workoutTemplate}
+        to={`/workout-template/${workoutTemplate}`}
       >
-        <MenuItem>{workoutTemplate.name}</MenuItem>
+        <MenuItem>{workoutTemplate}</MenuItem>
       </LinkContainer>;
     });
   };
@@ -102,7 +102,7 @@ class App extends Component {
 App.propTypes = {
   authenticated: PropTypes.bool.isRequired,
   authReceived: PropTypes.bool.isRequired,
-  workoutTemplates: PropTypes.arrayOf(PropTypes.object).isRequired
+  workoutTemplates: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 function mapStateToProps(state) {

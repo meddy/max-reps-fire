@@ -34,14 +34,15 @@ class WorkoutTemplateEdit extends Component {
   };
 
   onSubmitNewExerciseTemplate = exerciseTemplate => {
-    const {dispatch, name, hideModal} = this.props;
+    const {dispatch, hideModal, workoutTemplate} = this.props;
 
-    dispatch(addExerciseTemplate(name, exerciseTemplate));
+    dispatch(addExerciseTemplate(workoutTemplate, exerciseTemplate));
     hideModal('new');
   };
 
   onDeleteExerciseTemplate = () => {
-    const {dispatch, name} = this.props;
+    // make sure action types, creators, and sagas are ordered consistently
+    const {dispatch, workoutTemplate} = this.props;
   };
 
   renderExerciseTemplate = exerciseTemplate => {
@@ -85,16 +86,16 @@ class WorkoutTemplateEdit extends Component {
       exerciseTemplates,
       hideModal,
       isModalVisible,
-      name,
-      showModal
+      showModal,
+      workoutTemplate
     } = this.props;
 
     return <LoadingIndicator loading={!exerciseOptions.length}>
       <Row>
         <Col lg={8} lgOffset={2}>
           <Breadcrumb>
-            <LinkContainer to={`/workout-template/${name}`}>
-              <Breadcrumb.Item active>{name}</Breadcrumb.Item>
+            <LinkContainer to={`/workout-template/${workoutTemplate}`}>
+              <Breadcrumb.Item active>{workoutTemplate}</Breadcrumb.Item>
             </LinkContainer>
             <Breadcrumb.Item active>Exercise Templates</Breadcrumb.Item>
           </Breadcrumb>
@@ -145,16 +146,16 @@ WorkoutTemplateEdit.propTypes = {
   exerciseTemplates: PropTypes.arrayOf(exerciseTemplateShape),
   hideModal: PropTypes.func.isRequired,
   isModalVisible: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  showModal: PropTypes.func.isRequired
+  showModal: PropTypes.func.isRequired,
+  workoutTemplate: PropTypes.string.isRequired
 };
 
 function mapStateToProps(state, props) {
-  const {name} = getWorkoutTemplate(state, props);
+  const workoutTemplate = getWorkoutTemplate(state, props);
   return {
-    name,
     exerciseOptions: getExerciseOptions(state),
-    exerciseTemplates: getExerciseTemplates(state, name)
+    exerciseTemplates: getExerciseTemplates(state, workoutTemplate),
+    workoutTemplate
   };
 }
 
