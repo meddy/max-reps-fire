@@ -40,10 +40,11 @@ class WorkoutTemplateEdit extends Component {
     hideModal('new');
   };
 
-  onDeleteExerciseTemplate = () => {
-    // make sure action types, creators, and sagas are ordered consistently
-    const {dispatch, workoutTemplate} = this.props;
-  };
+  // TODO: Implement
+  // onDeleteExerciseTemplate = () => {
+  //   // make sure action types, creators, and sagas are ordered consistently
+  //   const {dispatch, workoutTemplate} = this.props;
+  // };
 
   renderExerciseTemplate = exerciseTemplate => {
     const {exercise, key, reps, rest, sets} = exerciseTemplate;

@@ -16,7 +16,7 @@
             ".validate": "newData.isString()"
           }
         },
-        "workoutTemplates": {x`
+        "workoutTemplates": {
           "$workoutTemplateId": {
             // user is authenticated and is owner of data
             // data has a unique name
