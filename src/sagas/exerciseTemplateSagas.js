@@ -1,5 +1,5 @@
 import createDatabaseSagas from '../helpers/createDatabaseSagas';
-import {receiveExerciseTemplates} from '../actions/creators';
+import {receiveExerciseTemplates} from '../actionCreators';
 import {getExerciseTemplatePath} from '../helpers/selectors';
 
 const exerciseTemplateSagas = createDatabaseSagas(getExerciseTemplatePath);

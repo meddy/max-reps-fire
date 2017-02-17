@@ -10,7 +10,7 @@ import {
   REQUEST_EXERCISE_TEMPLATES,
   REQUEST_SIGN_IN,
   REQUEST_WORKOUT_TEMPLATES
-} from '../actions/types';
+} from '../actionTypes';
 import {handleAuthFlow} from './authSagas';
 import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
 import {addExerciseTemplate, channelExerciseTemplates, removeExerciseTemplate} from './exerciseTemplateSagas';

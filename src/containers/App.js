@@ -4,7 +4,7 @@ import {Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {LinkContainer} from 'react-router-bootstrap';
-import {requestSignIn, requestSignOut, requestWorkoutTemplates} from '../actions/creators';
+import {requestSignIn, requestSignOut, requestWorkoutTemplates} from '../actionCreators';
 import {auth, authProvider} from '../bootstrap/firebaseServices';
 import {getAuthenticated, getAuthReceived, getWorkoutTemplatesReceived} from '../helpers/selectors';
 import signInImage from '../resources/google-sign-in.png';

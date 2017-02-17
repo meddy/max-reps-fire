@@ -1,5 +1,5 @@
 import {merge} from 'lodash/fp';
-import {ADD_EXERCISE_TEMPLATE, RECEIVE_EXERCISE_TEMPLATES, RECEIVE_SIGN_OUT} from '../actions/types';
+import {ADD_EXERCISE_TEMPLATE, RECEIVE_EXERCISE_TEMPLATES, RECEIVE_SIGN_OUT} from '../actionTypes';
 import createReducer from '../helpers/createReducer';
 
 const initialState = {

@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {LinkContainer} from 'react-router-bootstrap';
-import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actions/creators';
+import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actionCreators';
 import {EditExerciseTemplateModal, LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
 import {getExerciseOptions, getExerciseTemplates, getWorkoutTemplate} from '../helpers/selectors';
 import {exerciseTemplateShape} from '../helpers/shapes';

@@ -1,4 +1,4 @@
-import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actions/types';
+import {RECEIVE_EXERCISES, REQUEST_SIGN_OUT} from '../actionTypes';
 import createReducer from '../helpers/createReducer';
 
 const initialState = {

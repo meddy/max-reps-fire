@@ -1,4 +1,4 @@
-import {requestSignIn, requestWorkoutTemplates} from '../actions/creators';
+import {requestSignIn, requestWorkoutTemplates} from '../actionCreators';
 import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../helpers/selectors';
 
 export default function createRouteGuards(store) {

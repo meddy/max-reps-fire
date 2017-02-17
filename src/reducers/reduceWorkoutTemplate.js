@@ -1,4 +1,4 @@
-import {RECEIVE_WORKOUT_TEMPLATES, RECEIVE_SIGN_OUT} from '../actions/types';
+import {RECEIVE_WORKOUT_TEMPLATES, RECEIVE_SIGN_OUT} from '../actionTypes';
 import createReducer from '../helpers/createReducer';
 
 const initialState = {

@@ -1,4 +1,4 @@
-import * as types from './types';
+import * as types from './actionTypes';
 
 export function addExercise(name) {
   return {
