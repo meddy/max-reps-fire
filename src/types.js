@@ -1,9 +1,16 @@
+// @flow
+
+import actionTypes from './actionTypes';
+
 type Action = {
-  type: string
+  types: $Keys<typeof actionTypes>
 };
 
-type AddExerciseAction = {
-  type: ADD_EXERCISE,
+type ItemAction = Action & {
+  key: string
+};
+
+type AddExerciseAction = Action & {
   key: string,
   value: string
 };

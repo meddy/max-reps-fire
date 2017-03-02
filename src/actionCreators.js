@@ -1,8 +1,11 @@
-import * as types from './actionTypes';
+// @flow
+
+import actionTypes from './actionTypes';
+import type {Action, ItemAction} from './types';
 
 export function addExercise(name) {
   return {
-    type: types.ADD_EXERCISE,
+    type: actionTypes.ADD_EXERCISE,
     key: name,
     value: name
   };
@@ -10,7 +13,7 @@ export function addExercise(name) {
 
 export function addExerciseTemplate(workoutTemplate, exerciseTemplate) {
   return {
-    type: types.ADD_EXERCISE_TEMPLATE,
+    type: actionTypes.ADD_EXERCISE_TEMPLATE,
     value: exerciseTemplate,
     workoutTemplate
   };
@@ -18,37 +21,37 @@ export function addExerciseTemplate(workoutTemplate, exerciseTemplate) {
 
 export function addWorkoutTemplate(name) {
   return {
-    type: types.ADD_WORKOUT_TEMPLATE,
+    type: actionTypes.ADD_WORKOUT_TEMPLATE,
     key: name,
     value: name
   };
 }
 
-export function removeExercise(key) {
+export function removeExercise(key): ItemAction {
   return {
-    type: types.REMOVE_EXERCISE,
+    type: actionTypes.REMOVE_EXERCISE,
     key
   };
 }
 
 export function removeExerciseTemplate(workoutTemplate, key) {
   return {
-    type: types.REMOVE_EXERCISE_TEMPLATE,
+    type: actionTypes.REMOVE_EXERCISE_TEMPLATE,
     workoutTemplate,
     key
   };
 }
 
-export function removeWorkoutTemplate(key) {
+export function removeWorkoutTemplate(key): ItemAction {
   return {
-    type: types.REMOVE_WORKOUT_TEMPLATE,
+    type: actionTypes.REMOVE_WORKOUT_TEMPLATE,
     key
   };
 }
 
 export function receiveExercises(exercises, source) {
   return {
-    type: types.RECEIVE_EXERCISES,
+    type: actionTypes.RECEIVE_EXERCISES,
     exercises,
     source
   };
@@ -56,50 +59,65 @@ export function receiveExercises(exercises, source) {
 
 export function receiveExerciseTemplates(exerciseTemplatesGrouped) {
   return {
-    type: types.RECEIVE_EXERCISE_TEMPLATES,
+    type: actionTypes.RECEIVE_EXERCISE_TEMPLATES,
     exerciseTemplatesGrouped,
   };
 }
 
 export function receiveSignIn(name, uid) {
   return {
-    type: types.RECEIVE_SIGN_IN,
+    type: actionTypes.RECEIVE_SIGN_IN,
     name,
     uid
   };
 }
 
 export function receiveSignOut() {
-  return {type: types.RECEIVE_SIGN_OUT};
+  return {
+    type: actionTypes.RECEIVE_SIGN_OUT
+  };
 }
 
 export function receiveWorkoutTemplates(workoutTemplates) {
   return {
-    type: types.RECEIVE_WORKOUT_TEMPLATES,
+    type: actionTypes.RECEIVE_WORKOUT_TEMPLATES,
     workoutTemplates
   };
 }
 
-export function requestExercises() {
-  return {type: types.REQUEST_EXERCISES};
+export function requestExercises(): Action {
+  return {
+    type: actionTypes.REQUEST_EXERCISES
+  };
 }
 
-export function requestExerciseTemplates(workoutTemplateKey) {
-  return {type: types.REQUEST_EXERCISE_TEMPLATES, workoutTemplateKey};
+export function requestExerciseTemplates(workoutTemplateKey): Action {
+  return {
+    type: actionTypes.REQUEST_EXERCISE_TEMPLATES,
+    workoutTemplateKey
+  };
 }
 
-export function requestSignIn() {
-  return {type: types.REQUEST_SIGN_IN};
+export function requestSignIn(): Action {
+  return {
+    type: actionTypes.REQUEST_SIGN_IN
+  };
 }
 
-export function requestSignOut() {
-  return {type: types.REQUEST_SIGN_OUT};
+export function requestSignOut(): Action {
+  return {
+    type: actionTypes.REQUEST_SIGN_OUT
+  };
 }
 
-export function requestWorkoutTemplates() {
-  return {type: types.REQUEST_WORKOUT_TEMPLATES};
+export function requestWorkoutTemplates(): Action {
+  return {
+    type: actionTypes.REQUEST_WORKOUT_TEMPLATES
+  };
 }
 
-export function touchAuth() {
-  return {type: types.TOUCH_AUTH};
+export function touchAuth(): Action {
+  return {
+    type: actionTypes.TOUCH_AUTH
+  };
 }
