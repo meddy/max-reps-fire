@@ -1,3 +1,5 @@
+import {createActions} from 'redux-actions';
+
 export const ADD_EXERCISE = 'ADD_EXERCISE';
 export const ADD_EXERCISE_TEMPLATE = 'ADD_EXERCISE_TEMPLATE';
 export const ADD_WORKOUT_TEMPLATE = 'ADD_WORKOUT_TEMPLATE';
@@ -15,3 +17,27 @@ export const REQUEST_SIGN_IN = 'REQUEST_SIGN_IN';
 export const REQUEST_SIGN_OUT = 'REQUEST_SIGN_OUT';
 export const REQUEST_WORKOUT_TEMPLATES = 'REQUEST_WORKOUT_TEMPLATES';
 export const TOUCH_AUTH = 'TOUCH_AUTH';
+
+const actionMap = {
+  [ADD_EXERCISE_TEMPLATE]: (workoutTemplate, exerciseTemplate) => ({workoutTemplate, value: exerciseTemplate}),
+  [REMOVE_EXERCISE_TEMPLATE]: (workoutTemplate, key) => ({workoutTemplate, key}),
+  [RECEIVE_EXERCISES]: (exercises, source) => ({exercises, source}),
+  [RECEIVE_SIGN_IN]: (name, uid) => ({name, uid}),
+};
+
+export const creators = createActions(
+  actionMap,
+  ADD_EXERCISE,
+  ADD_WORKOUT_TEMPLATE,
+  REMOVE_EXERCISE,
+  REMOVE_WORKOUT_TEMPLATE,
+  RECEIVE_EXERCISE_TEMPLATES,
+  RECEIVE_SIGN_OUT,
+  RECEIVE_WORKOUT_TEMPLATES,
+  REQUEST_EXERCISES,
+  REQUEST_EXERCISE_TEMPLATES,
+  REQUEST_SIGN_IN,
+  REQUEST_SIGN_OUT,
+  REQUEST_WORKOUT_TEMPLATES,
+  TOUCH_AUTH
+);
