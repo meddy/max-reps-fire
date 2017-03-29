@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {Button, Col, FormControl, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router';
-import {addWorkoutTemplate} from '../actions/creators';
+import {addWorkoutTemplate} from '../actions';
 import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {NewEntityModal, withModals} from '../components';
 

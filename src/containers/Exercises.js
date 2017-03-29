@@ -2,7 +2,7 @@ import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {addExercise, requestExercises, removeExercise} from '../actions/creators';
+import {addExercise, requestExercises, removeExercise} from '../actions';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal, withModals} from '../components';
 
 class Exercises extends Component {

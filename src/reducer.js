@@ -11,8 +11,14 @@ const initialState = {
     selectedWorkoutTemplate: null,
     dataByWorkoutTemplate: {}
   },
+  navigation: {
+    path: null,
+    name: null,
+    params: {}
+  },
   user: {
     authenticated: false,
+    authChecked: false,
     name: null,
     uid: null
   },
@@ -21,12 +27,14 @@ const initialState = {
   }
 };
 
-export default handleActions({
+const reducerMap = {
   [actions.RECEIVE_EXERCISES](state, {payload: {source, exercises}}) {
-    return set(`exercises.${source}`, exercises, state);3
+    console.log(state);
+    console.log(set(`exercises.${source}`, exercises, state));
+    return set(`exercises.${source}`, exercises, state);
   },
   [actions.REQUEST_SIGN_OUT]() {
-    return cloneDeep(initialState)
+    return cloneDeep(initialState);
   },
   [actions.ADD_EXERCISE_TEMPLATE](state, {payload: {workoutTemplate}}) {
     return set(`exerciseTemplate.selected`, workoutTemplate, state);
@@ -40,19 +48,18 @@ export default handleActions({
       ...state,
       user: {
         authenticated: true,
+        authChecked: true,
         name,
         uid
       }
-    }
+    };
   },
   [actions.RECEIVE_SIGN_OUT](state) {
     return set('user', {...initialState.user}, state);
   },
-  [actions.TOUCH_AUTH](state, action) {
-    // might not need this if we switch to saga based routing
-    return state;
-  },
   [actions.RECEIVE_WORKOUT_TEMPLATES](state, {payload}) {
     return merge(state.workoutTemplate, {data: payload});
   }
-});
+};
+
+export default handleActions(reducerMap, initialState);

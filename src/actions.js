@@ -8,7 +8,9 @@ export const REMOVE_EXERCISE_TEMPLATE = 'REMOVE_EXERCISE_TEMPLATE';
 export const REMOVE_WORKOUT_TEMPLATE = 'REMOVE_WORKOUT_TEMPLATE';
 export const RECEIVE_EXERCISES = 'RECEIVE_EXERCISES';
 export const RECEIVE_EXERCISE_TEMPLATES = 'RECEIVE_EXERCISE_TEMPLATES';
+// RECEIVE_AUTH_RESPONSE, use for both user was/was not logged in
 export const RECEIVE_SIGN_IN = 'RECEIVE_SIGN_IN';
+// I think we can simplify sign out to just SIGN_OUT
 export const RECEIVE_SIGN_OUT = 'RECEIVE_SIGN_OUT';
 export const RECEIVE_WORKOUT_TEMPLATES = 'RECEIVE_WORKOUT_TEMPLATES';
 export const REQUEST_EXERCISES = 'REQUEST_EXERCISES';
@@ -16,7 +18,6 @@ export const REQUEST_EXERCISE_TEMPLATES = 'REQUEST_EXERCISE_TEMPLATES';
 export const REQUEST_SIGN_IN = 'REQUEST_SIGN_IN';
 export const REQUEST_SIGN_OUT = 'REQUEST_SIGN_OUT';
 export const REQUEST_WORKOUT_TEMPLATES = 'REQUEST_WORKOUT_TEMPLATES';
-export const TOUCH_AUTH = 'TOUCH_AUTH';
 
 const actionMap = {
   [ADD_EXERCISE_TEMPLATE]: (workoutTemplate, exerciseTemplate) => ({workoutTemplate, value: exerciseTemplate}),
@@ -25,7 +26,23 @@ const actionMap = {
   [RECEIVE_SIGN_IN]: (name, uid) => ({name, uid}),
 };
 
-export const creators = createActions(
+export const {
+  addExercise,
+  addExerciseTemplate,
+  addWorkoutTemplate,
+  removeExercise,
+  removeExerciseTemplate,
+  receiveExercises,
+  receiveExerciseTemplates,
+  receiveSignIn,
+  receiveSignOut,
+  receiveWorkoutTemplates,
+  requestExercises,
+  requestExerciseTemplates,
+  requestSignIn,
+  requestSignOut,
+  requestWorkoutTemplates
+} = createActions(
   actionMap,
   ADD_EXERCISE,
   ADD_WORKOUT_TEMPLATE,
@@ -39,5 +56,4 @@ export const creators = createActions(
   REQUEST_SIGN_IN,
   REQUEST_SIGN_OUT,
   REQUEST_WORKOUT_TEMPLATES,
-  TOUCH_AUTH
 );

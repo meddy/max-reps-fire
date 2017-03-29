@@ -1,6 +1,6 @@
 import {eventChannel} from 'redux-saga';
 import {call, put, select, take} from 'redux-saga/effects';
-import {db} from '../bootstrap/firebaseServices';
+import {getServices} from '../helpers/createFirebase';
 
 export default function createDatabaseSagas(getPath) {
   return {
@@ -34,7 +34,7 @@ export default function createDatabaseSagas(getPath) {
 
 function createDbValueChannel(path) {
   return eventChannel(emit => {
-    const ref = db.ref(path);
+    const ref = getServices().db.ref(path);
     const onValueChange = snapshot => emit(snapshot.val() || {});
     const unsubscribe = () => ref.off('value', onValueChange);
 
@@ -46,9 +46,9 @@ function createDbValueChannel(path) {
 
 function setItem(path, key, value) {
   path = path + '/' + key;
-  return db.ref(path).set(value);
+  return getServices().db.ref(path).set(value);
 }
 
 function pushItem(path, value) {
-  return db.ref(path).push(value);
+  return getServices().db.ref(path).push(value);
 }

@@ -10,13 +10,20 @@ import {
   REQUEST_EXERCISE_TEMPLATES,
   REQUEST_SIGN_IN,
   REQUEST_WORKOUT_TEMPLATES
-} from '../actions/types';
+} from '../actions';
 import {handleAuthFlow} from './authSagas';
 import {addExercise, fetchExercises, removeExercise} from './exerciseSagas';
 import {addExerciseTemplate, channelExerciseTemplates, removeExerciseTemplate} from './exerciseTemplateSagas';
 import {addWorkoutTemplate, channelWorkoutTemplates, removeWorkoutTemplate} from './workoutTemplateSagas';
 
 export default function* combineSagas() {
+  // on startup we want to check auth
+  // if authed
+  // get workout templates
+  // now app container is ready
+  // resolve router
+  // update state with navigation
+
   return yield [
     watchAuth(),
     watchAddExercise(),

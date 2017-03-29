@@ -1,4 +1,4 @@
-import {receiveWorkoutTemplates} from '../actions/creators';
+import {receiveWorkoutTemplates} from '../actions';
 import createDatabaseSagas from '../helpers/createDatabaseSagas';
 import {getWorkoutTemplatePath} from '../helpers/selectors';
 

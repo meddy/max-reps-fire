@@ -1,6 +1,6 @@
 import {call, fork, put} from 'redux-saga/effects';
-import {receiveExercises} from '../actions/creators';
-import {db} from '../bootstrap/firebaseServices';
+import {receiveExercises} from '../actions';
+import {getServices} from '../helpers/createFirebase';
 import createDatabaseSagas from '../helpers/createDatabaseSagas';
 import {getExercisePath} from '../helpers/selectors';
 
@@ -18,7 +18,8 @@ export function* fetchExercises() {
 }
 
 function fetchSystemExercises() {
-  return db
+  return getServices()
+    .db
     .ref('/exercises')
     .once('value')
     .then(snapshot => snapshot.val());
