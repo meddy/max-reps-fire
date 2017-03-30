@@ -1,6 +1,6 @@
 import {browserHistory} from 'react-router';
 import {apply, call, take, put} from 'redux-saga/effects';
-import {receiveSignIn, receiveSignOut, touchAuth} from '../actions';
+import {receiveAuthResponse, receiveSignIn, receiveSignOut, touchAuth} from '../actions';
 import {REQUEST_SIGN_OUT} from '../actions';
 import {getServices} from '../helpers/createFirebase';
 
@@ -8,12 +8,13 @@ import {getServices} from '../helpers/createFirebase';
 export function* handleAuthFlow() {
   const user = yield call(getAuthState);
   if (!user) {
-    // we might not need this
-    yield put(touchAuth());
+    yield put(receiveAuthResponse(null));
     return;
   }
 
-  yield put(receiveSignIn(user.displayName, user.uid));
+  // yield put(receiveAuthResponse(user.displayName, user.uid));
+  yield put(receiveAuthResponse(user));
+
   // I think we can simplify this,
   yield take(REQUEST_SIGN_OUT);
   yield apply(getServices.auth, getServices.auth.signOut);

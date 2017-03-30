@@ -8,8 +8,8 @@ export const REMOVE_EXERCISE_TEMPLATE = 'REMOVE_EXERCISE_TEMPLATE';
 export const REMOVE_WORKOUT_TEMPLATE = 'REMOVE_WORKOUT_TEMPLATE';
 export const RECEIVE_EXERCISES = 'RECEIVE_EXERCISES';
 export const RECEIVE_EXERCISE_TEMPLATES = 'RECEIVE_EXERCISE_TEMPLATES';
+export const RECEIVE_AUTH_RESPONSE = 'RECEIVE_AUTH_RESPONSE';
 // RECEIVE_AUTH_RESPONSE, use for both user was/was not logged in
-export const RECEIVE_SIGN_IN = 'RECEIVE_SIGN_IN';
 // I think we can simplify sign out to just SIGN_OUT
 export const RECEIVE_SIGN_OUT = 'RECEIVE_SIGN_OUT';
 export const RECEIVE_WORKOUT_TEMPLATES = 'RECEIVE_WORKOUT_TEMPLATES';
@@ -23,7 +23,6 @@ const actionMap = {
   [ADD_EXERCISE_TEMPLATE]: (workoutTemplate, exerciseTemplate) => ({workoutTemplate, value: exerciseTemplate}),
   [REMOVE_EXERCISE_TEMPLATE]: (workoutTemplate, key) => ({workoutTemplate, key}),
   [RECEIVE_EXERCISES]: (exercises, source) => ({exercises, source}),
-  [RECEIVE_SIGN_IN]: (name, uid) => ({name, uid}),
 };
 
 export const {
@@ -32,6 +31,7 @@ export const {
   addWorkoutTemplate,
   removeExercise,
   removeExerciseTemplate,
+  receiveAuthResponse,
   receiveExercises,
   receiveExerciseTemplates,
   receiveSignIn,
@@ -48,6 +48,7 @@ export const {
   ADD_WORKOUT_TEMPLATE,
   REMOVE_EXERCISE,
   REMOVE_WORKOUT_TEMPLATE,
+  RECEIVE_AUTH_RESPONSE,
   RECEIVE_EXERCISE_TEMPLATES,
   RECEIVE_SIGN_OUT,
   RECEIVE_WORKOUT_TEMPLATES,

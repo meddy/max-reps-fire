@@ -1,20 +1,24 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Row, Well} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {getAuthReceived} from '../helpers/selectors';
+import {getAuthChecked} from '../helpers/selectors';
 import {LoadingIndicator} from '../components';
 
-function Home({authReceived}) {
+function Home({authChecked}) {
   return <Row>
     <Well>Max Reps Fire is a weight lifting log app.</Well>
-    <LoadingIndicator loading={!authReceived} />
+    <LoadingIndicator loading={!authChecked} />
   </Row>;
 }
 
 function mapStateToProps(state) {
   return {
-    authReceived: getAuthReceived(state)
+    authChecked: getAuthChecked(state)
   };
 }
+
+Home.propTypes = {
+  authChecked: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(Home);

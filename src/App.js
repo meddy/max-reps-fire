@@ -1,12 +1,12 @@
 import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
-import {BrowserRouter, Link, Route} from 'react-router-dom';
+import {BrowserRouter, Link, Route, Switch} from 'react-router-dom';
 import {Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {requestSignOut} from './actions';
 import {NoMatch, Exercises, Home, Workouts, WorkoutTemplate} from './containers';
 import {getServices} from './helpers/createFirebase';
-import {getAuthenticated, getAuthReceived, getWorkoutTemplatesReceived} from './helpers/selectors';
+import {getAuthenticated, getAuthChecked, getWorkoutTemplatesReceived} from './helpers/selectors';
 import signInImage from './resources/google-sign-in.png';
 
 class App extends Component {
@@ -50,9 +50,9 @@ class App extends Component {
   };
 
   renderAuthButton = () => {
-    const {authenticated, authReceived} = this.props;
+    const {authenticated, authChecked} = this.props;
 
-    if (!authReceived) {
+    if (!authChecked) {
       return null;
     }
 
@@ -80,14 +80,15 @@ class App extends Component {
           {this.renderNavbar()}
         </Navbar>
         <Grid className="container theme-showcase">
-          {this.props.children}
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="exercises" component={Exercises} />
+            <Route path="workouts" component={Workouts} />
+            <Route path="workout-template/:workoutTemplate" component={WorkoutTemplate} />
+            <Route path="workout-template/:workoutTemplate/edit" component={WorkoutTemplate} />
+            <Route component={NoMatch} />
+          </Switch>
         </Grid>
-        <Route exact path="/" component={Home} />
-        <Route path="exercises" component={Exercises} />
-        <Route path="workouts" component={Workouts} />
-        <Route path="workout-template/:workoutTemplate" component={WorkoutTemplate} />
-        <Route path="workout-template/:workoutTemplate/edit" component={WorkoutTemplate} />
-        <Route component={NoMatch} />
       </div>
     </BrowserRouter>;
   }
@@ -95,14 +96,14 @@ class App extends Component {
 
 App.propTypes = {
   authenticated: PropTypes.bool.isRequired,
-  authReceived: PropTypes.bool.isRequired,
+  authChecked: PropTypes.bool.isRequired,
   workoutTemplates: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 function mapStateToProps(state) {
   return {
     authenticated: getAuthenticated(state),
-    authReceived: getAuthReceived(state),
+    authChecked: getAuthChecked(state),
     workoutTemplatesReceived: getWorkoutTemplatesReceived(state),
     workoutTemplates: values(state.workoutTemplate.data)
   };

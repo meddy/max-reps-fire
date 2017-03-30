@@ -39,20 +39,23 @@ const reducerMap = {
   [actions.ADD_EXERCISE_TEMPLATE](state, {payload: {workoutTemplate}}) {
     return set(`exerciseTemplate.selected`, workoutTemplate, state);
   },
-  [actions.RECEIVE_EXERCISE_TEMPLATES](state, {payload}) {
-    return merge(state.exerciseTemplate, {dataByWorkoutTemplate: payload})
-  },
-  [actions.RECEIVE_SIGN_IN](state, {payload: {name, uid}}) {
-    // got rid of received, because i don't think we need it
+  [actions.RECEIVE_AUTH_RESPONSE](state, {payload}) {
+    if (!payload) {
+      return set('user.authChecked', true, state);
+    }
+
     return {
       ...state,
       user: {
         authenticated: true,
         authChecked: true,
-        name,
-        uid
+        name: payload.displayName,
+        uid: payload.uid
       }
     };
+  },
+  [actions.RECEIVE_EXERCISE_TEMPLATES](state, {payload}) {
+    return merge(state.exerciseTemplate, {dataByWorkoutTemplate: payload});
   },
   [actions.RECEIVE_SIGN_OUT](state) {
     return set('user', {...initialState.user}, state);
