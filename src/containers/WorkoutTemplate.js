@@ -1,17 +1,17 @@
 import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
-import {LinkContainer} from 'react-router-bootstrap';
-import {ConfirmModal, withModals} from '../components';
+import {push, replace} from 'redux-little-router';
+import {ConfirmModal, LoadingIndicator, withModals} from '../components';
 import {removeWorkoutTemplate} from '../actions';
 import {getWorkoutTemplate} from '../helpers/selectors';
+import {createPathname, WORKOUT_LIST, WORKOUT_TEMPLATE_EDIT} from '../routes';
 
 class WorkoutTemplate extends Component {
   removeOnUnmount = false;
 
   onConfirmDeleteWorkoutTemplate = () => {
-    this.props.router.replace('/workouts');
+    this.props.dispatch(replace(WORKOUT_LIST));
     this.removeOnUnmount = true;
   };
 
@@ -24,42 +24,46 @@ class WorkoutTemplate extends Component {
   }
 
   render() {
-    const {hideModal, isModalVisible, showModal, workoutTemplate} = this.props;
+    const {dispatch, hideModal, isModalVisible, showModal, workoutTemplate} = this.props;
+    const editPathname = createPathname(WORKOUT_TEMPLATE_EDIT, {workoutTemplate});
 
-    return <Row>
-      <Col lg={8} lgOffset={2}>
-        <Breadcrumb>
-          <Breadcrumb.Item active>{workoutTemplate}</Breadcrumb.Item>
-        </Breadcrumb>
-        <ButtonToolbar>
-          <ButtonGroup>
-            <Button bsStyle="primary" title="Add Workout">
-              <Glyphicon glyph="plus" /> Workout
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <LinkContainer to={`/workout-template/${workoutTemplate}/edit`}>
-              <Button title="Edit Workout Template">
+    return <LoadingIndicator loading={!workoutTemplate}>
+      <Row>
+        <Col lg={8} lgOffset={2}>
+          <Breadcrumb>
+            <Breadcrumb.Item active>{workoutTemplate}</Breadcrumb.Item>
+          </Breadcrumb>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <Button bsStyle="primary" title="Add Workout">
+                <Glyphicon glyph="plus" /> Workout
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup>
+              <Button
+                title="Edit Workout Template"
+                onClick={() => dispatch(push(editPathname))}
+              >
                 <Glyphicon glyph="edit" /> Template
               </Button>
-            </LinkContainer>
-            <Button
-              bsStyle="danger"
-              title="Delete Workout Template"
-              onClick={() => showModal('workoutTemplate')}
-            >
-              <Glyphicon glyph="trash" /> Template
-            </Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-      </Col>
-      <ConfirmModal
-        onHide={() => hideModal('workoutTemplate')}
-        onConfirm={this.onConfirmDeleteWorkoutTemplate}
-        show={isModalVisible('workoutTemplate')}
-        title={`Delete ${workoutTemplate}?`}
-      />
-    </Row>;
+              <Button
+                bsStyle="danger"
+                title="Delete Workout Template"
+                onClick={() => showModal('workoutTemplate')}
+              >
+                <Glyphicon glyph="trash" /> Template
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </Col>
+        <ConfirmModal
+          onHide={() => hideModal('workoutTemplate')}
+          onConfirm={this.onConfirmDeleteWorkoutTemplate}
+          show={isModalVisible('workoutTemplate')}
+          title={`Delete ${workoutTemplate}?`}
+        />
+      </Row>
+    </LoadingIndicator>;
   }
 }
 
@@ -67,14 +71,14 @@ WorkoutTemplate.propTypes = {
   isModalVisible: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired,
-  workoutTemplate: PropTypes.string.isRequired
+  workoutTemplate: PropTypes.string
 };
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state) {
   return {
-    workoutTemplate: getWorkoutTemplate(state, props)
+    workoutTemplate: getWorkoutTemplate(state)
   };
 }
 
-const WrappedComponent = withRouter(withModals(WorkoutTemplate, ['workoutTemplate']));
+const WrappedComponent = withModals(WorkoutTemplate, ['workoutTemplate']);
 export default connect(mapStateToProps)(WrappedComponent);

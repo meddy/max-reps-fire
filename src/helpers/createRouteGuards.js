@@ -1,6 +1,7 @@
 import {requestSignIn, requestWorkoutTemplates} from '../actions';
 import {getAuthReceived, getAuthenticated, getWorkoutTemplatesReceived, getWorkoutTemplate} from '../helpers/selectors';
 
+// need to translate this to sagas
 export default function createRouteGuards(store) {
   const isAuthenticated = createStateCheck(
     requestSignIn,

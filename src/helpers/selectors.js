@@ -7,9 +7,9 @@ export const getAuthenticated = state => state.user.authenticated;
 export const getWorkoutTemplatesReceived = state => state.workoutTemplate.received;
 export const getWorkoutTemplateNames = state => Object.keys(state.workoutTemplate.data);
 
-export const getWorkoutTemplate = (state, props) => {
-  const {workoutTemplateKey} = props.params;
-  return state.workoutTemplate.data[workoutTemplateKey];
+export const getWorkoutTemplate = (state) => {
+  const {workoutTemplate} = state.router.params;
+  return state.workoutTemplate.data[workoutTemplate];
 };
 
 export const getExerciseOptions = createSelector(

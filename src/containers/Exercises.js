@@ -2,7 +2,7 @@ import {values} from 'lodash';
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {addExercise, requestExercises, removeExercise} from '../actions';
+import {addExercise, removeExercise} from '../actions';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal, withModals} from '../components';
 
 class Exercises extends Component {
@@ -10,14 +10,10 @@ class Exercises extends Component {
     exercise: null
   };
 
-  componentDidMount() {
-    this.props.dispatch(requestExercises());
-  }
-
-  onSubmitNewExercise = value => {
+  onSubmitNewExercise = exercise => {
     const {dispatch, hideModal} = this.props;
 
-    dispatch(addExercise(value));
+    dispatch(addExercise(exercise));
     hideModal('newExercise');
   };
 

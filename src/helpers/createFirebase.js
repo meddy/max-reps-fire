@@ -11,6 +11,7 @@ export default function createFirebase() {
 }
 
 export function getServices() {
+  // assert that app is not undefined
   return {
     db: app.database(),
     auth: app.auth(),

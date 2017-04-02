@@ -12,11 +12,12 @@ import {
   Row
 } from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {LinkContainer} from 'react-router-bootstrap';
+import {Link} from 'redux-little-router';
 import {addExerciseTemplate, requestExercises, requestExerciseTemplates} from '../actions';
 import {EditExerciseTemplateModal, LoadingIndicator, NewExerciseTemplateModal, withModals} from '../components';
 import {getExerciseOptions, getExerciseTemplates, getWorkoutTemplate} from '../helpers/selectors';
 import {exerciseTemplateShape} from '../helpers/shapes';
+import {createPathname, WORKOUT_TEMPLATE_VIEW} from '../routes';
 
 class WorkoutTemplateEdit extends Component {
   state = {
@@ -91,13 +92,15 @@ class WorkoutTemplateEdit extends Component {
       workoutTemplate
     } = this.props;
 
+    const viewPath = createPathname(WORKOUT_TEMPLATE_VIEW, {workoutTemplate});
+
     return <LoadingIndicator loading={!exerciseOptions.length}>
       <Row>
         <Col lg={8} lgOffset={2}>
           <Breadcrumb>
-            <LinkContainer to={`/workout-template/${workoutTemplate}`}>
-              <Breadcrumb.Item active>{workoutTemplate}</Breadcrumb.Item>
-            </LinkContainer>
+            <Breadcrumb.Item active>
+              <Link href={viewPath}>{workoutTemplate}</Link>
+            </Breadcrumb.Item>
             <Breadcrumb.Item active>Exercise Templates</Breadcrumb.Item>
           </Breadcrumb>
           <ButtonToolbar>
@@ -148,7 +151,7 @@ WorkoutTemplateEdit.propTypes = {
   hideModal: PropTypes.func.isRequired,
   isModalVisible: PropTypes.func.isRequired,
   showModal: PropTypes.func.isRequired,
-  workoutTemplate: PropTypes.string.isRequired
+  workoutTemplate: PropTypes.string
 };
 
 function mapStateToProps(state, props) {

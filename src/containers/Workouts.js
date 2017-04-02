@@ -1,18 +1,21 @@
 import React, {Component, PropTypes} from 'react';
 import {Button, Col, FormControl, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router';
+import {push} from 'redux-little-router';
 import {addWorkoutTemplate} from '../actions';
 import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {NewEntityModal, withModals} from '../components';
+import {WORKOUT_TEMPLATE_VIEW} from '../routes';
 
 class Workouts extends Component {
-  onSubmitNewWorkoutTemplate = value => {
-    const {dispatch, hideModal, router} = this.props;
+  onSubmitNewWorkoutTemplate = workoutTemplate => {
+    const {dispatch, hideModal} = this.props;
 
-    dispatch(addWorkoutTemplate(value));
+    dispatch(addWorkoutTemplate(workoutTemplate));
+
     hideModal('workoutTemplate');
-    router.push(`/workout-template/${value}`);
+
+    dispatch(push(WORKOUT_TEMPLATE_VIEW.replace(':workoutTemplate', workoutTemplate)));
   };
 
   getNameValidationState = (value) => {
@@ -74,5 +77,5 @@ function mapStateToProps(state) {
   };
 }
 
-const WrappedComponent = withRouter(withModals(Workouts, ['workoutTemplate']));
+const WrappedComponent = withModals(Workouts, ['workoutTemplate']);
 export default connect(mapStateToProps)(WrappedComponent);
