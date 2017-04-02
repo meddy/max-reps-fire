@@ -4,7 +4,8 @@ import {Grid, MenuItem, Nav, Navbar, NavDropdown, NavItem} from 'react-bootstrap
 import {connect} from 'react-redux';
 import {replace, Link, Fragment} from 'redux-little-router';
 import {signOut} from './actions';
-import {Home, NoMatch, Exercises, Workouts, WorkoutTemplate, WorkoutTemplateEdit} from './containers';
+import {NoMatch} from './components';
+import {Home, Exercises, Workouts, WorkoutTemplate, WorkoutTemplateEdit} from './containers';
 import {getServices} from './helpers/createFirebase';
 import {getAuthenticated, getAuthChecked, getWorkoutTemplatesReceived} from './helpers/selectors';
 import signInImage from './resources/google-sign-in.png';
@@ -36,9 +37,9 @@ class App extends Component {
   }
 
   renderNavbar = () => {
-    const {dispatch} = this.props;
+    const {authenticated, dispatch} = this.props;
     return <Navbar.Collapse>
-      {this.props.authenticated && <Nav>
+      {authenticated && <Nav>
         <NavItem onClick={() => dispatch(replace('/workouts'))}>Workouts</NavItem>
         <NavDropdown title="Workout Templates" id="workout-template-dropdown">
           {this.renderWorkoutTemplateMenu()}

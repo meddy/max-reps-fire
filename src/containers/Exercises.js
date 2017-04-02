@@ -6,6 +6,27 @@ import {addExercise, removeExercise} from '../actions';
 import {ConfirmModal, ExerciseList, LoadingIndicator, NewEntityModal, withModals} from '../components';
 
 class Exercises extends Component {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    isModalVisible: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired,
+    system: PropTypes.arrayOf(PropTypes.string).isRequired,
+    user: PropTypes.arrayOf(PropTypes.string).isRequired
+  };
+
+  static defaultProps = {
+    system: [],
+    user: []
+  };
+
+  static mapStateToProps = (state) => {
+    return {
+      system: values(state.exercise.system),
+      user: values(state.exercise.user)
+    };
+  };
+
   state = {
     exercise: null
   };
@@ -56,7 +77,7 @@ class Exercises extends Component {
             </Button>
           </div>
           <ExerciseList items={user} onClickDelete={exercise => {
-            this.setState({exercise}, () => this.props.showModal('deleteExercise'));
+            this.setState({exercise}, () => showModal('deleteExercise'));
           }} />
         </Col>
         <Col lg={6} lgOffset={3}>
@@ -81,25 +102,5 @@ class Exercises extends Component {
   }
 }
 
-Exercises.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  hideModal: PropTypes.func.isRequired,
-  isModalVisible: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired,
-  system: PropTypes.arrayOf(PropTypes.string).isRequired,
-  user: PropTypes.arrayOf(PropTypes.string).isRequired
-};
-
-Exercises.defaultProps = {
-  system: [],
-  user: []
-};
-
-function mapStateToProps(state) {
-  return {
-    system: values(state.exercise.system),
-    user: values(state.exercise.user)
-  };
-}
-
-export default connect(mapStateToProps)(withModals(Exercises, ['newExercise', 'deleteExercise']));
+const ExercisesWithModals = withModals(Exercises, ['newExercise', 'deleteExercise']);
+export default connect(Exercises.mapStateToProps)(ExercisesWithModals);

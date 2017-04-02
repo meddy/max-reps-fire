@@ -2,12 +2,25 @@ import React, {Component, PropTypes} from 'react';
 import {Breadcrumb, Button, ButtonGroup, ButtonToolbar, Col, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {push, replace} from 'redux-little-router';
-import {ConfirmModal, LoadingIndicator, withModals} from '../components';
 import {removeWorkoutTemplate} from '../actions';
+import {ConfirmModal, LoadingIndicator, withModals} from '../components';
 import {getWorkoutTemplate} from '../helpers/selectors';
 import {createPathname, WORKOUT_LIST, WORKOUT_TEMPLATE_EDIT} from '../routes';
 
 class WorkoutTemplate extends Component {
+  static propTypes = {
+    isModalVisible: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired,
+    workoutTemplate: PropTypes.string
+  };
+
+  static mapStateToProps(state) {
+    return {
+      workoutTemplate: getWorkoutTemplate(state)
+    };
+  }
+
   removeOnUnmount = false;
 
   onConfirmDeleteWorkoutTemplate = () => {
@@ -74,11 +87,5 @@ WorkoutTemplate.propTypes = {
   workoutTemplate: PropTypes.string
 };
 
-function mapStateToProps(state) {
-  return {
-    workoutTemplate: getWorkoutTemplate(state)
-  };
-}
-
-const WrappedComponent = withModals(WorkoutTemplate, ['workoutTemplate']);
-export default connect(mapStateToProps)(WrappedComponent);
+const WorkoutTemplateWithModals = withModals(WorkoutTemplate, ['workoutTemplate']);
+export default connect(WorkoutTemplate.mapStateToProps)(WorkoutTemplateWithModals);

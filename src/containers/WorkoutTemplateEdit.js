@@ -20,32 +20,53 @@ import {exerciseTemplateShape} from '../helpers/shapes';
 import {createPathname, WORKOUT_TEMPLATE_VIEW} from '../routes';
 
 class WorkoutTemplateEdit extends Component {
+  static propTypes = {
+    exerciseOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string
+      })
+    ).isRequired,
+    exerciseTemplates: PropTypes.arrayOf(exerciseTemplateShape),
+    hideModal: PropTypes.func.isRequired,
+    isModalVisible: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired,
+    workoutTemplate: PropTypes.string
+  };
+
+  static mapStateToProps(state) {
+    const workoutTemplate = getWorkoutTemplate(state);
+    return {
+      exerciseOptions: getExerciseOptions(state),
+      exerciseTemplates: getExerciseTemplates(state, workoutTemplate),
+      workoutTemplate
+    };
+  }
+
   state = {
     exerciseTemplate: null
   };
 
+  // TODO: Need to migrate this to saga
   componentDidMount() {
     const {dispatch, name} = this.props;
     dispatch(requestExercises());
     dispatch(requestExerciseTemplates(name));
   }
 
-  onSubmitUpdateExerciseTemplate = () => {
-
-  };
+  // TODO: Implement
+  onSubmitUpdateExerciseTemplate = () => {};
 
   onSubmitNewExerciseTemplate = exerciseTemplate => {
     const {dispatch, hideModal, workoutTemplate} = this.props;
 
     dispatch(addExerciseTemplate(workoutTemplate, exerciseTemplate));
+
     hideModal('new');
   };
 
   // TODO: Implement
-  // onDeleteExerciseTemplate = () => {
-  //   // make sure action types, creators, and sagas are ordered consistently
-  //   const {dispatch, workoutTemplate} = this.props;
-  // };
+  onDeleteExerciseTemplate = () => {};
 
   renderExerciseTemplate = exerciseTemplate => {
     const {exercise, key, reps, rest, sets} = exerciseTemplate;
@@ -91,7 +112,7 @@ class WorkoutTemplateEdit extends Component {
       showModal,
       workoutTemplate
     } = this.props;
-
+    const {exerciseTemplate} = this.state;
     const viewPath = createPathname(WORKOUT_TEMPLATE_VIEW, {workoutTemplate});
 
     return <LoadingIndicator loading={!exerciseOptions.length}>
@@ -123,8 +144,8 @@ class WorkoutTemplateEdit extends Component {
           </ListGroup>
         </Col>
       </Row>
-      {this.state.exerciseTemplate && <EditExerciseTemplateModal
-        exerciseTemplate={this.state.exerciseTemplate}
+      {exerciseTemplate && <EditExerciseTemplateModal
+        exerciseTemplate={exerciseTemplate}
         onSubmit={this.onSubmitUpdateExerciseTemplate}
         onHide={() => hideModal('edit')}
         show={isModalVisible('edit')}
@@ -140,27 +161,5 @@ class WorkoutTemplateEdit extends Component {
   }
 }
 
-WorkoutTemplateEdit.propTypes = {
-  exerciseOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string
-    })
-  ).isRequired,
-  exerciseTemplates: PropTypes.arrayOf(exerciseTemplateShape),
-  hideModal: PropTypes.func.isRequired,
-  isModalVisible: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired,
-  workoutTemplate: PropTypes.string
-};
-
-function mapStateToProps(state, props) {
-  const workoutTemplate = getWorkoutTemplate(state, props);
-  return {
-    exerciseOptions: getExerciseOptions(state),
-    exerciseTemplates: getExerciseTemplates(state, workoutTemplate),
-    workoutTemplate
-  };
-}
-
-export default connect(mapStateToProps)(withModals(WorkoutTemplateEdit, ['new', 'edit']));
+const WorkoutTemplateEditWithModals = withModals(WorkoutTemplateEdit, ['new', 'edit']);
+export default connect(WorkoutTemplateEdit.mapStateToProps)(WorkoutTemplateEditWithModals);

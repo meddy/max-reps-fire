@@ -3,12 +3,24 @@ import {Button, Col, FormControl, Glyphicon, Row} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {push} from 'redux-little-router';
 import {addWorkoutTemplate} from '../actions';
-import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {NewEntityModal, withModals} from '../components';
+import {getWorkoutTemplateNames} from '../helpers/selectors';
 import {WORKOUT_TEMPLATE_VIEW} from '../routes';
 
 class Workouts extends Component {
-  onSubmitNewWorkoutTemplate = workoutTemplate => {
+  static propTypes = {
+    isModalVisible: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    showModal: PropTypes.func.isRequired
+  };
+
+  static mapStateToProps(state) {
+    return {
+      workoutTemplateNames: getWorkoutTemplateNames(state)
+    };
+  }
+
+  onSubmitNewWorkoutTemplate = (workoutTemplate) => {
     const {dispatch, hideModal} = this.props;
 
     dispatch(addWorkoutTemplate(workoutTemplate));
@@ -65,17 +77,5 @@ class Workouts extends Component {
   }
 }
 
-Workouts.propTypes = {
-  isModalVisible: PropTypes.func.isRequired,
-  hideModal: PropTypes.func.isRequired,
-  showModal: PropTypes.func.isRequired
-};
-
-function mapStateToProps(state) {
-  return {
-    workoutTemplateNames: getWorkoutTemplateNames(state)
-  };
-}
-
-const WrappedComponent = withModals(Workouts, ['workoutTemplate']);
-export default connect(mapStateToProps)(WrappedComponent);
+const WorkoutsWithModals = withModals(Workouts, ['workoutTemplate']);
+export default connect(Workouts.mapStateToProps)(WorkoutsWithModals);

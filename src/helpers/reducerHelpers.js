@@ -1,5 +1,4 @@
 import {cloneDeep} from 'lodash/fp';
-
 import {SIGN_OUT} from '../actions';
 
 export function createReducer(initialState, actionMap) {

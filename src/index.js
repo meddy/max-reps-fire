@@ -24,14 +24,6 @@ if (process.env.NODE_ENV !== 'production') {
   composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 }
 
-const routes = {
-  '/': {},
-  '/exercises': {},
-  '/workouts': {},
-  '/workout-template/:workoutTemplate': {},
-  '/workout-template/:workoutTemplate/edit': {}
-};
-
 const router = routerForBrowser({routes: routeMap});
 
 const sagaMiddleware = createSagaMiddleware();

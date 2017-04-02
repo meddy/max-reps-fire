@@ -23,7 +23,7 @@ import {
 import createDatabaseSagas from './helpers/createDatabaseSagas';
 import {getServices} from './helpers/createFirebase';
 import {getExercisePath, getExerciseTemplatePath, getWorkoutTemplate, getWorkoutTemplatePath} from './helpers/selectors';
-import {EXERCISE_LIST, NO_MATCH, WORKOUT_TEMPLATE_VIEW} from './routes';
+import {EXERCISE_LIST, NO_MATCH, WORKOUT_TEMPLATE_EDIT, WORKOUT_TEMPLATE_VIEW} from './routes';
 
 export default function* rootSaga() {
   return yield [
@@ -105,6 +105,7 @@ function* onLocationChange({payload}) {
       yield put(requestExercises());
       break;
 
+    case WORKOUT_TEMPLATE_EDIT:
     case WORKOUT_TEMPLATE_VIEW:
       yield put(requestWorkoutTemplates());
 
@@ -117,5 +118,8 @@ function* onLocationChange({payload}) {
       if (!workoutTemplate) {
         yield put(replace(NO_MATCH));
       }
+      break;
+
+    default:
   }
 }

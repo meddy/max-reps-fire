@@ -11,7 +11,10 @@ export default function createFirebase() {
 }
 
 export function getServices() {
-  // assert that app is not undefined
+  if (!app) {
+    throw new Error('Firebase has not been initialized.');
+  }
+
   return {
     db: app.database(),
     auth: app.auth(),

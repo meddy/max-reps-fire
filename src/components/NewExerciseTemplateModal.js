@@ -4,6 +4,19 @@ import Select from 'react-select';
 import ExerciseTemplateControl from './ExerciseTemplateControl';
 
 export default class NewExerciseTemplateModal extends Component {
+  static propTypes = {
+    exerciseOptions: PropTypes.arrayOf(
+      PropTypes.shape({
+        value: PropTypes.string,
+        label: PropTypes.string
+      })
+    ).isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    onHide: Modal.propTypes.onHide,
+    show: Modal.propTypes.show,
+    title: PropTypes.string.isRequired
+  };
+
   initialState = {
     exercise: null,
     reps: {
@@ -34,6 +47,7 @@ export default class NewExerciseTemplateModal extends Component {
 
   render() {
     const {exerciseOptions, onHide, show, title} = this.props;
+    const {exercise, reps, sets, rest} = this.state;
     const validationState = this.getValidationState();
 
     return <Modal show={show} onHide={onHide}>
@@ -47,22 +61,22 @@ export default class NewExerciseTemplateModal extends Component {
             name="exercise"
             options={exerciseOptions}
             onChange={option => this.setState({exercise: option ? option.value : null})}
-            value={this.state.exercise}
+            value={exercise}
           />
         </FormGroup>
         <ExerciseTemplateControl
           label="Reps"
-          value={this.state.reps}
+          value={reps}
           onChange={reps => this.setState({reps})}
         />
         <ExerciseTemplateControl
           label="Sets"
-          value={this.state.sets}
+          value={sets}
           onChange={sets => this.setState({sets})}
         />
         <ExerciseTemplateControl
           label="Rest (Seconds)"
-          value={this.state.rest}
+          value={rest}
           onChange={rest => this.setState({rest})}
         />
       </Modal.Body>
@@ -80,16 +94,3 @@ export default class NewExerciseTemplateModal extends Component {
     </Modal>;
   }
 }
-
-NewExerciseTemplateModal.propTypes = {
-  exerciseOptions: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.string,
-      label: PropTypes.string
-    })
-  ).isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onHide: Modal.propTypes.onHide,
-  show: Modal.propTypes.show,
-  title: PropTypes.string.isRequired,
-};

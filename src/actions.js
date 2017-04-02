@@ -42,4 +42,3 @@ export const requestExerciseTemplates = createActionCreator(REQUEST_EXERCISE_TEM
 export const requestAuth = createActionCreator(REQUEST_AUTH);
 export const requestWorkoutTemplates = createActionCreator(REQUEST_WORKOUT_TEMPLATES);
 export const signOut = createActionCreator(SIGN_OUT);
-

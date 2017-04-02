@@ -5,6 +5,13 @@ import ExerciseTemplateControl from './ExerciseTemplateControl';
 import {exerciseTemplateShape} from '../helpers/shapes';
 
 export default class EditExerciseTemplateModal extends Component {
+  static propTypes = {
+    exerciseTemplate: exerciseTemplateShape,
+    onSubmit: PropTypes.func.isRequired,
+    onHide: Modal.propTypes.onHide,
+    show: Modal.propTypes.show
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -49,10 +56,3 @@ export default class EditExerciseTemplateModal extends Component {
     </Modal>;
   }
 }
-
-EditExerciseTemplateModal.propTypes = {
-  exerciseTemplate: exerciseTemplateShape,
-  onSubmit: PropTypes.func.isRequired,
-  onHide: Modal.propTypes.onHide,
-  show: Modal.propTypes.show
-};

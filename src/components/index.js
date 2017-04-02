@@ -5,6 +5,7 @@ import ExerciseTemplateControl from './ExerciseTemplateControl';
 import LoadingIndicator from './LoadingIndicator';
 import NewEntityModal from './NewEntityModal';
 import NewExerciseTemplateModal from './NewExerciseTemplateModal';
+import NoMatch from './NoMatch';
 import withModals from './withModals';
 
 export {
@@ -15,5 +16,6 @@ export {
   LoadingIndicator,
   NewEntityModal,
   NewExerciseTemplateModal,
+  NoMatch,
   withModals
 }

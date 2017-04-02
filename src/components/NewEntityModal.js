@@ -2,6 +2,14 @@ import React, {Component, PropTypes} from 'react';
 import {Button, FormControl, FormGroup, Modal} from 'react-bootstrap';
 
 export default class NewEntityModal extends Component {
+  static propTypes = {
+    onHide: Modal.propTypes.onHide,
+    onSubmit: PropTypes.func.isRequired,
+    show: Modal.propTypes.show,
+    title: PropTypes.string.isRequired,
+    getValidationState: PropTypes.func.isRequired
+  };
+
   state = {
     value: ''
   };
@@ -15,7 +23,8 @@ export default class NewEntityModal extends Component {
 
   render() {
     const {onHide, show, title, getValidationState} = this.props;
-    const validationState = getValidationState(this.state.value);
+    const {value} = this.state;
+    const validationState = getValidationState(value);
 
     return <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
@@ -29,7 +38,7 @@ export default class NewEntityModal extends Component {
           >
             <FormControl
               type="text"
-              value={this.state.value}
+              value={value}
               placeholder="name"
               onChange={e => this.setState({value: e.target.value})}
             />
@@ -48,11 +57,3 @@ export default class NewEntityModal extends Component {
     </Modal>;
   }
 }
-
-NewEntityModal.propTypes = {
-  onHide: Modal.propTypes.onHide,
-  onSubmit: PropTypes.func.isRequired,
-  show: Modal.propTypes.show,
-  title: PropTypes.string.isRequired,
-  getValidationState: PropTypes.func.isRequired
-};
